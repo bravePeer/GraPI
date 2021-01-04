@@ -4,7 +4,9 @@
 
 #include "person.h"
 #include "player.h"
+#include "item.h"
 using namespace std;
+
 
 int main()
 {

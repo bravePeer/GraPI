@@ -2,6 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <vector>
+#include "item.h"
 
 using namespace std;
 
@@ -46,8 +47,9 @@ public:
 	int spell();	//
 	Spell sp;
 	
-	vector<int> inventory;
+	//vector<int> inventory;
 
+	vector<Item *> inventory;
 
 private:
 

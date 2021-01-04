@@ -74,3 +74,11 @@ void Player::CreateCharacter()
 		pom = '0';
 	}
 }
+
+void Player::ShowInventory()
+{
+	for (auto a = inventory.begin(); a < inventory.size(); a++)
+	{
+
+	}
+}

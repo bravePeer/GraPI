@@ -15,6 +15,8 @@ public:
 	vector<Mission> mis;
 	void CreateCharacter();
 
+	void ShowInventory();
+
 private:
 
 };
