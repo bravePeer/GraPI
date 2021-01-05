@@ -19,7 +19,8 @@ public:
 	int magic_dmg;
 	int phi_dmg;
 	int mob_lvl;
-	void Exp_to_player();
+	void Exp_to_player(int mob_lvl, int lvl_gracza, int exp_after_win);
+	int exp_after_win;
 	void Lvl_mob(int lvlGracza);
 
 };
