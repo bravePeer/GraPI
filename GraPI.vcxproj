@@ -140,16 +140,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="item.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="mission.h" />
+    <ClInclude Include="mob.h" />
     <ClInclude Include="person.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="something.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="mission.cpp" />
+    <ClCompile Include="mob.cpp" />
     <ClCompile Include="person.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="point.cpp" />
+    <ClCompile Include="something.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

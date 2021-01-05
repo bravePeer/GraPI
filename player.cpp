@@ -1,7 +1,5 @@
 #include "player.h"
 
-
-
 Player::Player()
 {
 }
@@ -87,27 +85,69 @@ void Player::UsePreset()
 void Player::ShowInventory()
 {
 	int buf = -1;
-	FunnyStruct funnyStruct;
+	Food *food = NULL;
 
-	for (int i = 0; i < inventory.size(); i++)
+	vector<string> s;
+
+	if (inventory.size() > 0)
 	{
-		cout << i << " " << inventory[i]->name << endl;
+		for (int i = 0; i < inventory.size(); i++)
+		{
+			//cout << " " << inventory[i]->name << endl;
+			s.push_back(inventory[i]->name);
+		}
+		s.push_back("Powrot");
+		buf = DrawMenu(s);
+		if (buf == inventory.size())
+			return;
+
+		switch (inventory[buf]->UseItem())
+		{
+		case 1://zjedz
+			food = (Food*)inventory[buf];
+			if (life + food->healthModifier < lifeMax)
+				life += food->healthModifier;
+			else
+				life = lifeMax;
+			break;
+		case 2://zaloz bron
+			if (equipedWeapon != NULL)
+			{
+				food = (Food*)inventory[buf];
+				inventory[buf] = (Item*)equipedWeapon;
+				equipedWeapon = (Weapon*)food;
+			}
+			else
+			{
+				equipedWeapon = (Weapon*)inventory[buf];
+				inventory.erase(inventory.begin() + buf);
+			}
+			break;
+		case 3://ubierz ubranko xd
+			if (equipedWeapon != NULL)
+			{
+				food = (Food*)inventory[buf];
+				inventory[buf] = (Item*)equipedArmor;
+				equipedArmor = (Armor*)food;
+			}
+			else
+			{
+				equipedArmor = (Armor*)inventory[buf];
+				inventory.erase(inventory.begin() + buf);
+			}
+			break;
+		} 
 	}
-
-	cin >> buf;
-
-	life = 20;
-	inventory[buf]->UseItem(funnyStruct);
-	Use(funnyStruct);
-
-	cout << life;
-
+	else
+	{
+		cout << "Nic nie masz w ekwipunku" << endl;
+	}
+	delete food;
 }
 
 void Player::Use(FunnyStruct& funnyStruct)
 {
-	if (life + funnyStruct.healthModifier < lifeMax)
-		life += funnyStruct.healthModifier;
-	else
-		life = lifeMax;
+	
+
+
 }

@@ -47,9 +47,12 @@ public:
 	int spell();	//
 	Spell sp;
 	
-	//vector<int> inventory;
-
+	//ekwipunek
 	vector<Item *> inventory;
+
+	//ubrane rzeczy
+	Weapon *equipedWeapon = NULL;
+	Armor *equipedArmor = NULL;
 
 private:
 

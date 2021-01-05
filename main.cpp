@@ -1,103 +1,168 @@
-#include <iostream>
-#include <windows.h>
+﻿#include <iostream>
 #include <time.h>
-
+#include <conio.h>
 #include "person.h"
 #include "player.h"
 #include "item.h"
+#include "map.h"
+//tetuje \/
+#include "something.h"
 using namespace std;
 
-HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-
-int DrawMenu(vector<string>& option)
+void map_generator(Map &map)
 {
-	int pos = 0;
-	int key = 0;
-
-	do
+	int x,y;
+	for (int i = 0; i < 5;i++)
 	{
-
-		system("cls");
-		cout << pos << endl;
-
-		for (int i = 0; i < option.size(); i++)
+		x = 1 + rand() % (10 - 1 + 1);
+		y = 1 + rand() % (20 - 1 + 1);
+		if(map.map[x][y] == 'H' || map.map[x][y] == 'S' || map.map[x][y] == 'N' 
+		|| map.map[x][y] == 'P' || map.map[x][y] == '|' || map.map[x][y] == 'B'
+		|| map.map[x][y] == '-')
 		{
-			SetConsoleTextAttribute(handle, 0x0003);
-			if (i == pos)
-			{
-				SetConsoleTextAttribute(handle, FOREGROUND_RED);
-				cout << i <<" "<<option[i] << endl;
-			}
-			else
-			{
-				SetConsoleTextAttribute(handle, FOREGROUND_BLUE);
-				cout << i<<" "<<option[i] << endl;
-			}
-			
+			i--;
+			continue;
 		}
-
-		key = _getch();
-
-		if (key == 224)
-		{
-			key = _getch();
-			if (key == 80)
-				pos++;
-			if (key == 72)
-				pos--;
+		else{
+		map.map[x][y] = 'X';
+		x = 0;
+		y = 0;
 		}
+	}
+}
 
-		if (pos < 0)
-			pos = 0;
-		if (pos > option.size()-1)
-			pos = option.size()-1;
-		
-	} while (key != 13);
 
-	return pos;
+/*
+	bronie.txt
+	string [12]
+	string[0] = ########################
+	#........r..........d..#
+	#...................d..#
+	#........r..........d..#
+	########################
+	string buf;
+	
+	for ()
+	file >> buf;
+	cout << buf;
+
+
+*/
+
+int fight(int player_attack, int player_hp, int enemy_attack, int enemy_hp, int mana)
+{
+    int tura=1;
+    char help;
+    while(player_hp > 0 || enemy_hp)
+    {
+        cout<<"Tura: "<<tura<<endl;
+        cout<<"HP twojego bohatera: "<<player_hp<<endl;
+        cout<<"HP przeciwnika: "<<enemy_hp<<endl;
+        cout<<endl;
+        cout<<"Wybierz atak!"<<endl;
+        cout<<"1 - zwykły atak"<<endl;
+        cout<<"2 - umiejętność specjalna"<<" (potrzeba 4pkt many) " << mana << "/4"<<endl;
+        cout<<":";
+        cin>>help;
+        cout<<endl;
+
+        for(int i=0;i<1;i++)
+        {
+           switch(help)
+            {
+            case'1':
+                enemy_hp=enemy_hp-player_attack;
+                cout<<"Zadajesz: "<<player_attack<<" pkt obrażeń"<<endl;
+                continue;
+
+            case'2':
+               // enemy_hp-=player_skill(mana,player_attack);
+                if(mana!=4)
+                {
+                    cout<<"nie masz many aby wykonać ten atak, zamiast tego atakujesz podstawowym atakiem"<<endl;
+                }
+              //  cout<<"Zadajesz: "<<player_skill(mana,player_attack)<<" pkt obrażeń"<<endl;
+                cout<<endl;
+             //   player_skill(mana,player_attack);
+                mana=0;
+            }
+        }
+        if(mana<4) mana++;
+        cout<<endl;
+        if(enemy_hp<=0)
+        {
+            cout<<"Brawo wygrałeś tę walkę!"<<endl;
+            break;
+        }
+
+        cout<<endl;
+        cout<<"Twój przeciwnik uderza..."<<endl;
+        cout<<endl;
+        Sleep(1000);
+        player_hp=player_hp-enemy_attack;
+        cout<<"Zadaje ci: "<<enemy_attack<<" pkt obrażeń"<<endl;
+
+        if(player_hp<=0)
+        {
+            cout<<"Niestety przegrałeś walkę..."<<endl;
+            //trzeba dodac zeby resetowalo hp i cofalo do innego spota
+            break;
+        }
+
+        tura++;
+       // console_clean();
+    }
+	return 1;
 }
 
 int main()
 {
-	/*generowanie okna*/
-	HWND hwnd = GetConsoleWindow();
-	ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+	srand(time(NULL));
 
-	COORD c2 = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
-	SetConsoleScreenBufferSize(handle, c2);
+	GenerateWindow();
 
-	SMALL_RECT sr;
-	sr.Left = 0;
-	sr.Top = 0;
-	sr.Right = c2.X - 1;
-	sr.Bottom = c2.Y - 1;
-	SetConsoleWindowInfo(handle, true, &sr);
-	//------
-	setlocale(LC_CTYPE, "Polish");	//<- polskie litraki
+	Player player;
 
-	Player pl;
-	//pl.CreateCharacter();
-	pl.UsePreset();
-	pl.inventory.push_back(new Item("cos"));
-	pl.inventory.push_back(new Item("ddd"));
-	pl.inventory.push_back(new Item("cos"));
-	pl.inventory.push_back(new Food("zycie", 10));
-	//pl.ShowInventory();
-
-	int a;
-
-	/*while (1)
-	{
-		a = _getch();
-		cout << (int)a << endl;
-	}*/
+	player.inventory.push_back(new Item("PRzedmiot"));
+	player.inventory.push_back(new Item("PRzedmiot2"));
+	player.inventory.push_back(new Weapon("bron2"));
+	player.inventory.push_back(new Weapon("bron1"));
+	player.inventory.push_back(new Item("PRzedmiot3"));
+	player.inventory.push_back(new Armor("Armor1"));
+	player.inventory.push_back(new Armor("armor2"));
+	player.inventory.push_back(new Armor("armor3"));
+	player.inventory.push_back(new Item("PRzedmiot4"));
+	
+	player.ShowInventory();
 
 	vector<string> s;
-	s.push_back("1opcja");
-	s.push_back("2opcja");
-	s.push_back("3opcja");
-	
-	cout<<DrawMenu(s);
+	s.push_back("1 Rozpocznij nowa gre");
+	s.push_back("2 Wczytaj zapis");
+	s.push_back("3 wyjdz");
+
+	/*Map map;
+	map.Load1map();
+	map.ShowMap();
+
+	map_generator(map);
+
+	map.ShowMap();
+
+	while (1)//główna 
+	{
+		switch (DrawMenu(s))
+		{
+		case 0: //poczatek gry
+			
+			break;
+		case 1:	//wczytanie zapisu
+			break;
+		case 2:	//wyjscie
+			break;
+
+		}
+
+	}*/
+
 	return 0;
 }

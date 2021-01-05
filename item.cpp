@@ -13,8 +13,9 @@ Item::~Item()
 {
 }
 
-void Item::UseItem(FunnyStruct& funnyStruct)
+int Item::UseItem()
 {
+	return 0;
 }
 
 void Item::ShowItemInfo()
@@ -35,11 +36,48 @@ Food::~Food()
 {
 }
 
-void Food::UseItem(FunnyStruct& funnyStruct)
+int Food::UseItem()
 {
-	funnyStruct.healthModifier = healthModifier;
+	return 1;
 }
 
 void Food::ShowItemInfo()
+{
+}
+
+Weapon::Weapon(string _name)
+{
+	name = _name;
+}
+
+Weapon::~Weapon()
+{
+}
+
+int Weapon::UseItem()
+{
+	return 2;
+}
+
+void Weapon::ShowItemInfo()
+{
+}
+
+Armor::Armor(string _name)
+{
+	name = _name;
+}
+
+Armor::~Armor()
+{
+}
+
+int Armor::UseItem( )
+{
+	return 3;
+
+}
+
+void Armor::ShowItemInfo()
 {
 }
