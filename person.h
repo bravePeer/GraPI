@@ -19,29 +19,29 @@ public:
 	
 	string name;
 
-	char sex;
+	char sex = 'm';
 
-	bool dead;
-	int xp;
-	int level;
+	bool dead = false;
+	int xp = 0;
+	int level = 1;
 
-	int money;
-	float backpackMaxWeight;
-	float backpackWeight;
-	int armor;		// pancerz
+	int money = 100;
+	float backpackMaxWeight = 5.0f;
+	float backpackWeight = 1.0f;
+	int armor = 2;		// pancerz
 
-	int life;		// wytrzymalosc -> zdrowie aktualne
-	int lifeMax;
+	int life = 100;		// wytrzymalosc -> zdrowie aktualne
+	int lifeMax = 100;
 	
-	int accuracy;	//celnosc
-	int strength;	//sila
-	int inteligence;//inteligencja
-	int agility;	//zrêcznoœæ
-	int dodging;	//uniki
-	int crit_strike;//uderzenia krytyczne
+	int accuracy = 0;	//celnosc
+	int strength = 0;	//sila
+	int inteligence = 0;//inteligencja
+	int agility = 0;	//zrêcznoœæ
+	int dodging = 0;	//uniki
+	int crit_strike = 0;//uderzenia krytyczne
 	//int speed;		//szybkosc
 	
-	int profession; //klasa postaci
+	int profession = 0; //klasa postaci
 	//string profession_name;
 	
 	int spell();	//

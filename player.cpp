@@ -1,5 +1,7 @@
 #include "player.h"
 
+
+
 Player::Player()
 {
 }
@@ -75,10 +77,37 @@ void Player::CreateCharacter()
 	}
 }
 
+void Player::UsePreset()
+{
+	name = "Prefab Testwy";
+	lifeMax = 100;
+	life = lifeMax;
+}
+
 void Player::ShowInventory()
 {
-	for (auto a = inventory.begin(); a < inventory.size(); a++)
-	{
+	int buf = -1;
+	FunnyStruct funnyStruct;
 
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		cout << i << " " << inventory[i]->name << endl;
 	}
+
+	cin >> buf;
+
+	life = 20;
+	inventory[buf]->UseItem(funnyStruct);
+	Use(funnyStruct);
+
+	cout << life;
+
+}
+
+void Player::Use(FunnyStruct& funnyStruct)
+{
+	if (life + funnyStruct.healthModifier < lifeMax)
+		life += funnyStruct.healthModifier;
+	else
+		life = lifeMax;
 }

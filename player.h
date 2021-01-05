@@ -14,10 +14,12 @@ public:
 
 	vector<Mission> mis;
 	void CreateCharacter();
+	void UsePreset();
 
 	void ShowInventory();
-
+	
 private:
+	void Use(FunnyStruct& funnyStruct);
 
 };
 
