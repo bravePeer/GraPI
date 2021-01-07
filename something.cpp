@@ -67,3 +67,69 @@ int DrawMenu(vector<string>& option)
 
 	return pos;
 }
+
+int DrawMenu(vector<string>& option, COORD c)
+{
+	int pos = 0;
+	int key = 0;
+	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+	do
+	{
+		system("cls");
+		//	cout << pos << endl;
+	
+
+		for (int i = 0; i < option.size(); i++)
+		{
+			SetConsoleCursorPosition(handlee, {c.X, short(c.Y + i)});
+
+			SetConsoleTextAttribute(handlee, 0x0003);
+			if (i == pos)
+			{
+				SetConsoleTextAttribute(handlee, FOREGROUND_RED);
+				cout << option[i];
+			}
+			else
+			{
+				SetConsoleTextAttribute(handlee, FOREGROUND_BLUE);
+				cout << option[i] ;
+			}
+
+		}
+
+		key = _getch();
+
+		if (key == 224)
+		{
+			key = _getch();
+			if (key == 80)
+				pos++;
+			if (key == 72)
+				pos--;
+		}
+
+		if (pos < 0)
+			pos = 0;
+		if (pos > option.size() - 1)
+			pos = option.size() - 1;
+
+	} while (key != 13);
+
+	return pos;
+}
+
+void CDrawText(string s, COORD c,short textAtribute)
+{
+	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	
+	GetConsoleScreenBufferInfo(handlee, &info);
+	short buf = info.wAttributes;
+
+	SetConsoleCursorPosition(handlee, c);
+	SetConsoleTextAttribute(handlee, textAtribute);
+	cout << s;
+	SetConsoleTextAttribute(handlee,buf);
+}

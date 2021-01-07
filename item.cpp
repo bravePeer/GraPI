@@ -4,9 +4,12 @@ Item::Item()
 {
 }
 
-Item::Item(string _name)
+Item::Item(string _name, string _desc, float _weight, int _price)
 {
 	name = _name;
+	desc = _desc;
+	weight = _weight;
+	price = _price;
 }
 
 Item::~Item()
@@ -26,10 +29,14 @@ Food::Food()
 {
 }
 
-Food::Food(string _name, int _healthModifier)
+Food::Food(string _name, string _desc, float _weight, int _price, int _healthModifier)
 {
-	healthModifier = _healthModifier;
 	name = _name;
+	desc = _desc;
+	weight = _weight;
+	price = _price;
+	
+	healthModifier = _healthModifier;
 }
 
 Food::~Food()
@@ -45,9 +52,17 @@ void Food::ShowItemInfo()
 {
 }
 
-Weapon::Weapon(string _name)
+Weapon::Weapon(string _name, string _desc, float _weight, int _price, int _strength, int _critStrength, float _critPropability, int _profBonus)
 {
 	name = _name;
+	desc = _desc;
+	weight = _weight;
+	price = _price;
+
+	strength = _strength;
+	critStrength = _critStrength;
+	critPropability = _critPropability;
+	professionBonus = _profBonus;
 }
 
 Weapon::~Weapon()
@@ -63,9 +78,15 @@ void Weapon::ShowItemInfo()
 {
 }
 
-Armor::Armor(string _name)
+Armor::Armor(string _name, string _desc, float _weight, int _price, int _armor, int _profBonus)
 {
 	name = _name;
+	desc = _desc;
+	weight = _weight;
+	price = _price;
+
+	armor = _armor;
+	professionBonus = _profBonus;
 }
 
 Armor::~Armor()
@@ -75,7 +96,6 @@ Armor::~Armor()
 int Armor::UseItem( )
 {
 	return 3;
-
 }
 
 void Armor::ShowItemInfo()

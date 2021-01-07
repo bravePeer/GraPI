@@ -86,6 +86,8 @@ void Player::ShowInventory()
 {
 	int buf = -1;
 	Food *food = NULL;
+	Weapon* weapon = NULL;
+	Armor* armor = NULL;
 
 	vector<string> s;
 
@@ -97,7 +99,7 @@ void Player::ShowInventory()
 			s.push_back(inventory[i]->name);
 		}
 		s.push_back("Powrot");
-		buf = DrawMenu(s);
+		buf = DrawMenu(s, {5,5});
 		if (buf == inventory.size())
 			return;
 
@@ -113,9 +115,9 @@ void Player::ShowInventory()
 		case 2://zaloz bron
 			if (equipedWeapon != NULL)
 			{
-				food = (Food*)inventory[buf];
+				weapon = (Weapon*)inventory[buf];
 				inventory[buf] = (Item*)equipedWeapon;
-				equipedWeapon = (Weapon*)food;
+				equipedWeapon = weapon;
 			}
 			else
 			{
@@ -124,11 +126,11 @@ void Player::ShowInventory()
 			}
 			break;
 		case 3://ubierz ubranko xd
-			if (equipedWeapon != NULL)
+			if (equipedArmor != NULL)
 			{
-				food = (Food*)inventory[buf];
-				inventory[buf] = (Item*)equipedArmor;
-				equipedArmor = (Armor*)food;
+				armor = (Armor*)inventory[buf];
+				inventory[buf] = equipedArmor;
+				equipedArmor = armor;
 			}
 			else
 			{
@@ -145,9 +147,28 @@ void Player::ShowInventory()
 	delete food;
 }
 
-void Player::Use(FunnyStruct& funnyStruct)
+void Player::ShowStats()	
 {
-	
+	cout << name << " poziom:"<<level<< " punkty doswiadczenia: "<< xp <<endl<<endl;
+	cout << "¯ycie: " << life << "/" << lifeMax << endl;
+	cout << "Si³a: " << strength << endl;
+	cout << "Inteligencja" << inteligence << endl;
+	cout << "Celnoœæ" << accuracy << endl;
+	cout << "Zrêcznoœæ" << agility << endl;
+	cout << "Uniki" << dodging << endl;
 
+	if (equipedWeapon != NULL)
+		cout << "Bron: " << equipedWeapon->name << endl;
+	else
+		cout << "Brak broni" << endl;
+
+	if (equipedArmor != NULL)
+		cout << "Pancerz: " << equipedArmor->name << endl;
+	else
+		cout << "Brak pancerza" << endl;
+}
+
+void Player::AddItem(Item* item)
+{
 
 }

@@ -123,18 +123,18 @@ int main()
 
 	Player player;
 
-	player.inventory.push_back(new Item("PRzedmiot"));
-	player.inventory.push_back(new Item("PRzedmiot2"));
-	player.inventory.push_back(new Weapon("bron2"));
-	player.inventory.push_back(new Weapon("bron1"));
-	player.inventory.push_back(new Item("PRzedmiot3"));
-	player.inventory.push_back(new Armor("Armor1"));
-	player.inventory.push_back(new Armor("armor2"));
-	player.inventory.push_back(new Armor("armor3"));
-	player.inventory.push_back(new Item("PRzedmiot4"));
-	
-	player.ShowInventory();
+	player.inventory.push_back(new Item("PRzedmiot","Przedmiot Testpwy", 0.1f,1));
+	player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 3000, 5, 3, 0.1, 1));
+	player.inventory.push_back(new Armor("Zbroja","",3.0f,5000,5,1));
 
+	while (1)
+	{
+		player.ShowInventory();
+
+		player.ShowStats();
+		_getch();
+	}
+	
 	vector<string> s;
 	s.push_back("1 Rozpocznij nowa gre");
 	s.push_back("2 Wczytaj zapis");
