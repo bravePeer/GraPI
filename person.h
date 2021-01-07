@@ -6,11 +6,6 @@
 
 using namespace std;
 
-struct Spell
-{
-	int strew;
-};
-
 class Person
 {
 public:
@@ -19,7 +14,7 @@ public:
 	
 	string name;
 
-	char sex = 'm';
+	char sex;
 
 	bool dead = false;
 	int xp = 0;
@@ -28,7 +23,7 @@ public:
 	int money = 100;
 	float backpackMaxWeight = 5.0f;
 	float backpackWeight = 1.0f;
-	int armor = 2;		// pancerz
+	int armor=20;		// pancerz
 
 	int life = 100;		// wytrzymalosc -> zdrowie aktualne
 	int lifeMax = 100;
@@ -39,13 +34,7 @@ public:
 	int agility = 0;	//zrêcznoœæ
 	int dodging = 0;	//uniki
 	int crit_strike = 0;//uderzenia krytyczne
-	//int speed;		//szybkosc
-	
-	int profession = 0; //klasa postaci
-	//string profession_name;
-	
-	int spell();	//
-	Spell sp;
+
 	
 	//ekwipunek
 	vector<Item *> inventory;

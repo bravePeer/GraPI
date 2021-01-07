@@ -2,7 +2,7 @@
 
 Person::Person()
 {
-	sp.strew = 3;
+
 }
 
 Person::~Person()
@@ -12,9 +12,4 @@ Person::~Person()
 		delete inventory[i];
 	}
 	inventory.clear();
-}
-
-int Person::spell()
-{
-	return 2;
 }
