@@ -18,7 +18,7 @@ void map_generator(Map &map)
 		y = 1 + rand() % (20 - 1 + 1);
 		if(map.map[x][y] == 'H' || map.map[x][y] == 'S' || map.map[x][y] == 'N' 
 		|| map.map[x][y] == 'P' || map.map[x][y] == '|' || map.map[x][y] == 'B'
-		|| map.map[x][y] == '-')
+		|| map.map[x][y] == '-' || map.map[x][y] == '_')
 		{
 			i--;
 			continue;
@@ -140,13 +140,16 @@ int main()
 	s.push_back("2 Wczytaj zapis");
 	s.push_back("3 wyjdz");
 
-	/*Map map;
+	//TU ZACZYNA SIE GRA
+
+	Map map;
 	map.Load1map();
 	map.ShowMap();
 
 	map_generator(map);
 
 	map.ShowMap();
+	int x=2, y=2;
 
 	while (1)//główna 
 	{
@@ -162,7 +165,35 @@ int main()
 
 		}
 
-	}*/
+		if (map[x][y] == ".")			//puste pole
+		{
+
+		} 
+		else if (map[x][y] == "X")		//walka
+		{
+
+		}
+		else if (map[x][y] == "H")		//baza
+		{
+
+		}
+		else if (map[x][y] == "N")		//npc
+		{
+
+		}
+		else if (map[x][y] == "S")		//sklep
+		{
+
+		}
+		else if (map[x][y] == "P")		//przejście
+		{
+
+		}
+		else if (map[x][y] == "")		//poza zakresem mapy
+		{
+
+		}
+	}
 
 	return 0;
 }

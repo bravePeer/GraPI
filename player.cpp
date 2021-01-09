@@ -296,5 +296,6 @@ int Dmg_formula(int profession,int dmg_output, int strength, int agility, int in
 	{
 		dmg_output = (0.6 * agility * 7) + (0.4 * strength * 5) + (0.2 * inteligence * 3) + (level * 8);
 	}
+	return dmg_output;
 }
 
