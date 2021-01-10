@@ -115,6 +115,14 @@ int fight(int player_attack, int player_hp, int enemy_attack, int enemy_hp, int 
 	return 1;
 }
 
+void Game()
+{
+	if (_kbhit())
+	{
+
+	}
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -127,14 +135,6 @@ int main()
 	player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 3000, 5, 3, 0.1, 1));
 	player.inventory.push_back(new Armor("Zbroja","",3.0f,5000,5,1));
 
-	while (1)
-	{
-		player.ShowInventory();
-
-		player.ShowStats();
-		_getch();
-	}
-	
 	vector<string> s;
 	s.push_back("1 Rozpocznij nowa gre");
 	s.push_back("2 Wczytaj zapis");
@@ -162,10 +162,9 @@ int main()
 			break;
 		case 2:	//wyjscie
 			break;
-
 		}
 
-		if (map[x][y] == ".")			//puste pole
+		/*if (map.map[x][y] =='.')			//puste pole
 		{
 
 		} 
@@ -192,7 +191,7 @@ int main()
 		else if (map[x][y] == "")		//poza zakresem mapy
 		{
 
-		}
+		}*/
 	}
 
 	return 0;
