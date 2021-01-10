@@ -1,12 +1,15 @@
 ﻿#include <iostream>
+#include <fstream>
+#include <cwchar>
+#include <windows.h>
 #include <time.h>
 #include <conio.h>
+#include <string>
 #include "person.h"
 #include "player.h"
 #include "item.h"
 #include "map.h"
 #include "mob.h"
-//tetuje \/
 #include "something.h"
 
 using namespace std;
@@ -31,29 +34,12 @@ void map_generator(Map &map)
 		y = 0;
 		}
 	}
+	map.ShowMap();
 }
 
-
-/*
-	bronie.txt
-	string [12]
-	string[0] = ########################
-	#........r..........d..#
-	#...................d..#
-	#........r..........d..#
-	########################
-	string buf;
-	
-	for ()
-	file >> buf;
-	cout << buf;
-
-
-*/
-
-void Mob_stats(Player player, Mob mob1_1, Mob mob1_2, Mob mob1_3, Mob mob1_4, Mob mob1_5,
-	Mob mob2_1, Mob mob2_2, Mob mob2_3, Mob mob2_4, Mob mob2_5,
-	Mob mob3_1, Mob mob3_2, Mob mob3_3, Mob mob3_4, Mob mob3_5, Mob boss)
+void Mob_stats(Player &player, Mob mob1_1, Mob &mob1_2, Mob &mob1_3, Mob &mob1_4, Mob &mob1_5,
+	Mob &mob2_1, Mob &mob2_2, Mob &mob2_3, Mob &mob2_4, Mob &mob2_5,
+	Mob &mob3_1, Mob &mob3_2, Mob &mob3_3, Mob &mob3_4, Mob &mob3_5, Mob &boss)
 {
 	mob1_1.life = player.life * 0.4;
 	mob1_1.armor = player.armor * 0.1;
@@ -176,21 +162,21 @@ void Mob_stats(Player player, Mob mob1_1, Mob mob1_2, Mob mob1_3, Mob mob1_4, Mo
 	mob3_5.money_from_mob = 50;
 
 	boss.life = 300;						//do wyliczenia 
-	boss.armor = 100;
+	boss.armor = 40;
 	boss.dmg = 40 + rand() % (90-40+1);
 }
 
-int Fight(Player player,int player_attack, int player_hp,int player_armor,
- int enemy_attack, int enemy_hp, int enemy_armor, bool mob_dead, int money_received,int money)
+int Fight(Player &player, Mob &mobek)
 {
     int tura=1;
     char help;
 	int mana = 4;
-    while(player_hp > 0 || enemy_hp)
+	player.Dmg_formula();
+    while(player.life > 0 || mobek.life)
     {
         cout<<"Tura: "<<tura<<endl;
-        cout<<"HP twojego bohatera: "<<player_hp<<endl;
-        cout<<"HP przeciwnika: "<<enemy_hp<<endl;
+        cout<<"HP twojego bohatera: "<<player.life<<endl;
+        cout<<"HP przeciwnika: "<<mobek.life<<endl;
         cout<<endl;
         cout<<"Wybierz atak!"<<endl;
         cout<<"1 - zwykły atak"<<endl;
@@ -199,49 +185,51 @@ int Fight(Player player,int player_attack, int player_hp,int player_armor,
         cin>>help;
         cout<<endl;
 
-        for(int i=0;i<1;i++)
+        for(int i=0; i < 1; i++)
         {
            switch(help)
             {
             case'1':
-				enemy_hp = enemy_hp - (player_attack - enemy_armor);
-                cout<<"Zadajesz: "<<player_attack-enemy_armor<<" pkt obrażeń"<<endl;
+				mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+                cout<<"Zadajesz: "<<player.dmg_output - mobek.armor<<" pkt obrażeń"<<endl;
                 continue;
 
             case'2':
-                enemy_hp-=player.Spell(player.profession, player.level, player.life, player.lifeMax, tura, player.armor, player.dmg_output);
+                mobek.life-=player.Spell();
                 if(mana!=4)
                 {
                     cout<<"nie masz many aby wykonać ten atak, zamiast tego atakujesz podstawowym atakiem"<<endl;
                 }
-                cout<<"Zadajesz: "<< player.Spell(player.profession, player.level, player.life, player.lifeMax, tura, player.armor, player.dmg_output)<<" pkt obrażeń"<<endl;
+                cout<<"Zadajesz: "<< player.Spell()<<" pkt obrażeń"<<endl;
                 cout<<endl;
-
-				player.Spell(player.profession,player.level,player.life,player.lifeMax,tura,player.armor,player.dmg_output);
                 mana=0;
             }
         }
+
         if(mana<4) mana++;
         cout<<endl;
-        if(enemy_hp<=0)
+
+        if(mobek.life<=0)
         {
             cout<<"Brawo wygrałeś tę walkę!"<<endl;
-			mob_dead = true;
-			money = money + money_received;
+			mobek.dead = true;
+			player.money += mobek.money_from_mob;
             break;
         }
 
         cout<<endl;
         cout<<"Twój przeciwnik uderza..."<<endl;
+		
         cout<<endl;
-        Sleep(1000);
-        player_hp=player_hp-(enemy_attack-player_armor);
-        cout<<"Zadaje ci: "<< enemy_attack - player_armor <<" pkt obrażeń"<<endl;
+       // Sleep(1000);
+        player.life=player.life-(mobek.dmg-player.armor);
+        cout<<"Zadaje ci: "<< mobek.dmg - player.armor <<" pkt obrażeń"<<endl;
 
-        if(player_hp<=0)
+        if(player.life<=0)
         {
             cout<<"Niestety przegrałeś walkę..."<<endl;
-            //trzeba dodac zeby resetowalo hp i cofalo do innego spota
+			player.life = 1;
+
             break;
         }
 
@@ -251,17 +239,83 @@ int Fight(Player player,int player_attack, int player_hp,int player_armor,
 	return 1;
 }
 
-int main()
+int SellItem(Player &player)
 {
-	srand(time(NULL));
+	vector<string> itNames;
+	for (int i = 0; i < player.inventory.size(); i++)
+	{
+		itNames.push_back(player.inventory[i]->name + " " + to_string(player.inventory[i]->weight) + "Kg " + to_string(player.inventory[i]->price) + "PLN");
+	}
+	itNames.push_back("Powrót");
 
-	GenerateWindow();
+	return 0;
+}
 
-	Player player;
+int BuyItem(vector<Item*> &sellersItems)
+{
+	vector<string> itNames;
+	for (int i = 0; i < sellersItems.size(); i++)
+	{
+		itNames.push_back(sellersItems[i]->name + " " + to_string(sellersItems[i]->weight) + "Kg " + to_string(sellersItems[i]->price) + "PLN");
+	}
+	itNames.push_back("Powrót");
+	
+	return DrawMenu(itNames);
+}
 
+void Shop(Player& player)
+{
+	vector<Item *> sellersItems;
+	vector<string> s;
+	s.push_back("Kup");
+	s.push_back("Sprzedaj");
+	s.push_back("Odejdź");
+
+	int it = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 400 + i * 10));
+	}
+
+	switch (DrawMenu(s))
+	{
+	case 0:
+		it = BuyItem(sellersItems);
+		if (it <= sellersItems.size())
+		{
+			player.money -= sellersItems[it]->price;
+			player.inventory.push_back(sellersItems[it]);
+		}
+		break;
+	case 1:
+		it = SellItem(player);
+		if (it <= player.inventory.size())
+		{
+			player.money += player.inventory[it]->price;
+			player.inventory[it] = NULL;
+			player.inventory.erase(player.inventory.begin() + it);
+		}
+		break;
+	case 2:
+		break;
+	}
+
+	//Czyszczenie ekwipunku sprzedawcy
+	s.clear();
+	for (int i = 0; i < sellersItems.size(); i++)
+	{
+		if(i != it)
+			sellersItems[i] = NULL;
+	}
+	sellersItems.clear();
+}
+
+void Game(Player &player, Map &map)
+{
 	//moby  mob[nr mapy]_[numer moba]
 	Mob mob1_1;
-	Mob mob1_2; 
+	Mob mob1_2;
 	Mob mob1_3;
 	Mob mob1_4;
 	Mob mob1_5;
@@ -278,17 +332,175 @@ int main()
 	Mob boss;
 	// koniec mobow
 
-	player.inventory.push_back(new Item("PRzedmiot","Przedmiot Testpwy", 0.1f,1));
-	player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 3000, 5, 3, 0.1, 1));
-	player.inventory.push_back(new Armor("Zbroja","",3.0f,5000,5,1));
+	int x = 0, y = 0;
+	int return_map = map.Load1map();
 
-	while (1)
+	map_generator(map);
+	map.ShowMap();
+
+	while (1)	//głowna petla gry
 	{
-		player.ShowInventory();
+		system("cls");
+		map.ShowMap();
 
-		player.ShowStats();
-		_getch();
+		//Osługa klawiatury
+		int a = _getch();
+		switch (a)
+		{
+		case 'w':
+			map.playerPos = Point(map.playerPos.x, map.playerPos.y - 1);
+			if(map.playerPos.y < 1)
+				map.playerPos = Point(map.playerPos.x, 1);
+			break;
+		case 's':
+			map.playerPos = Point(map.playerPos.x, map.playerPos.y + 1);
+			if (map.playerPos.y > map.mapSize.y - 1)
+				map.playerPos = Point(map.playerPos.x, map.mapSize.y - 1);
+			break;
+		case 'a':
+			map.playerPos = Point(map.playerPos.x - 1, map.playerPos.y);
+			if (map.playerPos.x < 1)
+				map.playerPos = Point(1, map.mapSize.y);
+			break;
+		case 'd':
+			map.playerPos = Point(map.playerPos.x + 1, map.playerPos.y);
+			if (map.playerPos.x > map.mapSize.x - 1)
+				map.playerPos = Point(map.playerPos.x - 1, map.mapSize.y);
+			break;
+		case 'i':
+			player.ShowInventory();
+			break;
+		case 'j':
+			player.ShowStats();
+			break;
+		}
+		
+		
+
+		y = map.playerPos.x;
+		x = map.playerPos.y;
+
+		Mob_stats(player, mob1_1, mob1_2, mob1_3, mob1_4, mob1_5,	//aktualizowanie statow mobow
+			mob2_1, mob2_2, mob2_3, mob2_4, mob2_5,
+			mob3_1, mob3_2, mob3_3, mob3_4, mob3_5, boss);
+		
+		cout<<endl << map.map[x][y] << endl;
+		if (map.map[x][y] == '.')			//puste pole
+		{
+			// możliwość otwarcia eq
+			// wyświetlenie mapy z oznaczeniem gdzie jest postać
+		}
+		if (map.map[x][y] == 'X')		//walka
+		{
+			cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
+			int pom1, pom2, pom3;
+			pom1 = 1 + rand() % (5 - 1 + 1);
+			pom2 = 1 + rand() % (5 - 1 + 1);
+			pom3 = 1 + rand() % (5 - 1 + 1);
+			if (pom1 == 1 && return_map == 1) {
+				Fight(player, mob1_1);
+				if (mob1_1.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 2 && return_map == 1) {
+				Fight(player, mob1_2);
+				if (mob1_2.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 3 && return_map == 1) {
+				Fight(player, mob1_3);
+				if (mob1_3.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 4 && return_map == 1) {
+				Fight(player, mob1_4);
+				if (mob1_4.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 5 && return_map == 1) {
+				Fight(player, mob1_5);
+				if (mob1_5.dead == true) map.map[x][y] = '.';
+			}
+
+			else if (pom2 == 1 && return_map == 2) {
+				Fight(player, mob2_1);
+				if (mob2_1.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 2 && return_map == 2) {
+				Fight(player, mob2_2);
+				if (mob2_2.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 3 && return_map == 2) {
+				Fight(player, mob2_3);
+				if (mob2_3.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 4 && return_map == 2) {
+				Fight(player, mob2_4);
+				if (mob2_4.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 5 && return_map == 2) {
+				Fight(player, mob2_5);
+				if (mob2_5.dead == true) map.map[x][y] = '.';
+			}
+
+			else if (pom2 == 1 && return_map == 3) {
+				Fight(player, mob3_1);
+				if (mob3_1.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 2 && return_map == 3) {
+				Fight(player, mob3_2);
+				if (mob3_2.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 3 && return_map == 3) {
+				Fight(player, mob3_3);
+				if (mob3_3.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 4 && return_map == 3) {
+				Fight(player, mob3_4);
+				if (mob3_4.dead == true) map.map[x][y] = '.';
+			}
+			else if (pom1 == 5 && return_map == 3) {
+				Fight(player, mob3_5);
+				if (mob3_5.dead == true) map.map[x][y] = '.';
+			}
+			else if (map.map[x][y] == 'B' && return_map == 3) {
+				Fight(player, boss);
+				if (boss.dead == true);
+			}
+			else if (boss.dead == true)
+				break; //pokonanie bossa, wyjscie z glownej petli gry
+		}
+		
+		if (map.map[x][y] == 'H')		//baza
+		{
+
+		}
+		else if (map.map[x][y] == 'N')		//npc
+		{
+
+		}
+		else if (map.map[x][y] == 'S')		//sklep
+		{
+			Shop(player);
+		}
+		else if (map.map[x][y] == 'P')		//przejście
+		{
+
+		}
+		else if (player.xp >= player.xpToNextLvl)	//lvl up
+		{
+			player.xp -= player.xpToNextLvl;
+			player.xpToNextLvl = (int)player.xpToNextLvl * 1.5;
+		}
+		//cout << "Brawo, udało ci się ukończyć grę!" << endl;
 	}
+}
+
+
+int main()
+{
+	srand(time(NULL));
+
+	GenerateWindow();
+	Font(); //zmiana rodzaju oraz wielkosci czcionki
+	
+	Player player;
 	
 	vector<string> s;
 	s.push_back("1 Rozpocznij nowa gre");
@@ -298,162 +510,27 @@ int main()
 	//TU ZACZYNA SIE GRA
 
 	Map map;
-	int return_map;
 	map.Load1map();
-	return_map = map.Load1map();
-	map.ShowMap();
-
-	map_generator(map);
-
-	map.ShowMap();
-	int x=2, y=2;
-
+	
 	while (1)//główna 
 	{
 		switch (DrawMenu(s))
 		{
 		case 0: //poczatek gry
-			
+			player.inventory.push_back(new Item("PRzedmiot", "Przedmiot Testpwy", 0.1f, 1));
+			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 3000, 5, 3, 0.1, 1));
+			player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 5000, 5, 1));
+			player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+			Game(player, map);
 			break;
 		case 1:	//wczytanie zapisu
+			Game(player, map);
 			break;
 		case 2:	//wyjscie
+			return 0;
 			break;
-
-		}
-
-
-
-		Mob_stats(player, mob1_1, mob1_2, mob1_3, mob1_4, mob1_5,	//aktualizowanie statow mobow
-			mob2_1, mob2_2, mob2_3, mob2_4, mob2_5,
-			mob3_1, mob3_2, mob3_3, mob3_4, mob3_5, boss);
-
-		if (map[x][y] == ".")			//puste pole
-		{
-			// możliwość otwarcia eq
-			// wyświetlenie mapy z oznaczeniem gdzie jest postać
-		} 
-		else if (map[x][y] == "X")		//walka
-		{
-			cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
-			int pom1, pom2, pom3;
-			pom1 = 1 + rand() % (5 - 1 + 1);
-			pom2 = 1 + rand() % (5 - 1 + 1);
-			pom3 = 1 + rand() % (5 - 1 + 1);
-			if (pom1 == 1 && return_map == 1) {
-			Fight(player, player.dmg_output, player.life, player.armor, mob1_1.dmg, mob1_1.life,
-				mob1_1.armor, mob1_1.dead, mob1_1.money_from_mob, player.money);
-			if(mob1_1.dead == true) map[x][y]=".";
-			}
-			else if (pom1 == 2 && return_map == 1) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob1_2.dmg, mob1_2.life,
-					mob1_2.armor, mob1_2.dead, mob1_2.money_from_mob, player.money);
-				if (mob1_2.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 3 && return_map == 1) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob1_3.dmg, mob1_3.life,
-					mob1_3.armor, mob1_3.dead, mob1_3.money_from_mob, player.money);
-				if (mob1_3.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 4 && return_map == 1) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob1_4.dmg, mob1_4.life,
-					mob1_4.armor, mob1_4.dead, mob1_4.money_from_mob, player.money);
-				if (mob1_4.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 5 && return_map == 1) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob1_5.dmg, mob1_5.life,
-					mob1_5.armor, mob1_5.dead, mob1_5.money_from_mob, player.money);
-				if (mob1_5.dead == true) map[x][y] = ".";
-			}
-			
-			else if (pom2 == 1 && return_map == 2) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob2_1.dmg, mob2_1.life,
-					mob2_1.armor, mob2_1.dead, mob2_1.money_from_mob, player.money);
-				if (mob2_1.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 2 && return_map == 2) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob2_2.dmg, mob2_2.life,
-					mob2_2.armor, mob2_2.dead, mob2_2.money_from_mob, player.money);
-				if (mob2_2.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 3 && return_map == 2) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob2_3.dmg, mob2_3.life,
-					mob2_3.armor, mob2_3.dead, mob2_3.money_from_mob, player.money);
-				if (mob2_3.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 4 && return_map == 2) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob2_4.dmg, mob2_4.life,
-					mob2_4.armor, mob2_4.dead, mob2_4.money_from_mob, player.money);
-				if (mob2_4.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 5 && return_map == 2) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob2_5.dmg, mob2_5.life,
-					mob2_5.armor, mob2_5.dead, mob2_5.money_from_mob, player.money);
-				if (mob2_5.dead == true) map[x][y] = ".";
-			}
-
-			else if (pom2 == 1 && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob3_1.dmg, mob3_1.life,
-					mob3_1.armor, mob3_1.dead, mob3_1.money_from_mob, player.money);
-				if (mob3_1.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 2 && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob3_2.dmg, mob3_2.life,
-					mob3_2.armor, mob3_2.dead, mob3_2.money_from_mob, player.money);
-				if (mob3_2.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 3 && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob3_3.dmg, mob3_3.life,
-					mob3_3.armor, mob3_3.dead, mob3_3.money_from_mob, player.money);
-				if (mob3_3.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 4 && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob3_4.dmg, mob3_4.life,
-					mob3_4.armor, mob3_4.dead, mob3_4.money_from_mob, player.money);
-				if (mob3_4.dead == true) map[x][y] = ".";
-			}
-			else if (pom1 == 5 && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, mob3_5.dmg, mob3_5.life,
-					mob3_5.armor, mob3_5.dead, mob3_5.money_from_mob, player.money);
-				if (mob3_5.dead == true) map[x][y] = ".";
-			}
-			else if (map[x][y] == "B" && return_map == 3) {
-				Fight(player, player.dmg_output, player.life, player.armor, boss.dmg, boss.life,
-					boss.armor, boss.dead, boss.money_from_mob, player.money);
-				if (boss.dead == true);
-			}
-
-			else if (boss.dead == true) break; //pokonanie bossa, wyjscie z glownej petli gry
-
-			else if()
-		}
-		else if (map[x][y] == "H")		//baza
-		{
-
-		}
-		else if (map[x][y] == "N")		//npc
-		{
-
-		}
-		else if (map[x][y] == "S")		//sklep
-		{
-
-		}
-		else if (map[x][y] == "P")		//przejście
-		{
-			
-		}
-		else if (map[x][y] == "-" || map[x][y] == "_" || map[x][y] == "|")		//poza zakresem mapy
-		{
-			cout << "Próbujess wyjść poza mapę, wybierz inny kierunek." << endl;
-		}
-		else if (player.xp >= next_lvl)	//lvl up
-		{
-			
 		}
 	}
-
-	cout << "Brawo, udało ci się ukończyć grę!" << endl;
 
 	return 0;
 }

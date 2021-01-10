@@ -8,7 +8,7 @@ Player::~Player()
 {
 }
 
-void Player::Select_profession(int profession, string profession_name)
+void Player::Select_profession()
 {
 	int pom;
 	cout << "Wybierz klasê postaci:" << endl;
@@ -45,7 +45,7 @@ void Player::CreateCharacter()
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
-	Player::Select_profession(profession, profession_name);
+	Select_profession();
 	
 	char pom;
 	
@@ -95,7 +95,7 @@ void Player::CreateCharacter()
 	}
 }
 
-void Player::Bonus_stats_per_lvl(int strength, int agility, int inteligence, int accuracy, int dodging, int crit_strike)
+void Player::Bonus_stats_per_lvl()
 {
 	int pom;
 	cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
@@ -150,6 +150,7 @@ void Player::UsePreset()
 	name = "Prefab Testwy";
 	lifeMax = 100;
 	life = lifeMax;
+	profession = 1;
 }
 
 void Player::ShowInventory()
@@ -219,7 +220,7 @@ void Player::ShowInventory()
 
 void Player::ShowStats()	
 {
-	cout << name << " poziom:"<<level<< " punkty doswiadczenia: "<< xp <<endl<<endl;
+	cout << name << " poziom:" << level << " punkty doswiadczenia: " << xp << endl << endl;
 	cout << "¯ycie: " << life << "/" << lifeMax << endl;
 	cout << "Si³a: " << strength << endl;
 	cout << "Inteligencja" << inteligence << endl;
@@ -236,6 +237,7 @@ void Player::ShowStats()
 		cout << "Pancerz: " << equipedArmor->name << endl;
 	else
 		cout << "Brak pancerza" << endl;
+	_getch();
 }
 
 void Player::AddItem(Item* item)
@@ -243,7 +245,7 @@ void Player::AddItem(Item* item)
 
 }
 
-int Player::Spell(int profession, int level, int life, int lifeMax, int tura, int armor, int dmg_output)
+int Player::Spell()
 {
 	if (profession == 1) // wojownik - wzmocnienie miecza i armora na ileœ tam tur !!!!!!!!!!! do poprawy
 	{
@@ -282,20 +284,22 @@ int Player::Spell(int profession, int level, int life, int lifeMax, int tura, in
 	}
 }
 
-int Dmg_formula(int profession,int dmg_output, int strength, int agility, int inteligence, int level)
+int Player::Dmg_formula()
 {
 	if (profession == 1)
 	{
-		dmg_output = (0.6 * strength * 7)  + (0.4 * agility * 5) + (0.2 * inteligence * 3) + (level * 8);
+		dmg_output = (0.6 * strength * 7)  + (0.4 * agility * 5) + (0.2 * inteligence * 3) + (level * 5);
+		return dmg_output;
 	}
-	else if (profession == 2)
+	if (profession == 2)
 	{
-		dmg_output = (0.6 * inteligence * 7) + (0.4 * agility * 5) + (0.2 * strength * 3) + (level * 8);
+		dmg_output = (0.6 * inteligence * 7) + (0.4 * agility * 5) + (0.2 * strength * 3) + (level * 5);
+		return dmg_output;
 	}
-	else if (profession == 3)
+	if (profession == 3)
 	{
-		dmg_output = (0.6 * agility * 7) + (0.4 * strength * 5) + (0.2 * inteligence * 3) + (level * 8);
+		dmg_output = (0.6 * agility * 7) + (0.4 * strength * 5) + (0.2 * inteligence * 3) + (level * 5);
+		return dmg_output;
 	}
-	return dmg_output;
 }
 

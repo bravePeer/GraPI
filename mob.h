@@ -13,13 +13,13 @@ public:
 	~Mob();
 
 	bool dead = false;
-	int life;
-	int armor;
-	int dmg;
-	int mob_lvl;
-	int money_from_mob;
+	int life =1;
+	int armor =0;
+	int dmg =1;
+	int mob_lvl=1;
+	int money_from_mob =1;
 	int Exp_to_player(int mob_lvl, int lvl_gracza);
-	int exp_after_win;
+	int exp_after_win =1;
 	int Lvl_mob(int lvlGracza);
 };
 

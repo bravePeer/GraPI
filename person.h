@@ -23,17 +23,17 @@ public:
 	int money = 100;
 	float backpackMaxWeight = 5.0f;
 	float backpackWeight = 1.0f;
-	int armor=20;		// pancerz
+	int armor=1;		// pancerz
 
 	int life = 100;		// wytrzymalosc -> zdrowie aktualne
 	int lifeMax = 100;
 	
-	int accuracy = 0;	//celnosc
-	int strength = 0;	//sila
-	int inteligence = 0;//inteligencja
-	int agility = 0;	//zrêcznoœæ
-	int dodging = 0;	//uniki
-	int crit_strike = 0;//uderzenia krytyczne
+	int accuracy = 1;	//celnosc
+	int strength = 1;	//sila
+	int inteligence = 1;//inteligencja
+	int agility = 1;	//zrêcznoœæ
+	int dodging = 1;	//uniki
+	int crit_strike = 1;//uderzenia krytyczne
 
 	
 	//ekwipunek

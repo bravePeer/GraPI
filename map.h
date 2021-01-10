@@ -4,13 +4,6 @@
 
 using namespace std;
 
-enum MapLocations
-{
-	nic,
-	baza,
-	anomalia
-};
-
 class Map
 {
 public:
@@ -31,7 +24,6 @@ public:
 
 	Point playerPos = Point(8, 2);
 	Point mapSize = Point(10, 10);
-	Point* anomalies = new Point[10];
 private:
 
 };

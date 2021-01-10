@@ -101,9 +101,9 @@ void Map::ShowMap()
 	{
 		for (int j = 0; j < mapSize.x; j++)
 		{
-			//if (playerPos.y == i && playerPos.x == j)
-				//cout << "T";
-			//else
+			if (playerPos.y == i && playerPos.x == j)
+				cout << "T";
+			else
 			cout << map[i][j] << "";
 		}
 		cout << endl;
@@ -137,22 +137,6 @@ bool Map::IsFight()
 
 int Map::ShowPlace()
 {
-	switch (map[playerPos.y][playerPos.x])
-	{
-	case 'A':
-		cout << "Anomalia" << endl;
-		cout << "1 -> Szukaj artefaktu" << endl;
-		return anomalia;
-		break;
-	case 'B':
-		cout << "Baza" << endl;
-		cout << "1 -> Idz do szefa" << endl;
-		cout << "2 -> Idz do sprzedawcy" << endl;
-		cout << "3 -> Idz do lekarza" << endl;
-		cout << "s -> Zapisz gre" << endl;
-		cout << "q -> Zapisz i wyjdz" << endl;
-		return baza;
-		break;
-	}
+	
 	return 0;
 }
