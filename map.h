@@ -23,9 +23,9 @@ public:
 	bool IsFight();
 
 	int ShowPlace();
-	void Load1map();
-	void Load2map();
-	void Load3map();
+	int Load1map();
+	int Load2map();
+	int Load3map();
 
 	string map[12];
 

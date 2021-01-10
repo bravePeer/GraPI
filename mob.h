@@ -12,15 +12,14 @@ public:
 	Mob();
 	~Mob();
 
-	string name;
 	bool dead = false;
-	int hp;
+	int life;
 	int armor;
-	int magic_dmg;
-	int phi_dmg;
+	int dmg;
 	int mob_lvl;
-	void Exp_to_player(int mob_lvl, int lvl_gracza, int exp_after_win);
+	int money_from_mob;
+	int Exp_to_player(int mob_lvl, int lvl_gracza);
 	int exp_after_win;
-	void Lvl_mob(int lvlGracza);
-
+	int Lvl_mob(int lvlGracza);
 };
+

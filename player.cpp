@@ -257,7 +257,7 @@ int Player::Spell(int profession, int level, int life, int lifeMax, int tura, in
 	else if (profession == 2)  //mag - leczenie
 	{
 		int healing;
-		healing = 40 + (level * 5);
+		healing = 30 + (level * 5);
 		if (life == lifeMax) cout << "Jesteœ w pe³ni zdrowy!" << endl;
 		else if (life < lifeMax)
 		{
