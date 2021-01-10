@@ -21,7 +21,7 @@ Map::~Map()
 	//delete anomalies;
 }
 
-void Map::Load1map()
+int Map::Load1map()
 {
 	map[0] =  "+-------------------+";
 	map[1] =  "|H.............N....|";
@@ -36,6 +36,7 @@ void Map::Load1map()
    map[10] =  "|...N.....S........P|";
    map[11] =  "+-------------------+";
    mapSize = Point(22,12);
+   return 1;
 /*
    h-home
    N-npc
@@ -44,7 +45,7 @@ void Map::Load1map()
    */
 }
 
-void Map::Load2map()
+int Map::Load2map()
 {
 	map[0] =  "+-------------------+";
 	map[1] =  "|N..................|";
@@ -59,6 +60,7 @@ void Map::Load2map()
    map[10] =  "|p........|........H|";
    map[11] =  "+-------------------+";
    mapSize = Point(22,12);
+   return 2;
 /*
    h-home
    N-npc
@@ -67,7 +69,7 @@ void Map::Load2map()
    */
 }
 
-void Map::Load3map()
+int Map::Load3map()
 {
 	map[0] =  "+-------------------+";
 	map[1] =  "|..S...............B|";
@@ -82,6 +84,7 @@ void Map::Load3map()
    map[10] =  "|H..........S.......|";
    map[11] =  "+-------------------+";
    mapSize = Point(22,12);
+   return 3;
 /*
    h-home
    N-npc
