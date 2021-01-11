@@ -5,6 +5,11 @@ Mob::Mob() //konstruktor domyslny, wykonuje sie gdy tworzy sie obiekt
 
 }
 
+Mob::Mob(Point p)
+{
+	position = p;
+}
+
 Mob::~Mob()	//destruktor
 {
 

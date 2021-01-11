@@ -10,6 +10,7 @@ class Mob
 {
 public:
 	Mob();
+	Mob(Point p);
 	~Mob();
 
 	bool dead = false;
@@ -21,5 +22,6 @@ public:
 	int Exp_to_player(int mob_lvl, int lvl_gracza);
 	int exp_after_win =1;
 	int Lvl_mob(int lvlGracza);
+	Point position = { 0,0 };
 };
 

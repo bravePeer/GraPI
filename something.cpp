@@ -20,7 +20,6 @@ void GenerateWindow()
 	SetConsoleWindowInfo(handlee, true, &sr);
 	//------
 	setlocale(LC_CTYPE, "Polish");	//<- polskie litraki
-
 }
 
 int DrawMenu(vector<string>& option)
@@ -180,7 +179,7 @@ void DrawBorder()
 	{
 		wcout << L"\u2501";
 	}
-
+	
 	SetConsoleCursorPosition(handle, { 0, wSize.Y-1 });
 
 	for (short i = 0; i < wSize.X - 1; i++)

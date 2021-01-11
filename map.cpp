@@ -18,7 +18,16 @@ Map::Map()
 
 Map::~Map()
 {
-	//delete anomalies;
+	for (int i = 0; i < mobs.size(); i++)
+	{
+		delete mobs[i];
+	}
+	mobs.clear();
+	for (int i = 0; i < people.size(); i++)
+	{
+		delete people[i];
+	}
+	people.clear();
 }
 
 int Map::Load1map()
@@ -97,6 +106,8 @@ int Map::Load3map()
 /*Wyswietla mape*/
 void Map::ShowMap(Point& playerPos)
 {
+	CDrawText(" ", { 0,0 }, 0x0007);
+
 	for (int i = 0; i < mapSize.y; i++)
 	{
 		for (int j = 0; j < mapSize.x; j++)
@@ -108,7 +119,11 @@ void Map::ShowMap(Point& playerPos)
 		}
 		cout << endl;
 	}
-	cout << "Pozycja x: " << playerPos.x << " y: " << playerPos.y << endl;
+	CDrawText("Pozycja x: " + to_string(playerPos.x) + " y:" + to_string(playerPos.y), { 10,0 }, 0x0003);
+	for (int i = 0; i < mobs.size(); i++)
+	{
+		CDrawText("X", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x000c);
+	}
 }
 
 /*Ruch gracza*/
@@ -130,10 +145,23 @@ float Map::Propability(Point p1, Point p2)
 	return Distance(p1, p2) / Distance(Point(0, 0), mapSize);
 }
 
-bool Map::IsFight()
+int Map::IsFight(Point &playerPos)
 {
-	return  0;//rand() % 100 + 1 <= Propability(playerPos, Point(8, 2)) * 100 ? true : false;
+	for (int i = 0; i < mobs.size(); i++)
+	{
+		if (mobs[i]->position.x == playerPos.x && mobs[i]->position.y == playerPos.y)
+			return i + 1;
+	}
+	return 0;
 }
+
+void Map::KillMob(int pos)
+{
+	delete mobs[pos];
+	mobs.erase(mobs.begin() + pos);
+}
+
+
 
 int Map::ShowPlace()
 {
