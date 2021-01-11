@@ -13,9 +13,9 @@ void Player::Select_profession()
 {
 	int pom;
 	cout << "Wybierz klasê postaci:" << endl;
-	cout << "1 - Wojownik" << endl;
-	cout << "2 - Mag" << endl;
-	cout << "3 - £owca" << endl;
+	cout << "1 - Wojownik (Umiejêtnoœæ specjalna: Aura Pancerza)" << endl;
+	cout << "2 - Mag (Umiejêtnoœæ specjalna: Leczenie Ran)" << endl;
+	cout << "3 - £owca (Umiejêtnoœæ specjalna: Deszcz Strza³)" << endl;
 	cin >> pom;
 	if (pom == 1)
 	{
@@ -151,7 +151,7 @@ void Player::UsePreset()
 	name = "Prefab Testwy";
 	lifeMax = 100;
 	life = lifeMax;
-	profession = 3;
+	profession = 1;
 }
 
 void Player::ShowInventory()
@@ -249,16 +249,12 @@ void Player::AddItem(Item* item)
 
 }
 
-int Player::Spell()
+int Player::Spell(int atak_moba)
 {
 	if (profession == 1) // wojownik - wzmocnienie miecza i armora na ileœ tam tur !!!!!!!!!!! do poprawy
 	{
-		/*int i = tura + 2;
-		armor = armor + (5 * level);
-		dmg_output = dmg_output + (6 * level);
-		cout << "Twoje statystyki zosta³y zwiêkszonedo koñca walki!" << endl;
-		
-		return 0;*/
+		atak_moba =atak_moba* 0.5;
+		return atak_moba;
 	}
 	else if (profession == 2)  //mag - leczenie
 	{

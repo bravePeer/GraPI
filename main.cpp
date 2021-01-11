@@ -40,7 +40,7 @@ Mob MobStats(Player &player)
 		  pom1 = player.dmg_output * 0.4;
 		mob.dmg = 5 + rand() % ((pom1)-5 + 1);
 		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player(mob.mob_lvl, player.level);
+		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 20;
 		break;
 	case 2:
@@ -49,7 +49,7 @@ Mob MobStats(Player &player)
 		  pom2 = player.dmg_output * 0.5;
 		mob.dmg = 6 + rand() % ((pom2)-6 + 1);
 		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player(mob.mob_lvl, player.level);
+		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 20;
 		break;
 	case 3:
@@ -58,7 +58,7 @@ Mob MobStats(Player &player)
 		  pom3 = player.dmg_output * 0.65;
 		mob.dmg = 7 + rand() % ((pom3)-7 + 1);
 		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player(mob.mob_lvl, player.level);
+		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 20;
 		break;
 	case 4:
@@ -67,7 +67,7 @@ Mob MobStats(Player &player)
 		pom4 = player.dmg_output * 0.75;
 		mob.dmg = 8 + rand() % ((pom4)-8 + 1);
 		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player(mob.mob_lvl, player.level);
+		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 20;
 	case 5:
 		mob.life = player.life * 0.8;
@@ -75,7 +75,7 @@ Mob MobStats(Player &player)
 		pom5 = player.dmg_output * 1.1;
 		mob.dmg = 11 + rand() % ((pom5)-11 + 1);
 		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player(mob.mob_lvl, player.level);
+		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 30;
 		break;
 	}
@@ -246,10 +246,13 @@ int Fight(Player& player, Mob& mobek)
 	system("cls");
 	int tura = 1;
 	int mana = 4;
+	int pom=0;
+	
 	player.Dmg_formula();
 	while (player.life > 0 || mobek.life > 0)
 	{
 		cout << "Tura: " << tura << endl;
+		cout << "p:" << pom << endl;
 		cout << "HP twojego bohatera: " << player.life << endl;
 		cout << "HP przeciwnika: " << mobek.life << endl;
 		cout << "Mana: " << mana << " /4" << endl;
@@ -275,34 +278,64 @@ int Fight(Player& player, Mob& mobek)
 			case 1:
 				if (player.profession == 2 && player.life == player.lifeMax)
 				{
-					cout << "Masz pełne zdrowie, zamiast tego uderzasz przeciwnika zwykłym atakiem." << endl;
-					mobek.life = mobek.life - (player.dmg_output - mobek.armor);
-					cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+					cout << "Masz pełne zdrowie." << endl;
+					//mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+					//cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+					i--;
 					break;
+					
 				}
-				else mobek.life -= player.Spell();
 
-
-
-				if (mana != 4)
+				else if (player.profession == 2 && mana == 4) 
 				{
-					cout << "Nie masz many aby wykonać ten atak, zamiast tego atakujesz podstawowym atakiem" << endl;
+					mobek.life -= player.Spell(mobek.dmg);
+					mana = 0;
 				}
-				if(player.profession==3) cout << "Zadajesz: " << player.Spell() << " pkt obrażeń" << endl;
-				cout << endl;
-				mana = 0;
+
+				else if (player.profession == 1 && mana ==4) 
+				{
+					pom = 3;
+					cout << "Aktywujesz wokół siebie aurę która osłabi przyjmowane przez ciebie ciosy!" << endl << endl;
+					mobek.dmg=player.Spell(mobek.dmg);
+					mana = 0;
+
+				}
+
+				else if (player.profession == 3 && mana == 4) 
+				{
+					
+					cout << "Wypuszczasz deszcz strzał..." << endl << endl;
+					cout << "Zadajesz: " << player.Spell(mobek.dmg) << " pkt obrażeń" << endl;
+					mana = 0;
+				}
+
+				 else if (mana != 4)
+				{
+					cout << "Nie masz many aby wykonać ten atak." << endl;
+					i--;
+				}
+				
 			}
 		
 		}
+
+		if (pom >0 && player.profession==1)
+		{
+			pom--;
+			if (pom == 0) mobek.dmg *= 2;
+		}
+
 
 		if (mana < 4) mana++;
 		cout << endl;
 
 		if (mobek.life <= 0)
 		{
+			cout << endl;
 			cout << "Brawo wygrałeś tę walkę!" << endl;
+			cout << "Zdobywasz: " <<mobek.exp_after_win<<" pkt doświadczenia."<< endl;
+			cout << "Za wygraną walkę zyskujesz: " <<mobek.money_from_mob<<" złota."<< endl;
 			mobek.dead = true;
-			mobek.Exp_to_player(player.level);
 			player.money += mobek.money_from_mob;
 			player.xp += mobek.exp_after_win;
 			//  break;
@@ -318,6 +351,7 @@ int Fight(Player& player, Mob& mobek)
 
 		if (player.life <= 0)
 		{
+			cout << endl;
 			cout << "Niestety przegrałeś walkę..." << endl;
 			player.life = 1;
 			break;
@@ -465,7 +499,7 @@ void Game(Player &player, Map &map)
 	while (1)	//głowna petla gry
 	{
 		system("cls");
-		DrawBorder();
+		//DrawBorder();
 		map.ShowMap(player.positon);
 
 		//Osługa klawiatury

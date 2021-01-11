@@ -3,6 +3,7 @@
 #include "person.h"
 #include "mission.h"
 #include "something.h"
+#include "mob.h"
 
 using namespace std;
 
@@ -14,14 +15,14 @@ public:
 	~Player();
 
 	int dmg_output=1;		//obra¿enia zadawane przez bohatera
-	int profession = 3; //klasa postaci
+	int profession = 1; //klasa postaci
 	int xpToNextLvl = 100;
 
 	string profession_name;
 
 	void Select_profession(); // wybieranie klasy
 
-	int Spell();	// skille dla postaci 
+	int Spell(int atak_moba);	// skille dla postaci 
 
 	int Dmg_formula();	//wylicza obra¿enia bazowe bohatera
 
