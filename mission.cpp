@@ -1,8 +1,9 @@
 #include "mission.h"
 
-Mission::Mission(string _name)
+Mission::Mission(string _name, Point _point)
 {
 	name = _name;
+	missionPoint = _point;
 }
 
 Mission::~Mission()
@@ -16,7 +17,8 @@ bool Mission::IsOnMissionPoint(Point& playerPos)
 	return false;
 }
 
-void Mission::ShowMessege()
+bool Mission::IsMissionDone()
 {
 	cout << "eeeeeee" << endl;
+		return 1;
 }

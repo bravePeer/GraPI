@@ -126,12 +126,6 @@ void Map::ShowMap(Point& playerPos)
 	}
 }
 
-/*Ruch gracza*/
-void Map::Go(char d)
-{
-
-}
-
 /*Dystans miedy 2 punktami*/
 float Map::Distance(Point p1, Point p2)
 {
@@ -139,12 +133,7 @@ float Map::Distance(Point p1, Point p2)
 	return sqrtf((p.x * p.x) + (p.y * p.y));
 }
 
-/*Prawdopodobienstwo pojawienia walki*/
-float Map::Propability(Point p1, Point p2)
-{
-	return Distance(p1, p2) / Distance(Point(0, 0), mapSize);
-}
-
+/*Czy walka*/
 int Map::IsFight(Point &playerPos)
 {
 	for (int i = 0; i < mobs.size(); i++)
@@ -154,17 +143,9 @@ int Map::IsFight(Point &playerPos)
 	}
 	return 0;
 }
-
+/*Zabicie moba*/
 void Map::KillMob(int pos)
 {
 	delete mobs[pos];
 	mobs.erase(mobs.begin() + pos);
-}
-
-
-
-int Map::ShowPlace()
-{
-	
-	return 0;
 }

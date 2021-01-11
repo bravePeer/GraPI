@@ -16,3 +16,5 @@ void CDrawText(string s, COORD c, short textAtribute);
 void Font();
 /*Rysuje obramówke*/
 void DrawBorder();
+void ShowGfx(int id);
+void TakeGfx(int id);

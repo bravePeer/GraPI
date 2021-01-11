@@ -26,7 +26,7 @@ int Mob::Lvl_mob(int lvl_gracza)
 	return mob_lvl;
 }
 
-int Mob::Exp_to_player(int mob_lvl, int lvl_gracza)
+int Mob::Exp_to_player( int lvl_gracza)
 {
 	int exp_after_win;
 	if ((lvl_gracza - mob_lvl) == 2)	exp_after_win = 50 - (50 * 0.4);

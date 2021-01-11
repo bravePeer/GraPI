@@ -151,7 +151,7 @@ void Player::UsePreset()
 	name = "Prefab Testwy";
 	lifeMax = 100;
 	life = lifeMax;
-	profession = 1;
+	profession = 3;
 }
 
 void Player::ShowInventory()
@@ -183,6 +183,8 @@ void Player::ShowInventory()
 				life += food->healthModifier;
 			else
 				life = lifeMax;
+			inventory.erase(inventory.begin() + buf);
+
 			break;
 		case 2://zaloz bron
 			if (equipedWeapon != NULL)
@@ -260,17 +262,23 @@ int Player::Spell()
 	}
 	else if (profession == 2)  //mag - leczenie
 	{
+	
 		int healing;
-		healing = 30 + (level * 5);
-		if (life == lifeMax) cout << "Jesteœ w pe³ni zdrowy!" << endl;
-		else if (life < lifeMax)
+		healing = 10 + (level * 3);
+		if (life == lifeMax)
+		{
+			return 0;
+		}
+
+		if (life < lifeMax)
 		{
 			if ((life + healing) > lifeMax)
 			{
 				life = lifeMax;
 				cout << "Zosta³eœ uzdrowiony!" << endl;
 			}
-			else if ((life + healing) <= lifeMax)
+
+			if ((life + healing) <= lifeMax)
 			{
 				life = life + healing;
 				cout << "Zosta³eœ uzdrowiony!" << endl;
@@ -281,7 +289,7 @@ int Player::Spell()
 	else if (profession == 3) // ³owca - losowe obrazenia z danego zakresu, roœnie z levelem
 	{
 		int pom;
-		pom = (10 + (level * 5)) + rand() % ((40 + (level * 5)) - (10 + (level * 5)) + 1);
+		pom = (5 + (level * 2)) + rand() % ((40 + (level * 2)) - (5 + (level * 2)) + 1);
 		return pom;
 	}
 }

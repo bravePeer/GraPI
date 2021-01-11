@@ -14,7 +14,7 @@ public:
 	~Player();
 
 	int dmg_output=1;		//obra¿enia zadawane przez bohatera
-	int profession = 0; //klasa postaci
+	int profession = 3; //klasa postaci
 	int xpToNextLvl = 100;
 
 	string profession_name;
@@ -28,8 +28,6 @@ public:
 	void Bonus_stats_per_lvl(); 
 	//dodatkowe dodawanie statów przy nowych levelach
 	
-
-
 	Mission* quest = NULL;
 
 	void CreateCharacter();

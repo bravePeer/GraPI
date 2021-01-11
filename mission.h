@@ -8,12 +8,12 @@ using namespace std;
 class Mission
 {
 public:
-	Mission(string _name);
+	Mission(string _name, Point _point);
 	~Mission();
 
 	bool IsOnMissionPoint(Point &playerPos);
-	virtual void ShowMessege();
-
+	//virtual void ShowMessege();
+	virtual bool IsMissionDone();
 	Point missionPoint = { 5,5 };
 	
 	string name;

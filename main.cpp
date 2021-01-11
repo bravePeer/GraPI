@@ -16,6 +16,14 @@
 
 using namespace std;
 
+void console_clean()
+{
+	cout << "(wcisnij dowolny klawisz)" << endl;
+	int a;
+	a = _getch();
+	system("cls");
+}
+
 Mob MobStats(Player &player)
 {
 	Mob mob;
@@ -233,77 +241,92 @@ void map_generator(Player& player, Map& map)
 }
 
 
-int Fight(Player &player, Mob &mobek)
+int Fight(Player& player, Mob& mobek)
 {
-    int tura=1;
-    char help;
+	system("cls");
+	int tura = 1;
 	int mana = 4;
 	player.Dmg_formula();
-    while(player.life > 0 || mobek.life)
-    {
-        cout<<"Tura: "<<tura<<endl;
-        cout<<"HP twojego bohatera: "<<player.life<<endl;
-        cout<<"HP przeciwnika: "<<mobek.life<<endl;
-        cout<<endl;
-        cout<<"Wybierz atak!"<<endl;
-        cout<<"1 - zwykły atak"<<endl;
-        cout<<"2 - umiejętność specjalna"<<" (potrzeba 4pkt many) " << mana << "/4"<<endl;
-        cout<<":";
-        cin>>help;
-        cout<<endl;
+	while (player.life > 0 || mobek.life > 0)
+	{
+		cout << "Tura: " << tura << endl;
+		cout << "HP twojego bohatera: " << player.life << endl;
+		cout << "HP przeciwnika: " << mobek.life << endl;
+		cout << "Mana: " << mana << " /4" << endl;
+		cout << endl;
+		cout << "Wybierz atak!" << endl;
+		cout << endl;
+		
 
-        for(int i=0; i < 1; i++)
-        {
-           switch(help)
-            {
-            case'1':
+		for (int i = 0; i < 1; i++)
+		{
+			cout << endl;
+			cout << endl;
+			cout << endl;
+			vector<string> s;
+			s.push_back("Zwykły atak\n");
+			s.push_back("Umiejętność specjalna (potrzeba 4pkt many)\n");
+			switch (DrawMenu(s, { 0,6 }))
+			{
+			case 0:
 				mobek.life = mobek.life - (player.dmg_output - mobek.armor);
-                cout<<"Zadajesz: "<<player.dmg_output - mobek.armor<<" pkt obrażeń"<<endl;
-                continue;
+				cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+				continue;
+			case 1:
+				if (player.profession == 2 && player.life == player.lifeMax)
+				{
+					cout << "Masz pełne zdrowie, zamiast tego uderzasz przeciwnika zwykłym atakiem." << endl;
+					mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+					cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+					break;
+				}
+				else mobek.life -= player.Spell();
 
-            case'2':
-                mobek.life-=player.Spell();
-                if(mana!=4)
-                {
-                    cout<<"nie masz many aby wykonać ten atak, zamiast tego atakujesz podstawowym atakiem"<<endl;
-                }
-                cout<<"Zadajesz: "<< player.Spell()<<" pkt obrażeń"<<endl;
-                cout<<endl;
-                mana=0;
-            }
-        }
 
-        if(mana<4) mana++;
-        cout<<endl;
 
-        if(mobek.life<=0)
-        {
-            cout<<"Brawo wygrałeś tę walkę!"<<endl;
+				if (mana != 4)
+				{
+					cout << "Nie masz many aby wykonać ten atak, zamiast tego atakujesz podstawowym atakiem" << endl;
+				}
+				if(player.profession==3) cout << "Zadajesz: " << player.Spell() << " pkt obrażeń" << endl;
+				cout << endl;
+				mana = 0;
+			}
+		
+		}
+
+		if (mana < 4) mana++;
+		cout << endl;
+
+		if (mobek.life <= 0)
+		{
+			cout << "Brawo wygrałeś tę walkę!" << endl;
 			mobek.dead = true;
+			mobek.Exp_to_player(player.level);
 			player.money += mobek.money_from_mob;
-          //  break;
+			player.xp += mobek.exp_after_win;
+			//  break;
 			return 1;	//wygra
 		}
 
-        cout<<endl;
-        cout<<"Twój przeciwnik uderza..."<<endl;
-		
-        cout<<endl;
-       // Sleep(1000);
-        player.life=player.life-(mobek.dmg-player.armor);
-        cout<<"Zadaje ci: "<< mobek.dmg - player.armor <<" pkt obrażeń"<<endl;
+		cout << endl;
+		cout << "Twój przeciwnik uderza..." << endl;
 
-        if(player.life<=0)
-        {
-            cout<<"Niestety przegrałeś walkę..."<<endl;
+		// Sleep(1000);
+		player.life = player.life - (mobek.dmg - player.armor);
+		cout << "Zadaje ci: " << mobek.dmg - player.armor << " pkt obrażeń" << endl;
+
+		if (player.life <= 0)
+		{
+			cout << "Niestety przegrałeś walkę..." << endl;
 			player.life = 1;
-          //  break;
+			break;
 			return 0;	//przegra
 		}
 
-        tura++;
-       // console_clean();
-    }
+		tura++;
+		console_clean();
+	}
 	return 1;
 }
 
@@ -331,7 +354,7 @@ int BuyItem( vector<Item*> &sellersItems)
 	return  DrawMenu(itNames);
 }
 
-void Shop(Player& player)
+void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
 {
 	vector<Item *> sellersItems;
 	vector<string> s;
@@ -341,9 +364,21 @@ void Shop(Player& player)
 
 	int it = 0;
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 99 + i * 1));
+		switch (rand()%3 + 1)
+		{
+		case 1:	//jedzonko
+			sellersItems.push_back(new Food(allFood[rand() % (allFood.size() - 1)]));
+			break;
+		case 2:	//bron
+			sellersItems.push_back(new Weapon(allWeapons[rand() % (allWeapons.size() - 1)]));
+			break;
+		case 3:	//armor
+			sellersItems.push_back(new Armor(allArmor[rand() % (allArmor.size() - 1)]));
+			break;
+		}
+		//sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 99 + i * 1));
 	}
 
 	switch (DrawMenu(s))
@@ -393,35 +428,39 @@ void Shop(Player& player)
 	sellersItems.clear();
 }
 
+void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
+{
+	allFood.push_back(Food("Bułka", "Można zjeść", 0.05f, 30, 2));
+	allFood.push_back(Food("Chleb", "Można zjeść", 0.05f, 30, 2));
+	allFood.push_back(Food("Ciasteczka", "Ze stron ;)", 0.01f, 200, 3));
+	allFood.push_back(Food("Soczek Jagodowy", "Do picia", 0.3f, 500, 10));
+	allFood.push_back(Food("XXX", "Jak nie piłeś lepiej nie pij", 0.5f, 2000, -1));
+	
+	allWeapons.push_back(Weapon("Srebrny miecz", "", 2.81f, 767, 5, 30, 0.5f, 1));
+	allWeapons.push_back(Weapon("Stalowy miecz", "", 2.81f, 767, 30, 10, 0.3f, 1));
+	allWeapons.push_back(Weapon("Siekiera", "", 1.76f, 500, 10, 10, 0.8f, 1));
+
+
+	allArmor.push_back(Armor("Zbroja stalowa", "", 5.0f, 2000, 10, 1));
+	allArmor.push_back(Armor("Skurzane ubranko", "", 1.0f, 500, 7, 2));
+}
+
 void Game(Player &player, Map &map)
 {
-	//moby  mob[nr mapy]_[numer moba]
-	/*Mob mob1_1;
-	Mob mob1_2;
-	Mob mob1_3;
-	Mob mob1_4;
-	Mob mob1_5;
-	Mob mob2_1;
-	Mob mob2_2;
-	Mob mob2_3;
-	Mob mob2_4;
-	Mob mob2_5;
-	Mob mob3_1;
-	Mob mob3_2;
-	Mob mob3_3;
-	Mob mob3_4;
-	Mob mob3_5;
-	Mob boss;*/
-	// koniec mobow
-
 	/*missje?*/
-	player.quest = new Mission("Quest");
+	player.quest = new Mission("Quest", {5,5});
 
 	int x = 0, y = 0;
 	int return_map = map.Load1map();
 
 	map_generator(player, map);
 	map.ShowMap(player.positon);
+
+	vector<Food> allFood;
+	vector<Weapon> allWeapons;
+	vector<Armor> allArmor;
+
+	ReadGameAssets(allFood, allWeapons, allArmor);
 
 	while (1)	//głowna petla gry
 	{
@@ -466,10 +505,6 @@ void Game(Player &player, Map &map)
 		
 		y = player.positon.x;
 		x = player.positon.y;
-
-	/*	Mob_stats(player, mob1_1, mob1_2, mob1_3, mob1_4, mob1_5,	//aktualizowanie statow mobow
-			mob2_1, mob2_2, mob2_3, mob2_4, mob2_5,
-			mob3_1, mob3_2, mob3_3, mob3_4, mob3_5, boss);*/
 		
 		if (int buf = map.IsFight(player.positon))		//walka
 		{
@@ -566,7 +601,7 @@ void Game(Player &player, Map &map)
 		}
 		else if (map.map[x][y] == 'S')		//sklep
 		{
-			Shop(player);
+			Shop(player, allFood, allWeapons, allArmor);
 		}
 		else if (map.map[x][y] == 'P')		//przejście
 		{
@@ -580,9 +615,13 @@ void Game(Player &player, Map &map)
 
 		if (player.quest->IsOnMissionPoint(player.positon))
 		{
-			player.quest->ShowMessege();
+			//player.quest->ShowMessege();
 		}
 	}
+	
+	allArmor.clear();
+	allWeapons.clear();
+	allFood.clear();
 }
 
 int main()
@@ -590,15 +629,13 @@ int main()
 	srand(time(NULL));
 
 	GenerateWindow();
-	Font(); //zmiana rodzaju oraz wielkosci czcionki
 	
 	Player player;
-	
 	vector<string> s;
 	s.push_back("1 Rozpocznij nowa grę");
 	s.push_back("2 Wczytaj zapis");
 	s.push_back("3 wyjdź");
-
+	
 	//TU ZACZYNA SIE GRA
 
 	Map map;
