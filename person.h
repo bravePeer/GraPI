@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <vector>
 #include "item.h"
+#include "point.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ public:
 	int dodging = 1;	//uniki
 	int crit_strike = 1;//uderzenia krytyczne
 
+	Point positon = { 5,5 };
 	
 	//ekwipunek
 	vector<Item *> inventory;

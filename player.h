@@ -27,9 +27,11 @@ public:
 
 	void Bonus_stats_per_lvl(); 
 	//dodatkowe dodawanie statów przy nowych levelach
+	
 
 
-	vector<Mission> mis;
+	Mission* quest = NULL;
+
 	void CreateCharacter();
 	void UsePreset();
 	/*Otwiera plecak*/
@@ -38,6 +40,8 @@ public:
 	void ShowStats();
 	/*Dodaj element do plecaka*/
 	void AddItem(Item* item);
+	/*Pokazuje questy*/
+	void ShowQuests();
 
 private:
 

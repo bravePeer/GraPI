@@ -6,6 +6,7 @@ Player::Player()
 
 Player::~Player()
 {
+	delete quest;
 }
 
 void Player::Select_profession()
@@ -164,9 +165,9 @@ void Player::ShowInventory()
 
 	if (inventory.size() > 0)
 	{
+		cout << "Ekwipunek\t Pieni¹dze: " << money << endl;
 		for (int i = 0; i < inventory.size(); i++)
 		{
-			//cout << " " << inventory[i]->name << endl;
 			s.push_back(inventory[i]->name);
 		}
 		s.push_back("Powrot");
@@ -213,7 +214,8 @@ void Player::ShowInventory()
 	}
 	else
 	{
-		cout << "Nic nie masz w ekwipunku" << endl;
+		cout << "Nic nie masz w ekwipunku!" << endl;
+		_getch();
 	}
 	delete food;
 }
@@ -229,12 +231,12 @@ void Player::ShowStats()
 	cout << "Uniki" << dodging << endl;
 
 	if (equipedWeapon != NULL)
-		cout << "Bron: " << equipedWeapon->name << endl;
+		cout << "Bron: " << equipedWeapon->name <<" atak:"<< equipedWeapon->strength<< endl;
 	else
 		cout << "Brak broni" << endl;
 
 	if (equipedArmor != NULL)
-		cout << "Pancerz: " << equipedArmor->name << endl;
+		cout << "Pancerz: " << equipedArmor->name <<" pancerz: " << equipedArmor->armor<< endl;
 	else
 		cout << "Brak pancerza" << endl;
 	_getch();
@@ -303,3 +305,10 @@ int Player::Dmg_formula()
 	}
 }
 
+void Player::ShowQuests()
+{
+	if (quest != NULL)
+	{
+		cout << quest->name << endl;
+	}
+}

@@ -9,7 +9,7 @@ class Map
 public:
 	Map();
 	~Map();
-	void ShowMap();
+	void ShowMap(Point& playerPos);
 	void Go(char d);
 	float Distance(Point p1, Point p2);
 	float Propability(Point p1, Point p2);
@@ -22,7 +22,6 @@ public:
 
 	string map[12];
 
-	Point playerPos = Point(8, 2);
 	Point mapSize = Point(10, 10);
 private:
 

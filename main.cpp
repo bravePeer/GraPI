@@ -5,12 +5,14 @@
 #include <time.h>
 #include <conio.h>
 #include <string>
+#include <list>
 #include "person.h"
 #include "player.h"
 #include "item.h"
 #include "map.h"
 #include "mob.h"
 #include "something.h"
+#include "point.h"
 
 using namespace std;
 
@@ -34,7 +36,6 @@ void map_generator(Map &map)
 		y = 0;
 		}
 	}
-	map.ShowMap();
 }
 
 void Mob_stats(Player &player, Mob mob1_1, Mob &mob1_2, Mob &mob1_3, Mob &mob1_4, Mob &mob1_5,
@@ -248,10 +249,10 @@ int SellItem(Player &player)
 	}
 	itNames.push_back("Powrót");
 
-	return 0;
+	return DrawMenu(itNames);
 }
 
-int BuyItem(vector<Item*> &sellersItems)
+int BuyItem( vector<Item*> &sellersItems)
 {
 	vector<string> itNames;
 	for (int i = 0; i < sellersItems.size(); i++)
@@ -259,8 +260,8 @@ int BuyItem(vector<Item*> &sellersItems)
 		itNames.push_back(sellersItems[i]->name + " " + to_string(sellersItems[i]->weight) + "Kg " + to_string(sellersItems[i]->price) + "PLN");
 	}
 	itNames.push_back("Powrót");
-	
-	return DrawMenu(itNames);
+
+	return  DrawMenu(itNames);
 }
 
 void Shop(Player& player)
@@ -275,27 +276,41 @@ void Shop(Player& player)
 
 	for (int i = 0; i < 3; i++)
 	{
-		sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 400 + i * 10));
+		sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 99 + i * 1));
 	}
 
 	switch (DrawMenu(s))
 	{
 	case 0:
-		it = BuyItem(sellersItems);
-		if (it <= sellersItems.size())
+		it = BuyItem( sellersItems);
+		if (it < sellersItems.size())
 		{
-			player.money -= sellersItems[it]->price;
-			player.inventory.push_back(sellersItems[it]);
+			if (sellersItems[it]->price < player.money)
+			{
+				player.money -= sellersItems[it]->price;
+				player.inventory.push_back(sellersItems[it]);
+				CDrawText("Kupiłeś " + player.inventory[player.inventory.size() - 1]->name, { 5,5 }, 0x0003);
+			}
+			else
+			{
+				it = sellersItems.size();
+				CDrawText("Nie stać Cię!", { 5,5 }, 0x000c);
+			}
+			_getch();
 		}
 		break;
 	case 1:
 		it = SellItem(player);
-		if (it <= player.inventory.size())
+		if (it < player.inventory.size())
 		{
+			CDrawText("Sprzedałeś: " + player.inventory[it]->name + " za: " + to_string(player.inventory[it]->price), { 5,5 }, 0x000c);
+
 			player.money += player.inventory[it]->price;
 			player.inventory[it] = NULL;
 			player.inventory.erase(player.inventory.begin() + it);
+			_getch();
 		}
+		it = sellersItems.size();
 		break;
 	case 2:
 		break;
@@ -332,64 +347,65 @@ void Game(Player &player, Map &map)
 	Mob boss;
 	// koniec mobow
 
+	/*missje?*/
+	player.quest = new Mission("Quest");
+
+
+
 	int x = 0, y = 0;
 	int return_map = map.Load1map();
 
 	map_generator(map);
-	map.ShowMap();
+	map.ShowMap(player.positon);
 
 	while (1)	//głowna petla gry
 	{
 		system("cls");
-		map.ShowMap();
+		map.ShowMap(player.positon);
+		//DrawBorder();
 
 		//Osługa klawiatury
 		int a = _getch();
 		switch (a)
 		{
 		case 'w':
-			map.playerPos = Point(map.playerPos.x, map.playerPos.y - 1);
-			if(map.playerPos.y < 1)
-				map.playerPos = Point(map.playerPos.x, 1);
+			player.positon.y -= 1;
+			if(player.positon.y < 1)
+				player.positon.y += 1;
 			break;
 		case 's':
-			map.playerPos = Point(map.playerPos.x, map.playerPos.y + 1);
-			if (map.playerPos.y > map.mapSize.y - 1)
-				map.playerPos = Point(map.playerPos.x, map.mapSize.y - 1);
+			player.positon.y += 1;
+			if (player.positon.y > map.mapSize.y - 1)
+				player.positon.y -= 1;
 			break;
 		case 'a':
-			map.playerPos = Point(map.playerPos.x - 1, map.playerPos.y);
-			if (map.playerPos.x < 1)
-				map.playerPos = Point(1, map.mapSize.y);
+			player.positon.x -= 1;
+			if (player.positon.x < 1)
+				player.positon.x += 1;
 			break;
 		case 'd':
-			map.playerPos = Point(map.playerPos.x + 1, map.playerPos.y);
-			if (map.playerPos.x > map.mapSize.x - 1)
-				map.playerPos = Point(map.playerPos.x - 1, map.mapSize.y);
+			player.positon.x += 1;
+			if (player.positon.x > map.mapSize.x - 1)
+				player.positon.x -= 1;
 			break;
 		case 'i':
 			player.ShowInventory();
 			break;
-		case 'j':
+		case 'k':
 			player.ShowStats();
+			break;
+		case 'j':
+			player.ShowQuests();
 			break;
 		}
 		
-		
-
-		y = map.playerPos.x;
-		x = map.playerPos.y;
+		y = player.positon.x;
+		x = player.positon.y;
 
 		Mob_stats(player, mob1_1, mob1_2, mob1_3, mob1_4, mob1_5,	//aktualizowanie statow mobow
 			mob2_1, mob2_2, mob2_3, mob2_4, mob2_5,
 			mob3_1, mob3_2, mob3_3, mob3_4, mob3_5, boss);
 		
-		cout<<endl << map.map[x][y] << endl;
-		if (map.map[x][y] == '.')			//puste pole
-		{
-			// możliwość otwarcia eq
-			// wyświetlenie mapy z oznaczeniem gdzie jest postać
-		}
 		if (map.map[x][y] == 'X')		//walka
 		{
 			cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
@@ -488,7 +504,11 @@ void Game(Player &player, Map &map)
 			player.xp -= player.xpToNextLvl;
 			player.xpToNextLvl = (int)player.xpToNextLvl * 1.5;
 		}
-		//cout << "Brawo, udało ci się ukończyć grę!" << endl;
+
+		if (player.quest->IsOnMissionPoint(player.positon))
+		{
+			player.quest->ShowMessege();
+		}
 	}
 }
 
@@ -503,9 +523,9 @@ int main()
 	Player player;
 	
 	vector<string> s;
-	s.push_back("1 Rozpocznij nowa gre");
+	s.push_back("1 Rozpocznij nowa grę");
 	s.push_back("2 Wczytaj zapis");
-	s.push_back("3 wyjdz");
+	s.push_back("3 wyjdź");
 
 	//TU ZACZYNA SIE GRA
 

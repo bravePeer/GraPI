@@ -1,5 +1,6 @@
-#include "something.h"
-
+﻿#include "something.h"
+#include <io.h>
+#include <fcntl.h>
 
 void GenerateWindow()
 {
@@ -10,7 +11,7 @@ void GenerateWindow()
 
 	COORD c2 = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
 	SetConsoleScreenBufferSize(handlee, c2);
-
+	
 	SMALL_RECT sr;
 	sr.Left = 0;
 	sr.Top = 0;
@@ -19,6 +20,7 @@ void GenerateWindow()
 	SetConsoleWindowInfo(handlee, true, &sr);
 	//------
 	setlocale(LC_CTYPE, "Polish");	//<- polskie litraki
+
 }
 
 int DrawMenu(vector<string>& option)
@@ -29,7 +31,6 @@ int DrawMenu(vector<string>& option)
 	do
 	{
 		system("cls");
-		//	cout << pos << endl;
 
 		for (int i = 0; i < option.size(); i++)
 		{
@@ -64,6 +65,7 @@ int DrawMenu(vector<string>& option)
 			pos = option.size() - 1;
 
 	} while (key != 13);
+	SetConsoleTextAttribute(handlee, 0x0003);
 
 	return pos;
 }
@@ -74,12 +76,28 @@ int DrawMenu(vector<string>& option, COORD c)
 	int key = 0;
 	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
 
+	int lenght = option[0].length();
+
+	for (int i = 1; i < option.size(); i++)
+	{
+		if (option[i].length() > lenght)
+			lenght = option[i].length();
+	}
 
 	do
 	{
-		system("cls");
-		//	cout << pos << endl;
-	
+		//lepsze czyszczenie bo czysci tylko fragment nie calosc
+		for (int i = 0; i < option.size(); i++)
+		{
+			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
+			for (int j = 0; j < lenght; j++)
+			{
+				cout << " ";
+			}
+			cout << endl;
+		}
+		
+		//system("cls");
 
 		for (int i = 0; i < option.size(); i++)
 		{
@@ -116,6 +134,7 @@ int DrawMenu(vector<string>& option, COORD c)
 			pos = option.size() - 1;
 
 	} while (key != 13);
+	SetConsoleTextAttribute(handlee, 0x0003);
 
 	return pos;
 }
@@ -144,5 +163,51 @@ void Font()
     cfi.FontFamily = FF_DONTCARE;
     cfi.FontWeight = FW_NORMAL;
     std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+    //SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+}
+/*Jakaś obramówka*/
+void DrawBorder()
+{
+	CONSOLE_SCREEN_BUFFER_INFO bufInfo;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(handle, &bufInfo);
+	COORD wSize = bufInfo.dwSize;
+	
+	_setmode(_fileno(stdout), _O_U16TEXT);
+
+	SetConsoleCursorPosition(handle, {0,0});
+	for (short i = 0; i < wSize.X - 1; i++)
+	{
+		wcout << L"\u2501";
+	}
+
+	SetConsoleCursorPosition(handle, { 0, wSize.Y-1 });
+
+	for (short i = 0; i < wSize.X - 1; i++)
+	{
+		wcout << L"\u2501";
+	}
+	SetConsoleCursorPosition(handle, { 0, 0 });
+
+	for (short i = 0; i < wSize.Y-1; i++)
+	{
+		wcout << L"\u2503" << endl;
+	}
+
+	for (short i = 0; i < wSize.Y - 1; i++)
+	{
+		SetConsoleCursorPosition(handle, { wSize.X - 1, i });
+		wcout << L"\u2503";
+	}
+
+	SetConsoleCursorPosition(handle, { 0,0 });
+	wcout << L"\u250f";
+	SetConsoleCursorPosition(handle, { 0,wSize.Y - 1 });
+	wcout << L"\u2517";
+	SetConsoleCursorPosition(handle, { wSize.X-1,0 });
+	wcout << L"\u2513";
+	SetConsoleCursorPosition(handle, { wSize.X - 1,wSize.Y-1 });
+	wcout << L"\u251b";
+
+	_setmode(_fileno(stdout), _O_TEXT);
 }

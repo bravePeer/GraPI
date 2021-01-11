@@ -95,7 +95,7 @@ int Map::Load3map()
 }
 
 /*Wyswietla mape*/
-void Map::ShowMap()
+void Map::ShowMap(Point& playerPos)
 {
 	for (int i = 0; i < mapSize.y; i++)
 	{
@@ -132,7 +132,7 @@ float Map::Propability(Point p1, Point p2)
 
 bool Map::IsFight()
 {
-	return rand() % 100 + 1 <= Propability(playerPos, Point(8, 2)) * 100 ? true : false;
+	return  0;//rand() % 100 + 1 <= Propability(playerPos, Point(8, 2)) * 100 ? true : false;
 }
 
 int Map::ShowPlace()

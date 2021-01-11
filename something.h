@@ -14,3 +14,5 @@ int DrawMenu(vector<string>& option, COORD c);
 1- nwm 2- chyba podkreslenie 3-tlo 4-tekst*/
 void CDrawText(string s, COORD c, short textAtribute);
 void Font();
+/*Rysuje obramówke*/
+void DrawBorder();
