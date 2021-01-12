@@ -1,0 +1,21 @@
+#pragma once
+#include <iostream>
+#include <vector>
+#include <Windows.h>
+#include <conio.h>
+
+using namespace std;
+
+void ShowGfx_NPC(int id);
+void TakeGfx_NPC(int id);
+
+void ShowGfx_Mobs(int id);
+void TakeGfx_Mobs(int id);
+
+void ShowGfx_MiniBoss(int id);
+void TakeGfx_MiniBoss(int id);
+
+void ShowGfx_Boss(int id);
+void TakeGfx_Boss(int id);
+
+

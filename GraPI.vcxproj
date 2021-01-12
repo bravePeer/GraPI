@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gfx.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mission.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="something.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gfx.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
