@@ -525,7 +525,7 @@ void TakeGfx(int id)
 
 
 
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	//HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	_setmode(_fileno(stdout), _O_U16TEXT);
 
 	for (short i = 0; i < 30; i++)

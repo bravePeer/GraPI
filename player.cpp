@@ -251,7 +251,7 @@ void Player::AddItem(Item* item)
 
 int Player::Spell(int atak_moba)
 {
-	if (profession == 1) // wojownik - wzmocnienie miecza i armora na ileœ tam tur !!!!!!!!!!! do poprawy
+	if (profession == 1) // wojownik 
 	{
 		atak_moba =atak_moba* 0.5;
 		return atak_moba;
@@ -285,7 +285,7 @@ int Player::Spell(int atak_moba)
 	else if (profession == 3) // ³owca - losowe obrazenia z danego zakresu, roœnie z levelem
 	{
 		int pom;
-		pom = (5 + (level * 2)) + rand() % ((40 + (level * 2)) - (5 + (level * 2)) + 1);
+		pom = (25 + (level * 2)) + rand() % ((50 + (level * 2)) - (25 + (level * 2)) + 1);
 		return pom;
 	}
 }
@@ -294,17 +294,17 @@ int Player::Dmg_formula()
 {
 	if (profession == 1)
 	{
-		dmg_output = (0.6 * strength * 7)  + (0.4 * agility * 5) + (0.2 * inteligence * 3) + (level * 5);
+		dmg_output = ( strength * 4)  + ( agility * 3) + ( inteligence ) + (level * 3);
 		return dmg_output;
 	}
 	if (profession == 2)
 	{
-		dmg_output = (0.6 * inteligence * 7) + (0.4 * agility * 5) + (0.2 * strength * 3) + (level * 5);
+		dmg_output = ( inteligence * 4) + ( agility * 3) + ( strength ) + (level * 3);
 		return dmg_output;
 	}
 	if (profession == 3)
 	{
-		dmg_output = (0.6 * agility * 7) + (0.4 * strength * 5) + (0.2 * inteligence * 3) + (level * 5);
+		dmg_output = ( agility * 4) + ( strength * 3) + ( inteligence ) + (level * 3);
 		return dmg_output;
 	}
 }
