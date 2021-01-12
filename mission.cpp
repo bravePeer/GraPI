@@ -20,5 +20,5 @@ bool Mission::IsOnMissionPoint(Point& playerPos)
 bool Mission::IsMissionDone()
 {
 	cout << "eeeeeee" << endl;
-		return 1;
+	return 1;
 }

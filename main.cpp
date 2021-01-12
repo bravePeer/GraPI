@@ -408,7 +408,6 @@ void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Ar
 void Game(Player &player, Map &map)
 {
 	system("cls");
-	player.CreateCharacter();
 	/*missje?*/
 	player.quest = new Mission("Quest", {5,5});
 
@@ -571,6 +570,7 @@ int main()
 		switch (DrawMenu(s))
 		{
 		case 0: //poczatek gry
+			player.CreateCharacter();
 			player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
 			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
 			player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
@@ -578,6 +578,7 @@ int main()
 			Game(player, map);
 			break;
 		case 1:	//wczytanie zapisu
+			player.UsePreset();
 			Game(player, map);
 			break;
 		case 2:	//wyjscie

@@ -11,80 +11,94 @@ Player::~Player()
 
 void Player::Select_profession()
 {
-	int pom;
+	/*int pom;
 	cout << "Wybierz klasê postaci:" << endl;
 	cout << "1 - Wojownik (Umiejêtnoœæ specjalna: Aura Pancerza)" << endl;
 	cout << "2 - Mag (Umiejêtnoœæ specjalna: Leczenie Ran)" << endl;
 	cout << "3 - £owca (Umiejêtnoœæ specjalna: Deszcz Strza³)" << endl;
-	cin >> pom;
-	if (pom == 1)
+	cin >> pom;*/
+	vector<string> s;
+	s.push_back("Wojownik (Umiejêtnoœæ specjalna: Aura Pancerza)");
+	s.push_back("Mag (Umiejêtnoœæ specjalna: Leczenie Ran)");
+	s.push_back("£owca (Umiejêtnoœæ specjalna: Deszcz Strza³)");
+
+	switch (DrawMenu(s))
 	{
+	case 0:
 		profession = 1;
 		profession_name = "Wojownik";
-	}
-	else if (pom == 2)
-	{
+		break;
+	case 1:
 		profession = 2;
 		profession_name = "Mag";
-	}
-	else if (pom == 3)
-	{
+		break;
+	case 2:
 		profession = 3;
 		profession_name = "£owca";
+		break;
 	}
-
 }
 
 void Player::CreateCharacter()
 {
-	cout << "Podaj imiê" << endl;
+	//cout << "Podaj imiê" << endl;
+	CDrawText("Podaj imiê ", { 1,1 }, 0x0003);
 	cin >> name;
 
 	do
 	{
 		cout << "Podaj p³eæ(m/k)" << endl;
+		CDrawText("Podaj p³eæ(m/k)", { 2,2 }, 0x0003);
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
 	Select_profession();
 	
-	char pom;
-	
+	//char pom;
+	vector<string> s;
+	s.push_back("Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)");
+	s.push_back("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)");
+	s.push_back("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)");
+	s.push_back("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)");
+	s.push_back("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)");
+	s.push_back("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)");
+
 	for (int i = 15; i > 0; i--)
 	{
-		system("cls");
-		cout << "Rozdaj punkty umiejêtnoœci:" << endl;
+
+		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
 		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
 		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
 		cout << "3 - Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)" << endl;
 		cout << "4 - Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)" << endl;
 		cout << "5 - Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)" << endl;
 		cout << "6 - Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)" << endl;
-		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;
-		cin >> pom;
-		switch (pom)
+		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;*/
+
+		//cin >> pom;
+		switch (DrawMenu(s))
 		{
-		case'1':
+		case 0:
 			strength++;
 			break;
 		
-		case'2':
+		case 1:
 			inteligence++;
 			break;
 		
-		case'3':
+		case 2:
 			agility++;
 			break;
 		
-		case'4':
+		case 3:
 			accuracy++;
 			break;
 		
-		case'5':
+		case  4:
 			dodging++;
 			break;
 		
-		case'6':
+		case  5:
 			crit_strike++;
 			break;
 
@@ -92,7 +106,7 @@ void Player::CreateCharacter()
 			i++;
 			break;
 		}
-		pom = '0';
+		//pom = '0';
 	}
 }
 
