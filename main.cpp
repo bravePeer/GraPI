@@ -83,10 +83,7 @@ Mob MobStats(Player &player)
 	return mob;
 }
 
-/*void Mob_stats(Player &player, Mob mob1_1, Mob &mob1_2, Mob &mob1_3, Mob &mob1_4, Mob &mob1_5,
-	Mob &mob2_1, Mob &mob2_2, Mob &mob2_3, Mob &mob2_4, Mob &mob2_5,
-	Mob &mob3_1, Mob &mob3_2, Mob &mob3_3, Mob &mob3_4, Mob &mob3_5, Mob &boss)
-{
+/*
 	mob1_1.life = player.life * 0.4;
 	mob1_1.armor = player.armor * 0.1;
 	int pom1 = player.dmg_output * 0.4;
@@ -98,8 +95,7 @@ Mob MobStats(Player &player)
 
 	boss.life = 300;						//do wyliczenia 
 	boss.armor = 40;
-	boss.dmg = 40 + rand() % (90-40+1);
-}*/
+	boss.dmg = 40 + rand() % (90-40+1);*/
 
 void map_generator(Player &player, Map& map)
 {
@@ -130,7 +126,35 @@ void map_generator(Player &player, Map& map)
 	}
 }
 
-int Fight(Player& player, Mob& mobek)
+Mob Mob_generator1(Mob &mob,Player &player)
+{
+	mob.armor = 5 + rand() % (10 - 5 + 1);
+	mob.life = 60 + rand() % (140 - 60 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob= 100 + rand() % (100 - 20 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	return mob;
+}
+Mob Mob_generator2(Mob& mob, Player& player)
+{
+	mob.armor = 10 + rand() % (20 - 10 + 1);
+	mob.life = 80 + rand() % (160 - 80 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob = 40 + rand() % (120 - 40 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	return mob;
+}
+Mob Mob_generator3(Mob& mob, Player& player)
+{
+	mob.armor = 15 + rand() % (25 - 15 + 1);
+	mob.life = 100 + rand() % (180 - 60 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	return mob;
+}
+
+int Fight(Player& player, Mob& mobek, int return_map)
 {
 	system("cls");
 	int tura = 1;
@@ -138,6 +162,7 @@ int Fight(Player& player, Mob& mobek)
 	int pom=0;
 	
 	player.Dmg_formula();
+
 	while (player.life > 0 || mobek.life > 0)
 	{
 		cout << "Tura: " << tura << endl;
@@ -181,11 +206,11 @@ int Fight(Player& player, Mob& mobek)
 					mana = 0;
 				}
 
-				else if (player.profession == 1 && mana ==4) 
+				else if (player.profession == 1 && mana == 4) 
 				{
 					pom = 3;
 					cout << "Aktywujesz wokół siebie aurę która osłabi przyjmowane przez ciebie ciosy!" << endl << endl;
-					mobek.dmg=player.Spell(mobek.dmg);
+					mobek.dmg=(int)player.Spell(mobek.dmg);
 					mana = 0;
 
 				}
@@ -208,11 +233,8 @@ int Fight(Player& player, Mob& mobek)
 		
 		}
 
-		if (pom >0 && player.profession==1)
-		{
-			pom--;
-			if (pom == 0) mobek.dmg *= 2;
-		}
+		if (pom >0 && player.profession==1) pom--;
+		if (pom == 0) mobek.dmg *= 2;
 
 
 		if (mana < 4) mana++;
@@ -233,8 +255,23 @@ int Fight(Player& player, Mob& mobek)
 
 		cout << endl;
 		cout << "Twój przeciwnik uderza..." << endl;
+		if (return_map == 1)
+		{
+			mobek.dmg= 20 + rand() % (30 - 20 + 1);
+		}
+		else if (return_map == 2)
+		{
+			mobek.dmg = 30 + rand() % (45 - 30 + 1);
+		}
+		else if (return_map == 3)
+		{
+			mobek.dmg = 40 + rand() % (55 - 40 + 1);
+		}
+		if (player.profession == 1 && pom > 0)
+		{
+			cout << "Aura zablokowała:" <<(int)mobek.dmg*0.5<<" pkt obrażeń."<< endl;
+		}
 
-		// Sleep(1000);
 		player.life = player.life - (mobek.dmg - player.armor);
 		cout << "Zadaje ci: " << mobek.dmg - player.armor << " pkt obrażeń" << endl;
 
@@ -243,7 +280,8 @@ int Fight(Player& player, Mob& mobek)
 			cout << endl;
 			cout << "Niestety przegrałeś walkę..." << endl;
 			player.life = 1;
-			break;
+			//zmienić pozycje gracza
+			
 			return 0;	//przegra
 		}
 
@@ -385,6 +423,8 @@ void Game(Player &player, Map &map)
 	vector<Weapon> allWeapons;
 	vector<Armor> allArmor;
 
+	Mob mob;
+
 	ReadGameAssets(allFood, allWeapons, allArmor);
 
 	while (1)	//głowna petla gry
@@ -435,88 +475,31 @@ void Game(Player &player, Map &map)
 		{
 			cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
 
-			if (Fight(player, *map.mobs[buf-1]))
+			/*if (Fight(player, *map.mobs[buf-1]))
 			{
 				map.KillMob(buf - 1);
 			}
 
-			_getch();
+			_getch();*/
+			if (return_map == 1)
+			{
+				mob = Mob_generator1(mob, player);
+			}
+			else if (return_map == 2)
+			{
+				mob = Mob_generator2(mob, player);
+			}
+			else if (return_map == 3)
+			{
+				mob = Mob_generator3(mob, player);
+			}
+			Fight(player, mob,return_map);
 
-			/*int pom1, pom2, pom3;
-			pom1 = 1 + rand() % (5 - 1 + 1);
-			pom2 = 1 + rand() % (5 - 1 + 1);
-			pom3 = 1 + rand() % (5 - 1 + 1);
-			if (pom1 == 1 && return_map == 1) {
-				Fight(player, mob1_1);
-				if (mob1_1.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 2 && return_map == 1) {
-				Fight(player, mob1_2);
-				if (mob1_2.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 3 && return_map == 1) {
-				Fight(player, mob1_3);
-				if (mob1_3.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 4 && return_map == 1) {
-				Fight(player, mob1_4);
-				if (mob1_4.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 5 && return_map == 1) {
-				Fight(player, mob1_5);
-				if (mob1_5.dead == true) map.map[x][y] = '.';
-			}
-
-			else if (pom2 == 1 && return_map == 2) {
-				Fight(player, mob2_1);
-				if (mob2_1.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 2 && return_map == 2) {
-				Fight(player, mob2_2);
-				if (mob2_2.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 3 && return_map == 2) {
-				Fight(player, mob2_3);
-				if (mob2_3.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 4 && return_map == 2) {
-				Fight(player, mob2_4);
-				if (mob2_4.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 5 && return_map == 2) {
-				Fight(player, mob2_5);
-				if (mob2_5.dead == true) map.map[x][y] = '.';
-			}
-
-			else if (pom2 == 1 && return_map == 3) {
-				Fight(player, mob3_1);
-				if (mob3_1.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 2 && return_map == 3) {
-				Fight(player, mob3_2);
-				if (mob3_2.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 3 && return_map == 3) {
-				Fight(player, mob3_3);
-				if (mob3_3.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 4 && return_map == 3) {
-				Fight(player, mob3_4);
-				if (mob3_4.dead == true) map.map[x][y] = '.';
-			}
-			else if (pom1 == 5 && return_map == 3) {
-				Fight(player, mob3_5);
-				if (mob3_5.dead == true) map.map[x][y] = '.';
-			}
-			else if (map.map[x][y] == 'B' && return_map == 3) {
-				Fight(player, boss);
-				if (boss.dead == true);
-			}
-			else if (boss.dead == true)
-				break; //pokonanie bossa, wyjscie z glownej petli gry*/
+			if (mob.dead == true);
+			
 		}
 		
-		if (map.map[x][y] == 'H')		//baza
+		else if (map.map[x][y] == 'H')		//baza
 		{
 
 		}
@@ -537,7 +520,18 @@ void Game(Player &player, Map &map)
 		}
 		else if (map.map[x][y] == 'P')		//przejście
 		{
-
+			/*if (return_map == 1)
+			{
+				delete map.map;
+				map.Load2map();
+				map_generator(player, map);
+			}
+			else if (return_map == 2)
+			{
+				delete map.map;
+				map.Load3map();
+				map_generator(player, map);
+			}*/
 		}
 		else if (player.xp >= player.xpToNextLvl)	//lvl up
 		{

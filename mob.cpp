@@ -1,4 +1,5 @@
 #include "mob.h"
+#include "player.h"
 
 Mob::Mob() //konstruktor domyslny, wykonuje sie gdy tworzy sie obiekt
 {
@@ -37,7 +38,4 @@ int Mob::Exp_to_player( int lvl_gracza)
 	return exp_after_win;
 }
 
-void Generate_mob()
-{
 
-}
