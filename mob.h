@@ -24,5 +24,7 @@ public:
 	int exp_after_win =1;
 	int Lvl_mob(int lvlGracza);
 	Point position = { 0,0 };
+
+	void Generate_mob();
 };
 

@@ -14,8 +14,8 @@ public:
 	Player();
 	~Player();
 
-	int dmg_output=1;		//obra¿enia zadawane przez bohatera
-	int profession = 1; //klasa postaci
+	int dmg_output;		//obra¿enia zadawane przez bohatera
+	int profession; //klasa postaci
 	int xpToNextLvl = 100;
 
 	string profession_name;

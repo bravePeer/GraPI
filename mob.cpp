@@ -36,3 +36,8 @@ int Mob::Exp_to_player( int lvl_gracza)
 	if ((lvl_gracza - mob_lvl) == -2)	exp_after_win = 50 + (50 * 0.25);
 	return exp_after_win;
 }
+
+void Generate_mob()
+{
+
+}

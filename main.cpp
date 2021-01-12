@@ -94,124 +94,13 @@ Mob MobStats(Player &player)
 	mob1_1.exp_after_win = mob1_1.Exp_to_player(mob1_1.mob_lvl, player.level);
 	mob1_1.money_from_mob = 20;
 
-	mob1_2.life = player.life * 0.5;
-	mob1_2.armor = player.armor * 0.3;
-	int pom2 = player.dmg_output * 0.5;
-	mob1_2.dmg = 6 + rand() % ((pom2)-6 + 1);
-	mob1_2.mob_lvl = mob1_2.Lvl_mob(player.level);
-	mob1_2.exp_after_win = mob1_2.Exp_to_player(mob1_2.mob_lvl, player.level);
-	mob1_2.money_from_mob = 20;
-
-	mob1_3.life = player.life * 0.6;
-	mob1_3.armor = player.armor * 0.4;
-	int pom3 = player.dmg_output * 0.65;
-	mob1_3.dmg = 7 + rand() % ((pom3)-7 + 1);
-	mob1_3.mob_lvl = mob1_3.Lvl_mob(player.level);
-	mob1_3.exp_after_win = mob1_3.Exp_to_player(mob1_3.mob_lvl, player.level);
-	mob1_3.money_from_mob = 20;
-
-	mob1_4.life = player.life * 0.7;
-	mob1_4.armor = player.armor * 0.6;
-	int pom4 = player.dmg_output * 0.75;
-	mob1_4.dmg = 8 + rand() % ((pom4)-8 + 1);
-	mob1_4.mob_lvl = mob1_4.Lvl_mob(player.level);
-	mob1_4.exp_after_win = mob1_4.Exp_to_player(mob1_4.mob_lvl, player.level);
-	mob1_4.money_from_mob = 20;
-
-	mob1_5.life = player.life * 0.8;
-	mob1_5.armor = player.armor * 0.7;
-	int pom5 = player.dmg_output * 1.1;
-	mob1_5.dmg = 11 + rand() % ((pom5)-11 + 1);
-	mob1_5.mob_lvl = mob1_5.Lvl_mob(player.level);
-	mob1_5.exp_after_win = mob1_5.Exp_to_player(mob1_5.mob_lvl, player.level);
-	mob1_5.money_from_mob = 30;
-
-	mob2_1.life = player.life * 0.65;
-	mob2_1.armor = player.armor * 0.55;
-	int pom2_1 = player.dmg_output*0.9;
-	mob2_1.dmg = 9 + rand() % ((pom2_1)-9 + 1);
-	mob2_1.mob_lvl = mob2_1.Lvl_mob(player.level);
-	mob2_1.exp_after_win = mob2_1.Exp_to_player(mob2_1.mob_lvl, player.level);
-	mob2_1.money_from_mob = 20;
-
-	mob2_2.life = player.life * 0.7;
-	mob2_2.armor = player.armor * 0.7;
-	int pom2_2 = player.dmg_output;
-	mob2_2.dmg = 11 + rand() % ((pom2_2)-11 + 1);
-	mob2_2.mob_lvl = mob2_2.Lvl_mob(player.level);
-	mob2_2.exp_after_win = mob2_2.Exp_to_player(mob2_2.mob_lvl, player.level);
-	mob2_2.money_from_mob = 20;
-
-	mob2_3.life = player.life * 0.8;
-	mob2_3.armor = player.armor * 0.7;
-	int pom2_3 = player.dmg_output * 1.15;
-	mob2_3.dmg = 12 + rand() % ((pom2_3)-12 + 1);
-	mob2_3.mob_lvl = mob2_3.Lvl_mob(player.level);
-	mob2_3.exp_after_win = mob2_3.Exp_to_player(mob2_3.mob_lvl, player.level);
-	mob2_3.money_from_mob = 20;
-
-	mob2_4.life = player.life * 0.5;
-	mob2_4.armor = player.armor * 0.3;
-	int pom2_4 = player.dmg_output * 1.5;
-	mob2_4.dmg = 14 + rand() % ((pom2_4)-14 + 1);
-	mob2_4.mob_lvl = mob2_4.Lvl_mob(player.level);
-	mob2_4.exp_after_win = mob2_4.Exp_to_player(mob2_4.mob_lvl, player.level);
-	mob2_3.money_from_mob = 20;
-
-	mob2_5.life = player.life * 1.2;
-	mob2_5.armor = player.armor * 0.5;
-	int pom2_5 = player.dmg_output * 0.7;
-	mob2_5.dmg = 12 + rand() % ((pom2_5)-12 + 1);
-	mob2_5.mob_lvl = mob2_5.Lvl_mob(player.level);
-	mob2_5.exp_after_win = mob2_5.Exp_to_player(mob2_4.mob_lvl, player.level);
-	mob2_5.money_from_mob = 40;
-
-	mob3_1.life = player.life * 0.8;
-	mob3_1.armor = player.armor * 0.6;
-	int pom3_1 = player.dmg_output;
-	mob3_1.dmg = 13 + rand() % ((pom3_1)-13 + 1);
-	mob3_1.mob_lvl = mob3_1.Lvl_mob(player.level);
-	mob3_1.exp_after_win = mob3_1.Exp_to_player(mob3_1.mob_lvl, player.level);
-	mob3_1.money_from_mob = 20;
-
-	mob3_2.life = player.life * 0.85;
-	mob3_2.armor = player.armor * 0.75;
-	int pom3_2 = player.dmg_output*1.2;
-	mob3_2.dmg = 14 + rand() % ((pom3_2)-14 + 1);
-	mob3_2.mob_lvl = mob3_2.Lvl_mob(player.level);
-	mob3_2.exp_after_win = mob3_2.Exp_to_player(mob3_2.mob_lvl, player.level);
-	mob3_2.money_from_mob = 20;
-
-	mob3_3.life = player.life * 0.9;
-	mob3_3.armor = player.armor * 0.7;
-	int pom3_3 = player.dmg_output * 1.4;
-	mob3_3.dmg = 12+ rand() % ((pom3_3)-12 + 1);
-	mob3_3.mob_lvl = mob3_3.Lvl_mob(player.level);
-	mob3_3.exp_after_win = mob3_3.Exp_to_player(mob3_3.mob_lvl, player.level);
-	mob3_3.money_from_mob = 20;
-
-	mob3_4.life = player.life * 0.80;
-	mob3_4.armor = player.armor;
-	int pom3_4 = player.dmg_output * 0.9;
-	mob3_4.dmg = 13 + rand() % ((pom3_4)-13 + 1);
-	mob3_4.mob_lvl = mob3_4.Lvl_mob(player.level);
-	mob3_4.exp_after_win = mob3_4.Exp_to_player(mob3_4.mob_lvl, player.level);
-	mob3_4.money_from_mob = 20;
-
-	mob3_5.life = player.life;
-	mob3_5.armor = player.armor * 0.70;
-	int pom3_5 = player.dmg_output * 1.3;
-	mob3_5.dmg = 15 + rand() % ((pom3_5)-15 + 1);
-	mob3_5.mob_lvl = mob3_5.Lvl_mob(player.level);
-	mob3_5.exp_after_win = mob3_5.Exp_to_player(mob3_5.mob_lvl, player.level);
-	mob3_5.money_from_mob = 50;
 
 	boss.life = 300;						//do wyliczenia 
 	boss.armor = 40;
 	boss.dmg = 40 + rand() % (90-40+1);
 }*/
 
-void map_generator(Player& player, Map& map)
+void map_generator(Player &player, Map& map)
 {
 	int x, y;
 	for (int i = 0; i < 5;i++)
@@ -239,7 +128,6 @@ void map_generator(Player& player, Map& map)
 		}
 	}
 }
-
 
 int Fight(Player& player, Mob& mobek)
 {
@@ -481,6 +369,8 @@ void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Ar
 
 void Game(Player &player, Map &map)
 {
+	system("cls");
+	player.CreateCharacter();
 	/*missje?*/
 	player.quest = new Mission("Quest", {5,5});
 
@@ -632,6 +522,13 @@ void Game(Player &player, Map &map)
 		else if (map.map[x][y] == 'N')		//npc
 		{
 
+		}
+		else if (map.map[x][y] == '-' || map.map[x][y] == '|' || map.map[x][y] == '+' || map.map[x][y] == '_')
+		{
+			if (a == 'w')	x = x - 1;
+			if (a == 'a')	y = y + 1;
+			if (a == 's')	x = x + 1;
+			if (a == 'd')	y = y - 1;
 		}
 		else if (map.map[x][y] == 'S')		//sklep
 		{
