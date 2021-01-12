@@ -13,6 +13,7 @@
 #include "mob.h"
 #include "something.h"
 #include "point.h"
+#include "gfx.h"
 
 using namespace std;
 
@@ -560,6 +561,8 @@ int main()
 	srand(time(NULL));
 
 	GenerateWindow();
+
+	
 	
 	Player player;
 	vector<string> s;
