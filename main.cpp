@@ -519,6 +519,7 @@ void Game(Player &player, Map &map)
 		
 		y = player.positon.x;
 		x = player.positon.y;
+
 		
 		if (int buf = map.IsFight(player.positon))		//walka
 		{
