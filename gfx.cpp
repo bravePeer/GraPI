@@ -122,6 +122,38 @@ void TakeGfx_Hero(int id)
 		hero_gfx[28] = L"   ░▒░         ▒░▒█              █▒█▓             ";
 		hero_gfx[29] = L"              ░▒ ▒               ░░▒█▒            ";
 		break;
+	case 12:
+		hero_gfx[0] =  L"";
+		hero_gfx[1] =  L"";
+		hero_gfx[2] =  L"";
+		hero_gfx[3] =  L"";
+		hero_gfx[4] =  L"";
+		hero_gfx[5] =  L"";
+		hero_gfx[6] =  L"";
+		hero_gfx[7] =  L"";
+		hero_gfx[8] =  L"";
+		hero_gfx[9] =  L"";
+		hero_gfx[10] = L"";
+		hero_gfx[11] = L"";
+		hero_gfx[12] = L"";
+		hero_gfx[13] = L"";
+		hero_gfx[14] = L"";
+		hero_gfx[15] = L"";
+		hero_gfx[16] = L"";
+		hero_gfx[17] = L"";
+		hero_gfx[18] = L"";
+		hero_gfx[19] = L"";
+		hero_gfx[20] = L"";
+		hero_gfx[21] = L"";
+		hero_gfx[22] = L"";
+		hero_gfx[23] = L"";
+		hero_gfx[24] = L"";
+		hero_gfx[25] = L"";
+		hero_gfx[26] = L"";
+		hero_gfx[27] = L"";
+		hero_gfx[28] = L"";
+		hero_gfx[29] = L"";
+		break;
 	}
 
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
