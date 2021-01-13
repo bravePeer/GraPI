@@ -168,6 +168,8 @@ void TakeGfx_Hero(int id)
 	_setmode(_fileno(stdout), _O_TEXT);
 }
 
+
+
 /*
 														$$\   $$\ $$$$$$$\   $$$$$$\
 														$$$\  $$ |$$  __$$\ $$  __$$\
@@ -845,6 +847,7 @@ void TakeGfx_Boss(int id)
 
 void ShowGfx_Envi(int id)
 {
+	
 	//TakeGfx_Envi(id);
 }
 
@@ -856,7 +859,6 @@ void TakeGfx_Envi(int id)
 	{
 		case 1000:
 			break;
-
 	}
 
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -870,3 +872,31 @@ void TakeGfx_Envi(int id)
 
 	_setmode(_fileno(stdout), _O_TEXT);
 }
+
+
+// |33 -137
+void ShowGfx_GameName()
+{
+	wstring* buf = new wstring[10];
+
+	TakeGfx_GameName(buf);
+
+	for (short i = 0; i < 9; i++)
+	{
+		CDrawText(buf[i], { (137 - 79)/2,1 + i }, 0x000c);
+	}
+}
+
+//Cuś innego
+void TakeGfx_GameName(wstring buf[])
+{
+	buf[0] = L"███▄▄▄▄   ▀█████████▄     ▄██████▄          ▄████████    ▄███████▄    ▄██████▄";
+	buf[1] = L"███▀▀▀██▄   ███    ███   ███    ███        ███    ███   ███    ███   ███    ███";
+	buf[2] = L"███   ███   ███    ███   ███    █▀         ███    ███   ███    ███   ███    █▀";
+	buf[3] = L"███   ███  ▄███▄▄▄██▀   ▄███              ▄███▄▄▄▄██▀   ███    ███  ▄███";
+	buf[4] = L"███   ███ ▀▀███▀▀▀██▄  ▀▀███ ████▄       ▀▀███▀▀▀▀▀   ▀█████████▀  ▀▀███ ████▄";
+	buf[5] = L"███   ███   ███    ██▄   ███    ███      ▀███████████   ███          ███    ███";
+	buf[6] = L"███   ███   ███    ███   ███    ███        ███    ███   ███          ███    ███";
+	buf[7] = L" ▀█   █▀  ▄█████████▀    ████████▀         ███    ███  ▄████▀        ████████▀";
+	buf[8] = L"                                           ███    ███";
+}	 

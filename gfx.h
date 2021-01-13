@@ -24,3 +24,6 @@ void TakeGfx_Envi(int id);
 
 void ShowGfx_Hero(int id);
 void TakeGfx_Hero(int id);
+
+void ShowGfx_GameName();
+void TakeGfx_GameName(wstring buf[]);
