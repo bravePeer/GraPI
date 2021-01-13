@@ -114,14 +114,14 @@ int Map::Load3map()
 
 void Map::ShowMap()
 {
-	for (int i = 0; i < mapSize.y; i++)
+	for (int i = 1; i < mapSize.y; i++)
 	{
-		for (int j = 0; j < mapSize.x; j++)
+		for (int j = 1; j < mapSize.x; j++)
 		{
 			CDrawText("", { (short)j, (short)i }, 0x0003);
 			cout << map[i][j] ;
 		}
-		cout << endl;
+		//cout << endl;
 	}/**/
 }
 

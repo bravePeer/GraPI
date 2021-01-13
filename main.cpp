@@ -179,7 +179,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		cout << endl;
 		cout << "Wybierz atak!" << endl;
 		cout << endl;*/
-
+		ClearInfoPlace();
 		CDrawText("Tura: "+to_string(tura), { 107,1 }, 0x0003);
 		CDrawText("p: " + to_string(pom), { 107,2 }, 0x0003);
 		CDrawText("HP twojego bohatera: " + to_string(player.life), { 107,3 }, 0x0003);
@@ -321,7 +321,6 @@ int Fight(Player& player, Mob& mobek, int return_map)
 
 		tura++;
 		GetKey();
-		ClearInfoPlace();
 		//console_clean();
 	}
 	return 1;
@@ -471,9 +470,9 @@ void Game(Player &player, Map &map)
 
 	//int a = 0;
 
+	//clock_t endTime = clock() + 5 * CLOCKS_PER_SEC;
 	while (1)	//głowna petla gry
 	{
-		
 		//system("cls");
 		map.ShowMap(player.positon);
 
@@ -508,6 +507,7 @@ void Game(Player &player, Map &map)
 		case 'k':
 			ClearInfoPlace();
 			player.ShowStats();
+			_getch();
 			ClearInfoPlace();
 			break;
 		case 'j':
@@ -528,7 +528,7 @@ void Game(Player &player, Map &map)
 			{
 				map.KillMob(buf - 1);
 			}
-			//map.ShowMap();
+			map.ShowMap();
 		}
 		
 		
@@ -536,7 +536,7 @@ void Game(Player &player, Map &map)
 		{
 			Shop(player, allFood, allWeapons, allArmor);
 		}
-		else if (map.map[x][y] == 'P')		//przejście
+		if (map.map[x][y] == 'P')		//przejście
 		{
 			if (return_map == 1)
 			{
@@ -558,6 +558,7 @@ void Game(Player &player, Map &map)
 			player.xpToNextLvl = (int)player.xpToNextLvl * 1.5;
 			player.level++;
 			player.Bonus_stats_per_lvl();
+			map.ShowMap();
 		}
 
 		if (player.quest->IsOnMissionPoint(player.positon))
@@ -600,7 +601,10 @@ int main()
 
 	while (1)//główna 
 	{
-		switch (DrawMenu(s))
+		ClearMapPlace();
+		ClearInfoPlace();
+		ShowGfx_GameName();
+		switch (DrawMenu(s, {50, 15}))
 		{
 		case 0: //poczatek gry
 			player.CreateCharacter();
@@ -612,6 +616,10 @@ int main()
 			break;
 		case 1:	//wczytanie zapisu
 			player.UsePreset();
+			player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
+			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
+			player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
+			player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 			Game(player, map);
 			break;
 		case 2:	//wyjscie

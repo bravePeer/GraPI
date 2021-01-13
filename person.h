@@ -45,6 +45,8 @@ public:
 	Weapon *equipedWeapon = NULL;
 	Armor *equipedArmor = NULL;
 
+	int gfxID = 0;
+
 private:
 
 };

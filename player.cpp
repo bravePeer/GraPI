@@ -116,6 +116,9 @@ void Player::Bonus_stats_per_lvl()
 	//cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
 
 	X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
+	GetKey();
+
+	ClearMapPlace();
 
 	vector<string> s;
 	s.push_back("Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)");
@@ -127,7 +130,10 @@ void Player::Bonus_stats_per_lvl()
 
 	for (int i = 2; i > 0; i--)
 	{
+		X(-1, 0x0002, "Pozosta³e punkty:   do wydania.");
+		CDrawText(to_string(i), { 55,28 }, 0x0002);
 		ShowStats();
+		
 		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
 		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
 		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
@@ -138,7 +144,7 @@ void Player::Bonus_stats_per_lvl()
 		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;*/
 
 		//cin >> pom;
-		switch (DrawMenu(s))
+		switch (DrawMenu(s, { 20, 3 }))
 		{
 		case 0:
 			strength++;
@@ -169,6 +175,8 @@ void Player::Bonus_stats_per_lvl()
 			break;
 		}
 	}
+	ShowStats();
+
 }
 
 void Player::UsePreset()
@@ -185,6 +193,7 @@ void Player::UsePreset()
 	inteligence = 6;
 	agility = 3;
 	dodging = 4;
+	xp= 101;
 }
 
 void Player::ShowInventory()
@@ -260,6 +269,7 @@ void Player::ShowInventory()
 
 void Player::ShowStats()	
 {
+	ClearInfoPlace();
 	CDrawText(name, { 107, 1 }, 0x0003);
 	sex == 'm' ? CDrawText(L"\u2642", {(short) name.length() + 108, 1 }, 0x0003) : CDrawText(L"\u2640", { (short)name.length() + 108, 1 }, 0x0003);
 	CDrawText("Poziom: " +to_string( level), {107, 2}, 0x0003);

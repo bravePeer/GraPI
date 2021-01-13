@@ -353,7 +353,6 @@ void X(short n, ...)
 void X(short n, short textAtribute, ...)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
 	CONSOLE_SCREEN_BUFFER_INFO info;
 	GetConsoleScreenBufferInfo(handle, &info);
 	short buf = info.wAttributes;
@@ -362,10 +361,19 @@ void X(short n, short textAtribute, ...)
 	va_list arg;
 	va_start(arg, textAtribute);
 
+	bool wait = true;
+	if (n < 0)
+	{
+		wait = !wait;
+		n *= -1;
+	}
+
 	string* text = new string[n];
 	short lenghtT = 0;
 	short x = 52, y = 29;
 	
+
+
 	for (short i = 0; i < n; i++)
 	{
 		text[i] = va_arg(arg, char*);
@@ -409,20 +417,21 @@ void X(short n, short textAtribute, ...)
 	wcout << L"\u255d";
 	_setmode(_fileno(stdout), _O_TEXT);
 
-	GetKey();
+	if (wait)
+	{
+		GetKey();
+		ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
+	}
 	//sprzatanie
 	SetConsoleTextAttribute(handle, buf);
-	ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
 	va_end(arg);
 }
 
 int GetKey()
 {
 	int a = 0;
-
 	a = _getch();
 	if (_kbhit())
 		a += _getch();
-
 	return a;
 }
