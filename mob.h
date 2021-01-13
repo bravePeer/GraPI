@@ -7,6 +7,9 @@
 
 using namespace std;
 
+//Mob MobStats(Player& player, int return_map);
+
+
 class Mob
 {
 public:

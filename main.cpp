@@ -14,8 +14,15 @@
 #include "something.h"
 #include "point.h"
 #include "gfx.h"
+#include <map>
 
 using namespace std;
+
+void Testujemy()
+{
+	//map<Point, Point> s;
+	
+}
 
 void console_clean()
 {
@@ -25,146 +32,13 @@ void console_clean()
 	system("cls");
 }
 
-Mob MobStats(Player &player, int return_map)
-{
-	Mob mob;
-	if(return_map == 1)
-	{
-	mob.armor = 5 + rand() % (10 - 5 + 1);
-	mob.life = 60 + rand() % (140 - 60 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob= 100 + rand() % (100 - 20 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	}
-	else if(return_map == 2)
-	{
-		mob.armor = 10 + rand() % (20 - 10 + 1);
-	mob.life = 80 + rand() % (160 - 80 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob = 40 + rand() % (120 - 40 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	}
-	else if(return_map == 3)
-	{
-	mob.armor = 15 + rand() % (25 - 15 + 1);
-	mob.life = 100 + rand() % (180 - 60 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	}
-	/*{
-	case 1:
-		mob.life = player.life * 0.4;
-		mob.armor = player.armor * 0.1;
-		  pom1 = player.dmg_output * 0.4;
-		mob.dmg = 5 + rand() % ((pom1)-5 + 1);
-		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player( player.level);
-		mob.money_from_mob = 20;
-		break;
-	case 2:
-		mob.life = player.life * 0.5;
-		mob.armor = player.armor * 0.3;
-		  pom2 = player.dmg_output * 0.5;
-		mob.dmg = 6 + rand() % ((pom2)-6 + 1);
-		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player( player.level);
-		mob.money_from_mob = 20;
-		break;
-	case 3:
-		mob.life = player.life * 0.6;
-		mob.armor = player.armor * 0.4;
-		  pom3 = player.dmg_output * 0.65;
-		mob.dmg = 7 + rand() % ((pom3)-7 + 1);
-		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player( player.level);
-		mob.money_from_mob = 20;
-		break;
-	case 4:
-		mob.life = player.life * 0.7;
-		mob.armor = player.armor * 0.6;
-		pom4 = player.dmg_output * 0.75;
-		mob.dmg = 8 + rand() % ((pom4)-8 + 1);
-		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player( player.level);
-		mob.money_from_mob = 20;
-	case 5:
-		mob.life = player.life * 0.8;
-		mob.armor = player.armor * 0.7;
-		pom5 = player.dmg_output * 1.1;
-		mob.dmg = 11 + rand() % ((pom5)-11 + 1);
-		mob.mob_lvl = mob.Lvl_mob(player.level);
-		mob.exp_after_win = mob.Exp_to_player( player.level);
-		mob.money_from_mob = 30;
-		break;
-	}*/
-	return mob;
-}
-
-void map_generator(Player &player, Map& map)
-{
-	int x, y;
-	for (int i = 0; i < 5;i++)
-	{
-		x = 1 + rand() % (10 - 1 + 1);
-		y = 1 + rand() % (20 - 1 + 1);
-		if (map.map[x][y] == 'H' || map.map[x][y] == 'S' || map.map[x][y] == 'N'
-			|| map.map[x][y] == 'P' || map.map[x][y] == '|' || map.map[x][y] == 'B'
-			|| map.map[x][y] == '-' || map.map[x][y] == '_')
-		{
-			i--;
-			continue;
-		}
-		else
-		{
-			map.mobs.push_back(new Mob(MobStats(player,1)));
-			//map.map[x][y] = 'X';
-			if (map.mobs.size() > 0)
-			{
-				map.mobs[map.mobs.size()-1]->position = { y,x };
-			}
-			
-			x = 0;
-			y = 0;
-		}
-	}
-}
-
-/*
-Mob Mob_generator1(Mob &mob,Player &player)
-{
-	mob.armor = 5 + rand() % (10 - 5 + 1);
-	mob.life = 60 + rand() % (140 - 60 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob= 100 + rand() % (100 - 20 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	return mob;
-}
-Mob Mob_generator2(Mob& mob, Player& player)
-{
-	mob.armor = 10 + rand() % (20 - 10 + 1);
-	mob.life = 80 + rand() % (160 - 80 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob = 40 + rand() % (120 - 40 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	return mob;
-}
-Mob Mob_generator3(Mob& mob, Player& player)
-{
-	mob.armor = 15 + rand() % (25 - 15 + 1);
-	mob.life = 100 + rand() % (180 - 60 + 1);
-	mob.mob_lvl = mob.Lvl_mob(player.level);
-	mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
-	mob.exp_after_win = mob.Exp_to_player(player.level);
-	return mob;
-}*/
-
 int Fight(Player& player, Mob& mobek, int return_map)
 {
 	//system("cls");
 	int tura = 1;
 	int mana = 4;
 	int pom=0;
+	bool dodge = false;
 	bool crit = false;
 
 	player.Dmg_formula();
@@ -303,8 +177,12 @@ int Fight(Player& player, Mob& mobek, int return_map)
 			//cout << "Aura zablokowała:" <<(int)mobek.dmg*0.5<<" pkt obrażeń."<< endl;
 			CDrawText("Aura zablokowała : " + to_string((int)mobek.dmg * 0.5) + " pkt obrażeń.", { 107,14 }, 0x000b);
 		}
-
-		player.life = player.life - (mobek.dmg - player.armor);
+		dodge = player.DodgeIs();
+				if(crit)
+				{
+					player.life=player.life;
+				}
+				else player.life = player.life - (mobek.dmg - player.armor);
 		//cout << "Zadaje ci: " << mobek.dmg - player.armor << " pkt obrażeń" << endl;
 		CDrawText("Zadaje ci: : " + to_string(mobek.dmg - player.armor) + " pkt obrażeń.", { 107,14 }, 0x000b);
 
@@ -428,7 +306,7 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 	sellersItems.clear();
 }
 
-void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
+void LoadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
 {
 	allFood.push_back(Food("Bułka", "Można zjeść", 0.05f, 30, 2));
 	allFood.push_back(Food("Chleb", "Można zjeść", 0.05f, 30, 2));
@@ -445,30 +323,34 @@ void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Ar
 	allArmor.push_back(Armor("Skurzane ubranko", "", 1.0f, 500, 7, 2));
 }
 
+void LoadQuests(list<Mission>& mainQuest)
+{
+
+}
+
 void Game(Player &player, Map &map)
 {
 	system("cls");
 	
-	/*missje?*/
-	player.quest = new Mission("Quest", {5,5});
-
 	int x = 0, y = 0;
-	int return_map = map.Load1map();
-
-	map_generator(player, map);
+	int return_map = map.LoadHome(player.positon); //<TU
+	
+	if(return_map !=0)
+		map_generator(player, map);
 	map.ShowMap(player.positon);
 
 	vector<Food> allFood;
 	vector<Weapon> allWeapons;
 	vector<Armor> allArmor;
+	list<Mission> mainQuest;
 
 	Mob mob;
-	ReadGameAssets(allFood, allWeapons, allArmor);
-	
+	LoadGameAssets(allFood, allWeapons, allArmor);
+	LoadQuests(mainQuest);
+
 	map.ShowMap();
 	DrawBorder();
 
-	//int a = 0;
 
 	//clock_t endTime = clock() + 5 * CLOCKS_PER_SEC;
 	while (1)	//głowna petla gry
@@ -532,26 +414,25 @@ void Game(Player &player, Map &map)
 			map.ShowMap();
 		}
 		
-		
 		if (map.map[x][y] == 'S')		//sklep
 		{
 			Shop(player, allFood, allWeapons, allArmor);
 		}
-		if (map.map[x][y] == 'P')		//przejście
+		/*if (map.map[x][y] == 'P')		//przejście
 		{
 			if (return_map == 1)
 			{
 				//delete map.map;
-				map.Load2map();
+				map.Load2map(player.positon);
 				map_generator(player, map);
 			}
 			else if (return_map == 2)
 			{
 				//delete map.map;
-				map.Load3map();
+				map.Load3map(player.positon);
 				map_generator(player, map);
-			}/**/
-		}
+			}
+		}*/
 		
 		if (player.xp >= player.xpToNextLvl)	//lvl up
 		{
@@ -562,10 +443,13 @@ void Game(Player &player, Map &map)
 			map.ShowMap();
 		}
 
-		if (player.quest->IsOnMissionPoint(player.positon))
+		if ( map.IsNextMap(player.positon))
 		{
-			//player.quest->ShowMessege();
+			return_map = map.LoadMap(return_map + 1, player.positon);
+			ClearMapPlace();
+			map.ShowMap();
 		}
+
 		if(player.dead)
 		{
 			//cout << "Koniec gry." << endl;
@@ -584,21 +468,19 @@ int main()
 	srand(time(NULL));
 	GenerateWindow();
 	
-//	ShowGfx_NPC(102);
+	//ShowGfx_NPC(102);
 
 
 	//_getch();
 
 	Player player;
 	vector<string> s;
-	s.push_back("1 Rozpocznij nowa grę");
-	s.push_back("2 Wczytaj zapis");
-	s.push_back("3 wyjdź");
-
-	//TU ZACZYNA SIE GRA
+	s.push_back("Rozpocznij nowa grę");
+	s.push_back("Wczytaj zapis");
+	s.push_back("wyjdź");
 
 	Map map;
-	map.Load1map();
+	map.LoadHome(player.positon);
 
 	while (1)//główna 
 	{

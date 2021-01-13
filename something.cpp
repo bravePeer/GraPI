@@ -5,12 +5,36 @@
 
 void GenerateWindow()
 {
-	Font();
-	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
 	/*generowanie okna*/
+	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
 	HWND hwnd = GetConsoleWindow();
-	ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+	//ShowWindow(hwnd, SW_SHOWMAXIMIZED);
 	COORD c2 = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
+	CONSOLE_FONT_INFOEX cfi;
+
+	/*czcionka*/
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 0;    
+	cfi.dwFontSize.Y = 12;// Width of each character in the font
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
+	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+	
+	/*Ustalenie rozmiaru okna*/
+	for (short i = 0; i < 12; i++)
+	{
+		cfi.dwFontSize.Y = 24-i;
+		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+		c2 = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
+		if (c2.X >= 174 && c2.Y >= 43)
+			break;
+	}
+ 
+	c2.X = 174;
+	c2.Y = 42;
+	
 	SetConsoleScreenBufferSize(handlee, c2);
 	
 	SMALL_RECT sr;
@@ -27,19 +51,6 @@ void GenerateWindow()
 
 	//------
 	setlocale(LC_CTYPE, "Polish");	//<- polskie literki
-}
-
-void Font()
-{
-    CONSOLE_FONT_INFOEX cfi;
-    cfi.cbSize = sizeof(cfi);
-    cfi.nFont = 0;
-    cfi.dwFontSize.X = 0;                   // Width of each character in the font
-    cfi.dwFontSize.Y = 24;                  // Height
-    cfi.FontFamily = FF_DONTCARE;
-    cfi.FontWeight = FW_NORMAL;
-    std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
 
 int DrawMenu(vector<string>& option)

@@ -44,6 +44,7 @@ public:
 	void ShowQuests();
 
 	bool CritIs();
+	bool DodgeIs();
 
 private:
 

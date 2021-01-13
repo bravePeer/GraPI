@@ -193,7 +193,7 @@ void Player::UsePreset()
 	inteligence = 6;
 	agility = 3;
 	dodging = 4;
-	xp= 101;
+	//xp= 101;
 }
 
 void Player::ShowInventory()
@@ -329,13 +329,15 @@ int Player::Spell(int atak_moba)
 			if ((life + healing) > lifeMax)
 			{
 				life = lifeMax;
-				cout << "Zosta³eœ uzdrowiony!" << endl;
+				//cout << "Zosta³eœ uzdrowiony!" << endl;
+				CDrawText("Zosta³eœ uzdrowiony!", { 107,12 },0x009 );
 			}
 
 			if ((life + healing) <= lifeMax)
 			{
 				life = life + healing;
-				cout << "Zosta³eœ uzdrowiony!" << endl;
+				//cout << "Zosta³eœ uzdrowiony!" << endl;
+				CDrawText("Zosta³eœ uzdrowiony!", { 107,12 },0x009 );
 			}
 		}
 		return 0;
@@ -374,9 +376,16 @@ void Player::ShowQuests()
 		cout << quest->name << endl;
 	}
 }
+
 bool Player::CritIs()
 {
 	int help = 1 + rand() % (100-1+1);
 	if((crit_strike*3)>help) 
 		return true;
+}
+
+bool Player::DodgeIs()
+{
+	int help = 1 + rand() % (100-1+1);
+	if((dodging*3)>help) return true;
 }

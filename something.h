@@ -15,7 +15,6 @@ int DrawMenu(vector<string>& option, COORD c);
 void CDrawText(string s, COORD c, short textAtribute);
 void CDrawText(wstring s, COORD c, short textAtribute);
 
-void Font();
 /*Rysuje obramówke*/
 void DrawBorder();
 

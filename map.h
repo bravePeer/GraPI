@@ -22,16 +22,19 @@ public:
 	int IsFight(Point& playerPos);
 	void KillMob(int pos);
 
-	int ShowPlace();
-	int Load1map();
-	int Load2map();
-	int Load3map();
-	int LoadHome();
+	int LoadMap(int id, Point& point);
+	//int ShowPlace(Point& position);
+	int Load1map(Point& position);
+	int Load2map(Point& position);
+	int Load3map(Point& position);
+	int LoadHome(Point& position);
 
 	string map[41] = { "" };
 	string buf = "";
 	Point mapSize = Point(10, 10);
 	Point lastPlayerPos;
+	Point nextMap = { 0,0 };
+
 
 	/*Trzyma NPC i moby*/
 	vector<Mob*> mobs;
@@ -39,6 +42,10 @@ public:
 
 	bool CanMove(Point& point);
 	bool MoveToHome(int x,int y);
+	bool IsNextMap(Point& point);
 private:
 
 };
+
+void map_generator(Player& player, Map& map);
+Mob MobStats(Player& player, int return_map);

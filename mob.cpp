@@ -39,3 +39,4 @@ int Mob::Exp_to_player( int lvl_gracza)
 }
 
 
+
