@@ -26,8 +26,9 @@ public:
 	int Load1map();
 	int Load2map();
 	int Load3map();
+	int LoadHome();
 
-	string map[35] = { "" };
+	string map[41] = { "" };
 	string buf = "";
 	Point mapSize = Point(10, 10);
 	Point lastPlayerPos;
