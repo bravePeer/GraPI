@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "person.h"
 #include "mission.h"
 #include "something.h"
@@ -41,6 +42,8 @@ public:
 	void AddItem(Item* item);
 	/*Pokazuje questy*/
 	void ShowQuests();
+
+	bool CritIs();
 
 private:
 

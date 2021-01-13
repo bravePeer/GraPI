@@ -25,16 +25,34 @@ void console_clean()
 	system("cls");
 }
 
-Mob MobStats(Player &player)
+Mob MobStats(Player &player, int return_map)
 {
 	Mob mob;
-	int pom1 = 1 + rand() % (5 - 1 + 1);
-	int pom2 = 1 + rand() % (5 - 1 + 1);
-	int pom3 = 1 + rand() % (5 - 1 + 1);
-	int pom4 = 1 + rand() % (5 - 1 + 1);
-	int pom5 = 1 + rand() % (5 - 1 + 1);
-	switch (rand()%5+1)
+	if(return_map == 1)
 	{
+	mob.armor = 5 + rand() % (10 - 5 + 1);
+	mob.life = 60 + rand() % (140 - 60 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob= 100 + rand() % (100 - 20 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	}
+	else if(return_map == 2)
+	{
+		mob.armor = 10 + rand() % (20 - 10 + 1);
+	mob.life = 80 + rand() % (160 - 80 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob = 40 + rand() % (120 - 40 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	}
+	else if(return_map == 3)
+	{
+	mob.armor = 15 + rand() % (25 - 15 + 1);
+	mob.life = 100 + rand() % (180 - 60 + 1);
+	mob.mob_lvl = mob.Lvl_mob(player.level);
+	mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
+	mob.exp_after_win = mob.Exp_to_player(player.level);
+	}
+	/*{
 	case 1:
 		mob.life = player.life * 0.4;
 		mob.armor = player.armor * 0.1;
@@ -79,23 +97,9 @@ Mob MobStats(Player &player)
 		mob.exp_after_win = mob.Exp_to_player( player.level);
 		mob.money_from_mob = 30;
 		break;
-	}
+	}*/
 	return mob;
 }
-
-/*
-	mob1_1.life = player.life * 0.4;
-	mob1_1.armor = player.armor * 0.1;
-	int pom1 = player.dmg_output * 0.4;
-	mob1_1.dmg = 5 + rand() % ((pom1)-5 + 1);
-	mob1_1.mob_lvl = mob1_1.Lvl_mob(player.level);
-	mob1_1.exp_after_win = mob1_1.Exp_to_player(mob1_1.mob_lvl, player.level);
-	mob1_1.money_from_mob = 20;
-
-
-	boss.life = 300;						//do wyliczenia 
-	boss.armor = 40;
-	boss.dmg = 40 + rand() % (90-40+1);*/
 
 void map_generator(Player &player, Map& map)
 {
@@ -113,7 +117,7 @@ void map_generator(Player &player, Map& map)
 		}
 		else
 		{
-			map.mobs.push_back(new Mob(MobStats(player)));
+			map.mobs.push_back(new Mob(MobStats(player,1)));
 			//map.map[x][y] = 'X';
 			if (map.mobs.size() > 0)
 			{
@@ -126,6 +130,7 @@ void map_generator(Player &player, Map& map)
 	}
 }
 
+/*
 Mob Mob_generator1(Mob &mob,Player &player)
 {
 	mob.armor = 5 + rand() % (10 - 5 + 1);
@@ -152,100 +157,124 @@ Mob Mob_generator3(Mob& mob, Player& player)
 	mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
 	mob.exp_after_win = mob.Exp_to_player(player.level);
 	return mob;
-}
+}*/
 
 int Fight(Player& player, Mob& mobek, int return_map)
 {
-	system("cls");
+	//system("cls");
 	int tura = 1;
 	int mana = 4;
 	int pom=0;
-	
+	bool crit = false;
+
 	player.Dmg_formula();
 
 	while (player.life > 0 || mobek.life > 0)
 	{
-		cout << "Tura: " << tura << endl;
+		/*cout << "Tura: " << tura << endl;
 		cout << "p:" << pom << endl;
 		cout << "HP twojego bohatera: " << player.life << endl;
 		cout << "HP przeciwnika: " << mobek.life << endl;
 		cout << "Mana: " << mana << " /4" << endl;
 		cout << endl;
 		cout << "Wybierz atak!" << endl;
-		cout << endl;
-		
+		cout << endl;*/
+
+		CDrawText("Tura: "+to_string(tura), { 107,1 }, 0x0003);
+		CDrawText("p: " + to_string(pom), { 107,2 }, 0x0003);
+		CDrawText("HP twojego bohatera: " + to_string(player.life), { 107,3 }, 0x0003);
+		CDrawText("HP przeciwnika: " + to_string(mobek.life), { 107,4 }, 0x0003);
+		CDrawText("Mana: " + to_string(mana), { 107,5 }, 0x0003);
+		CDrawText("Wybierz atak! ", { 107,7 }, 0x0003);
 
 		for (int i = 0; i < 1; i++)
 		{
-			cout << endl;
-			cout << endl;
-			cout << endl;
+			//cout << endl;
+			//cout << endl;
+			//cout << endl;
 			vector<string> s;
 			s.push_back("Zwykły atak\n");
-			s.push_back("Umiejętność specjalna (potrzeba 4pkt many)\n");
-			switch (DrawMenu(s, { 0,6 }))
+			s.push_back("Umiejętność specjalna \n");
+			CDrawText("(potrzeba 4pkt many)", { 107,10}, 0x0003);
+
+			switch (DrawMenu(s, { 107,9 }))
 			{
 			case 0:
+				crit = player.CritIs();
+				if(crit)
+				{
+					player.dmg_output*=1.5;
+				}
 				mobek.life = mobek.life - (player.dmg_output - mobek.armor);
-				cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+				//cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
+				CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
+				if(crit)
+				{
+					player.dmg_output=player.dmg_output/1.5;
+				}
 				continue;
 			case 1:
 				if (player.profession == 2 && player.life == player.lifeMax)
 				{
-					cout << "Masz pełne zdrowie." << endl;
+					//cout << "Masz pełne zdrowie." << endl;
+					CDrawText("Masz pełne zdrowie. " , { 107,12 }, 0x000b);
+
 					//mobek.life = mobek.life - (player.dmg_output - mobek.armor);
 					//cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
 					i--;
 					break;
-					
 				}
-
 				else if (player.profession == 2 && mana == 4) 
 				{
 					mobek.life -= player.Spell(mobek.dmg);
 					mana = 0;
 				}
-
 				else if (player.profession == 1 && mana == 4) 
 				{
 					pom = 3;
-					cout << "Aktywujesz wokół siebie aurę która osłabi przyjmowane przez ciebie ciosy!" << endl << endl;
+					//cout << "Aktywujesz wokół siebie aurę która osłabi przyjmowane przez ciebie ciosy!" << endl << endl;
+					CDrawText("Aktywujesz wokół siebie aurę,", { 107,12 }, 0x000b);
+					CDrawText("która zwiększy pancerz", { 107,13 }, 0x000b);
+
 					mobek.dmg=(int)player.Spell(mobek.dmg);
 					mana = 0;
 
 				}
-
 				else if (player.profession == 3 && mana == 4) 
 				{
 					
-					cout << "Wypuszczasz deszcz strzał..." << endl << endl;
-					cout << "Zadajesz: " << player.Spell(mobek.dmg) << " pkt obrażeń" << endl;
+					//cout << "Wypuszczasz deszcz strzał..." << endl << endl;
+					//cout << "Zadajesz: " << player.Spell(mobek.dmg) << " pkt obrażeń" << endl;
+					CDrawText("Wypuszczasz deszcz strzał...", { 107,12 }, 0x000b);
+					CDrawText("Zadajesz: " +to_string( player.Spell(mobek.dmg)) + " pkt obrażeń", { 107,12 }, 0x000b);
+
 					mana = 0;
 				}
-
 				 else if (mana != 4)
 				{
-					cout << "Nie masz many aby wykonać ten atak." << endl;
+					//cout << "Nie masz many aby wykonać ten atak." << endl;
+					CDrawText("Nie masz many!", { 107,12 }, 0x000b);
 					i--;
 				}
-				
 			}
-		
 		}
 
 		if (pom >0 && player.profession==1) pom--;
 		if (pom == 0) mobek.dmg *= 2;
 
-
 		if (mana < 4) mana++;
-		cout << endl;
+		//cout << endl;
 
 		if (mobek.life <= 0)
 		{
-			cout << endl;
-			cout << "Brawo wygrałeś tę walkę!" << endl;
-			cout << "Zdobywasz: " <<mobek.exp_after_win<<" pkt doświadczenia."<< endl;
-			cout << "Za wygraną walkę zyskujesz: " <<mobek.money_from_mob<<" złota."<< endl;
+		//	cout << endl;
+		//	cout << "Brawo wygrałeś tę walkę!" << endl;
+		//	cout << "Zdobywasz: " <<mobek.exp_after_win<<" pkt doświadczenia."<< endl;
+		//	cout << "Za wygraną walkę zyskujesz: " <<mobek.money_from_mob<<" złota."<< endl;
+			ClearInfoPlace();
+			CDrawText("Brawo wygrałeś tę walkę!", { 107,1   }, 0x000b);
+			CDrawText("Zdobywasz: " +to_string( mobek.money_from_mob) + "G", { 107,2 }, 0x000b);
+
 			mobek.dead = true;
 			player.money += mobek.money_from_mob;
 			player.xp += mobek.exp_after_win;
@@ -253,8 +282,10 @@ int Fight(Player& player, Mob& mobek, int return_map)
 			return 1;	//wygra
 		}
 
-		cout << endl;
-		cout << "Twój przeciwnik uderza..." << endl;
+		//cout << endl;
+		//cout << "Twój przeciwnik uderza..." << endl;
+		GetKey();
+		CDrawText("Twój przeciwnik uderza...", { 107,12 }, 0x000b);
 		if (return_map == 1)
 		{
 			mobek.dmg= 20 + rand() % (30 - 20 + 1);
@@ -269,24 +300,29 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		}
 		if (player.profession == 1 && pom > 0)
 		{
-			cout << "Aura zablokowała:" <<(int)mobek.dmg*0.5<<" pkt obrażeń."<< endl;
+			//cout << "Aura zablokowała:" <<(int)mobek.dmg*0.5<<" pkt obrażeń."<< endl;
+			CDrawText("Aura zablokowała : " + to_string((int)mobek.dmg * 0.5) + " pkt obrażeń.", { 107,14 }, 0x000b);
 		}
 
 		player.life = player.life - (mobek.dmg - player.armor);
-		cout << "Zadaje ci: " << mobek.dmg - player.armor << " pkt obrażeń" << endl;
+		//cout << "Zadaje ci: " << mobek.dmg - player.armor << " pkt obrażeń" << endl;
+		CDrawText("Zadaje ci: : " + to_string(mobek.dmg - player.armor) + " pkt obrażeń.", { 107,14 }, 0x000b);
 
 		if (player.life <= 0)
 		{
-			cout << endl;
-			cout << "Niestety przegrałeś walkę..." << endl;
-			player.life = 1;
-			//zmienić pozycje gracza
+			//cout << endl;
+			//cout << "Poległeś na polu bitwy..." << endl;
+			CDrawText("Poległeś na polu bitwy...", { 107,14 }, 0x000b);
+			player.dead = true;
+			break;
 			
 			return 0;	//przegra
 		}
 
 		tura++;
-		console_clean();
+		GetKey();
+		ClearInfoPlace();
+		//console_clean();
 	}
 	return 1;
 }
@@ -296,11 +332,12 @@ int SellItem(Player &player)
 	vector<string> itNames;
 	for (int i = 0; i < player.inventory.size(); i++)
 	{
-		itNames.push_back(player.inventory[i]->name + " " + to_string(player.inventory[i]->weight) + "Kg " + to_string(player.inventory[i]->price) + "PLN");
+		itNames.push_back(player.inventory[i]->name + " " + [](string s)->string { s.erase(s.end() - 4, s.end()); return s; }(to_string(player.inventory[i]->weight)) + "Kg " + to_string(player.inventory[i]->price) + "G");
 	}
 	itNames.push_back("Powrót");
 
-	return DrawMenu(itNames);
+	ClearInfoPlace();
+	return DrawMenu(itNames, {107,1});
 }
 
 int BuyItem( vector<Item*> &sellersItems)
@@ -308,11 +345,12 @@ int BuyItem( vector<Item*> &sellersItems)
 	vector<string> itNames;
 	for (int i = 0; i < sellersItems.size(); i++)
 	{
-		itNames.push_back(sellersItems[i]->name + " " + to_string(sellersItems[i]->weight) + "Kg " + to_string(sellersItems[i]->price) + "PLN");
+		itNames.push_back(sellersItems[i]->name + " " + [](string s)->string { s.erase(s.end() - 4, s.end()); return s; }(to_string(sellersItems[i]->weight)) + "Kg " + to_string(sellersItems[i]->price) + "G");
 	}
 	itNames.push_back("Powrót");
-
-	return  DrawMenu(itNames);
+	
+	ClearInfoPlace();
+	return  DrawMenu(itNames, {107,1});
 }
 
 void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
@@ -342,7 +380,9 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 		//sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 99 + i * 1));
 	}
 
-	switch (DrawMenu(s))
+	ClearInfoPlace();
+
+	switch (DrawMenu(s, {107, 1}))
 	{
 	case 0:
 		it = BuyItem( sellersItems);
@@ -352,32 +392,32 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 			{
 				player.money -= sellersItems[it]->price;
 				player.inventory.push_back(sellersItems[it]);
-				CDrawText("Kupiłeś " + player.inventory[player.inventory.size() - 1]->name, { 5,5 }, 0x0003);
+				CDrawText("Kupiłeś " + player.inventory[player.inventory.size() - 1]->name, { 107,30 }, 0x0003);
 			}
 			else
 			{
 				it = sellersItems.size();
-				CDrawText("Nie stać Cię!", { 5,5 }, 0x000c);
+				CDrawText("Nie stać Cię!", { 107, 30 }, 0x000c);
 			}
-			_getch();
 		}
 		break;
 	case 1:
 		it = SellItem(player);
 		if (it < player.inventory.size())
 		{
-			CDrawText("Sprzedałeś: " + player.inventory[it]->name + " za: " + to_string(player.inventory[it]->price), { 5,5 }, 0x000c);
+			CDrawText("Sprzedałeś: " + player.inventory[it]->name + " za: " + to_string(player.inventory[it]->price), {107,30 }, 0x000c);
 
 			player.money += player.inventory[it]->price;
 			player.inventory[it] = NULL;
 			player.inventory.erase(player.inventory.begin() + it);
-			_getch();
 		}
 		it = sellersItems.size();
 		break;
 	case 2:
 		break;
 	}
+
+	//GetKey();
 
 	//Czyszczenie ekwipunku sprzedawcy
 	s.clear();
@@ -409,6 +449,7 @@ void ReadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Ar
 void Game(Player &player, Map &map)
 {
 	system("cls");
+	
 	/*missje?*/
 	player.quest = new Mission("Quest", {5,5});
 
@@ -423,47 +464,56 @@ void Game(Player &player, Map &map)
 	vector<Armor> allArmor;
 
 	Mob mob;
-
 	ReadGameAssets(allFood, allWeapons, allArmor);
+	
+	map.ShowMap();
+	DrawBorder();
+
+	//int a = 0;
 
 	while (1)	//głowna petla gry
 	{
-		system("cls");
-		//DrawBorder();
+		
+		//system("cls");
 		map.ShowMap(player.positon);
 
 		//Osługa klawiatury
-		int a = _getch();
-		switch (a)
+		switch (GetKey())
 		{
 		case 'w':
 			player.positon.y -= 1;
-			if(player.positon.y < 1)
+			if (player.positon.y < 1 || !map.CanMove(player.positon))
 				player.positon.y += 1;
 			break;
 		case 's':
 			player.positon.y += 1;
-			if (player.positon.y > map.mapSize.y - 1)
+			if (player.positon.y > map.mapSize.y - 1 || !map.CanMove(player.positon))
 				player.positon.y -= 1;
 			break;
 		case 'a':
 			player.positon.x -= 1;
-			if (player.positon.x < 1)
+			if (player.positon.x < 1 || !map.CanMove(player.positon))
 				player.positon.x += 1;
 			break;
 		case 'd':
 			player.positon.x += 1;
-			if (player.positon.x > map.mapSize.x - 1)
+			if (player.positon.x > map.mapSize.x - 1 || !map.CanMove(player.positon))
 				player.positon.x -= 1;
 			break;
 		case 'i':
+			ClearInfoPlace();
 			player.ShowInventory();
+			ClearInfoPlace();
 			break;
 		case 'k':
+			ClearInfoPlace();
 			player.ShowStats();
+			ClearInfoPlace();
 			break;
 		case 'j':
+			ClearInfoPlace();
 			player.ShowQuests();
+			ClearInfoPlace();
 			break;
 		}
 		
@@ -472,75 +522,53 @@ void Game(Player &player, Map &map)
 		
 		if (int buf = map.IsFight(player.positon))		//walka
 		{
-			cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
-
-			/*if (Fight(player, *map.mobs[buf-1]))
+			//cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
+			X(1, 0x000c ,"Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!");
+			if (Fight(player, *map.mobs[buf-1],return_map))
 			{
 				map.KillMob(buf - 1);
 			}
-
-			_getch();*/
-			if (return_map == 1)
-			{
-				mob = Mob_generator1(mob, player);
-			}
-			else if (return_map == 2)
-			{
-				mob = Mob_generator2(mob, player);
-			}
-			else if (return_map == 3)
-			{
-				mob = Mob_generator3(mob, player);
-			}
-			Fight(player, mob,return_map);
-
-			if (mob.dead == true);
-			
+			//map.ShowMap();
 		}
 		
-		else if (map.map[x][y] == 'H')		//baza
-		{
-
-		}
-		else if (map.map[x][y] == 'N')		//npc
-		{
-
-		}
-		else if (map.map[x][y] == '-' || map.map[x][y] == '|' || map.map[x][y] == '+' || map.map[x][y] == '_')
-		{
-			if (a == 'w')	x = x - 1;
-			if (a == 'a')	y = y + 1;
-			if (a == 's')	x = x + 1;
-			if (a == 'd')	y = y - 1;
-		}
-		else if (map.map[x][y] == 'S')		//sklep
+		
+		if (map.map[x][y] == 'S')		//sklep
 		{
 			Shop(player, allFood, allWeapons, allArmor);
 		}
 		else if (map.map[x][y] == 'P')		//przejście
 		{
-			/*if (return_map == 1)
+			if (return_map == 1)
 			{
-				delete map.map;
+				//delete map.map;
 				map.Load2map();
 				map_generator(player, map);
 			}
 			else if (return_map == 2)
 			{
-				delete map.map;
+				//delete map.map;
 				map.Load3map();
 				map_generator(player, map);
-			}*/
+			}/**/
 		}
-		else if (player.xp >= player.xpToNextLvl)	//lvl up
+		
+		if (player.xp >= player.xpToNextLvl)	//lvl up
 		{
 			player.xp -= player.xpToNextLvl;
 			player.xpToNextLvl = (int)player.xpToNextLvl * 1.5;
+			player.level++;
+			player.Bonus_stats_per_lvl();
 		}
 
 		if (player.quest->IsOnMissionPoint(player.positon))
 		{
 			//player.quest->ShowMessege();
+		}
+		if(player.dead)
+		{
+			//cout << "Koniec gry." << endl;
+			X(1, 0x0004, "Koniec gry");
+			break;
 		}
 	}
 	
@@ -552,22 +580,24 @@ void Game(Player &player, Map &map)
 int main()
 {
 	srand(time(NULL));
-
 	GenerateWindow();
+	
+//	ShowGfx_NPC(102);
 
-	
-	
+
+	//_getch();
+
 	Player player;
 	vector<string> s;
 	s.push_back("1 Rozpocznij nowa grę");
 	s.push_back("2 Wczytaj zapis");
 	s.push_back("3 wyjdź");
-	
+
 	//TU ZACZYNA SIE GRA
 
 	Map map;
 	map.Load1map();
-	
+
 	while (1)//główna 
 	{
 		switch (DrawMenu(s))

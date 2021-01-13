@@ -22,7 +22,7 @@ void Player::Select_profession()
 	s.push_back("Mag (Umiejêtnoœæ specjalna: Leczenie Ran)");
 	s.push_back("£owca (Umiejêtnoœæ specjalna: Deszcz Strza³)");
 
-	switch (DrawMenu(s))
+	switch (DrawMenu(s, {1,1}))
 	{
 	case 0:
 		profession = 1;
@@ -65,7 +65,7 @@ void Player::CreateCharacter()
 
 	for (int i = 15; i > 0; i--)
 	{
-
+		ShowStats();
 		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
 		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
 		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
@@ -112,43 +112,55 @@ void Player::CreateCharacter()
 
 void Player::Bonus_stats_per_lvl()
 {
-	int pom;
-	cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
+	
+	//cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
+
+	X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
+
+	vector<string> s;
+	s.push_back("Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)");
+	s.push_back("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)");
+	s.push_back("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)");
+	s.push_back("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)");
+	s.push_back("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)");
+	s.push_back("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)");
+
 	for (int i = 2; i > 0; i--)
 	{
-		system("cls");
-		cout << "Rozdaj punkty umiejêtnoœci:" << endl;
+		ShowStats();
+		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
 		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
 		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
 		cout << "3 - Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)" << endl;
 		cout << "4 - Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)" << endl;
 		cout << "5 - Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)" << endl;
 		cout << "6 - Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)" << endl;
-		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;
-		cin >> pom;
-		switch (pom)
+		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;*/
+
+		//cin >> pom;
+		switch (DrawMenu(s))
 		{
-		case'1':
+		case 0:
 			strength++;
 			break;
-
-		case'2':
+		
+		case 1:
 			inteligence++;
 			break;
-
-		case'3':
+		
+		case 2:
 			agility++;
 			break;
-
-		case'4':
+		
+		case 3:
 			accuracy++;
 			break;
-
-		case'5':
+		
+		case  4:
 			dodging++;
 			break;
-
-		case'6':
+		
+		case  5:
 			crit_strike++;
 			break;
 
@@ -156,16 +168,23 @@ void Player::Bonus_stats_per_lvl()
 			i++;
 			break;
 		}
-		pom = '0';
 	}
 }
 
 void Player::UsePreset()
 {
-	name = "Prefab Testwy";
+	name = "Alicja Zalewska";
+	sex = 'k';
 	lifeMax = 100;
 	life = lifeMax;
-	profession = 1;
+	profession = 2;
+	money = 1000;
+	
+	accuracy = 2;
+	strength = 7;
+	inteligence = 6;
+	agility = 3;
+	dodging = 4;
 }
 
 void Player::ShowInventory()
@@ -176,16 +195,19 @@ void Player::ShowInventory()
 	Armor* armor = NULL;
 
 	vector<string> s;
+	
+	CDrawText("Ekwipunek", { 107,1 }, 0x000a);
+	CDrawText("Posiadasz" + to_string(money) + "G", { 107, 2 }, 0x0003);
 
 	if (inventory.size() > 0)
 	{
-		cout << "Ekwipunek\t Pieni¹dze: " << money << endl;
+		//cout << "Ekwipunek\t Pieni¹dze: " << money << endl;
 		for (int i = 0; i < inventory.size(); i++)
 		{
 			s.push_back(inventory[i]->name);
 		}
 		s.push_back("Powrot");
-		buf = DrawMenu(s, {5,5});
+		buf = DrawMenu(s, {107,4});
 		if (buf == inventory.size())
 			return;
 
@@ -230,7 +252,7 @@ void Player::ShowInventory()
 	}
 	else
 	{
-		cout << "Nic nie masz w ekwipunku!" << endl;
+		CDrawText("Twók plecak jest pusty!", { 107, 4 }, 0x000c);
 		_getch();
 	}
 	delete food;
@@ -238,24 +260,36 @@ void Player::ShowInventory()
 
 void Player::ShowStats()	
 {
-	cout << name << " poziom:" << level << " punkty doswiadczenia: " << xp << endl << endl;
+	CDrawText(name, { 107, 1 }, 0x0003);
+	sex == 'm' ? CDrawText(L"\u2642", {(short) name.length() + 108, 1 }, 0x0003) : CDrawText(L"\u2640", { (short)name.length() + 108, 1 }, 0x0003);
+	CDrawText("Poziom: " +to_string( level), {107, 2}, 0x0003);
+	CDrawText("PD: " + to_string(xp), { 107,3 }, 0x0003);
+	CDrawText("¯ycie: " + to_string(life) + '/' + to_string(lifeMax), { 107,4 }, 0x0003);
+	CDrawText("Si³a: " + to_string(strength), { 107,5 }, 0x0003);
+	CDrawText("Inteligencja: " + to_string(inteligence), { 107,6 }, 0x0003);
+	CDrawText("Celnoœæ: " + to_string(accuracy), { 107,7 }, 0x0003);
+	CDrawText("Zrêcznoœæ: " + to_string(agility), { 107,8 }, 0x0003);
+	CDrawText("Uniki: "+ to_string(dodging), { 107,9 }, 0x0003);
+/*	cout << name << " poziom:" << level << " punkty doswiadczenia: " << xp << endl << endl;
 	cout << "¯ycie: " << life << "/" << lifeMax << endl;
 	cout << "Si³a: " << strength << endl;
 	cout << "Inteligencja" << inteligence << endl;
 	cout << "Celnoœæ" << accuracy << endl;
 	cout << "Zrêcznoœæ" << agility << endl;
-	cout << "Uniki" << dodging << endl;
+	cout << "Uniki" << dodging << endl;*/
 
 	if (equipedWeapon != NULL)
-		cout << "Bron: " << equipedWeapon->name <<" atak:"<< equipedWeapon->strength<< endl;
+		CDrawText("Broñ: " + equipedWeapon->name + " atak:" + to_string( equipedWeapon->strength), { 107, 10 }, 0x0003);
 	else
-		cout << "Brak broni" << endl;
+		CDrawText("Brak broni", { 107, 10 }, 0x0001);
+
 
 	if (equipedArmor != NULL)
-		cout << "Pancerz: " << equipedArmor->name <<" pancerz: " << equipedArmor->armor<< endl;
+		CDrawText("Pancerz: " + equipedArmor->name + " pancerz:" + to_string(equipedArmor->armor), { 107, 11 }, 0x0003);
 	else
-		cout << "Brak pancerza" << endl;
-	_getch();
+		CDrawText("Brak pancerza", { 107, 11 }, 0x0001);
+
+	//_getch();
 }
 
 void Player::AddItem(Item* item)
@@ -329,4 +363,10 @@ void Player::ShowQuests()
 	{
 		cout << quest->name << endl;
 	}
+}
+bool Player::CritIs()
+{
+	int help = 1 + rand() % (100-1+1);
+	if((crit_strike*3)>help) 
+		return true;
 }

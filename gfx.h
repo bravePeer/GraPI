@@ -3,6 +3,7 @@
 #include <vector>
 #include <Windows.h>
 #include <conio.h>
+#include "map.h"
 
 using namespace std;
 
@@ -18,4 +19,8 @@ void TakeGfx_MiniBoss(int id);
 void ShowGfx_Boss(int id);
 void TakeGfx_Boss(int id);
 
+void ShowGfx_Envi(int id);
+void TakeGfx_Envi(int id);
 
+void ShowGfx_Hero(int id);
+void TakeGfx_Hero(int id);

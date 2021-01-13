@@ -14,6 +14,7 @@ public:
 	Map();
 	~Map();
 	void ShowMap(Point& playerPos);
+	void ShowMap( );
 	void Go(char d);
 	float Distance(Point p1, Point p2);
 	float Propability(Point p1, Point p2);
@@ -26,12 +27,17 @@ public:
 	int Load2map();
 	int Load3map();
 
-	string map[12];
+	string map[35] = { "" };
+	string buf = "";
 	Point mapSize = Point(10, 10);
+	Point lastPlayerPos;
 
 	/*Trzyma NPC i moby*/
 	vector<Mob*> mobs;
 	vector<Person*> people;
+
+	bool CanMove(Point& point);
+	bool MoveToHome(int x,int y);
 private:
 
 };

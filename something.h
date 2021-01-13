@@ -13,8 +13,17 @@ int DrawMenu(vector<string>& option, COORD c);
 /*Wypisuje napis w odpowiednim miejscu i z atrybutem (0x1234)
 1- nwm 2- chyba podkreslenie 3-tlo 4-tekst*/
 void CDrawText(string s, COORD c, short textAtribute);
+void CDrawText(wstring s, COORD c, short textAtribute);
+
 void Font();
 /*Rysuje obramówke*/
 void DrawBorder();
-void ShowGfx(int id);
-void TakeGfx(int id);
+
+void ClearPlace(COORD pos, COORD size);
+void ClearMapPlace();
+void ClearInfoPlace();
+/*wypisuje dialog*/
+//void X(short n, ...);
+void X(short n, short textAtribute, ...);
+
+int GetKey();
