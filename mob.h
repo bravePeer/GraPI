@@ -16,7 +16,8 @@ public:
 	Mob();
 	Mob(Point p);
 	~Mob();
-
+	
+	string name;
 	bool dead = false;
 	int life = 1;
 	int armor = 0;

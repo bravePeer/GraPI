@@ -66,8 +66,9 @@ int Map::LoadHome(Point& position)
 	
 	position = {47,22};		//pozycja gracza
 	nextMap =  {61,19};		//przejscie do nastepnej mapy
+	prevMap =  {61,19};		
 	
-	//if (position.x == )
+	if (position.x == )
 	
 
 	return 0;
@@ -132,11 +133,11 @@ int Map::Load1map(Point& position)
 	mapSize = Point(106,41);
 
 	nextMap =  {105,39};	//przejscie do nastepnej mapy
-	prevMap =  {6,4};		//powrot do poprzedniej mapy
+	prevMap =  {5,4};		//powrot do poprzedniej mapy
 	
 	//warunki powrotu do poprzedniej mapy
-	if (position.x == 47 && position.y == 22)
-		position = { 6,5 };		//pozycja gracza
+	if (position.x == 61 && position.y == 19)
+		position = { 5,5 };		//pozycja gracza
 	else if (position.x == 2 && position.y == 39)
 		position = { 104, 39 };
 
@@ -341,8 +342,7 @@ bool Map::IsNextMap(Point& point)
 bool Map::IsPrevMap(Point& point)
 {
 	if (prevMap == point)
-	return true;
-	else 
+		return true; 
 	return false;
 }
 

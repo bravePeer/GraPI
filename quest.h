@@ -98,7 +98,7 @@ public:
 	void UpdateQuest();
 	bool IsQuestDone(Player& player, Map& map);
 
-	Point p1 = Point(6, 4);
+	Point p1 = Point(6, 5);
 };
 
 class MainQuest3 : public Quest

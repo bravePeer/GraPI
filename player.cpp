@@ -116,7 +116,8 @@ void Player::Bonus_stats_per_lvl()
 	
 	//cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
 
-	X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
+	//X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
+	CDrawText("Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.", { 107,1 }, 0x0002);
 	GetKey();
 
 	ClearMapPlace();
@@ -131,11 +132,10 @@ void Player::Bonus_stats_per_lvl()
 
 	for (int i = 2; i > 0; i--)
 	{
-		X(-1, 0x0002, "Pozosta³e punkty:   do rozdania.");
-		CDrawText(to_string(i), { 55,28 }, 0x0002);
 		ShowStats();
+		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 107,10 }, 0x0002);
 
-		switch (DrawMenu(s, { 109,10 }))
+		switch (DrawMenu(s, { 107,3 }))
 		{
 		case 0:
 			strength++;
