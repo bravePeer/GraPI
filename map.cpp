@@ -67,6 +67,7 @@ int Map::LoadHome(Point& position)
 	position = {47,22};		//pozycja gracza
 	nextMap =  {61,19};		//przejscie do nastepnej mapy
 	
+	//if (position.x == )
 	
 
 	return 0;
@@ -132,9 +133,12 @@ int Map::Load1map(Point& position)
 
 	nextMap =  {105,39};	//przejscie do nastepnej mapy
 	prevMap =  {6,4};		//powrot do poprzedniej mapy
-
-	if (position.x ==  47 && position.y == 22)
+	
+	//warunki powrotu do poprzedniej mapy
+	if (position.x == 47 && position.y == 22)
 		position = { 6,5 };		//pozycja gracza
+	else if (position.x == 2 && position.y == 39)
+		position = { 104, 39 };
 
 
 	return 1;
@@ -266,7 +270,7 @@ void Map::ShowMap()
 		//cout << endl;
 	}
 	CDrawText(L"\u220f", { (short)nextMap.x, (short)nextMap.y }, 0x0001);
-	CDrawText(L"\u2229", { (short)prevMap.x, (short)prevMap.y}, 0x0006);
+	CDrawText(L"\u2229", { (short)prevMap.x, (short)prevMap.y }, 0x0006);
 }
 
 /*Wyswietla mape i moby*/

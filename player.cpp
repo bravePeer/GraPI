@@ -1,4 +1,5 @@
 #include "player.h"
+#include "gfx.h"
 
 Player::Player()
 {
@@ -16,7 +17,7 @@ void Player::Select_profession()
 	s.push_back("Mag");
 	s.push_back("£owca");
 
-	switch (DrawMenu(s, {124,7}))
+	switch (DrawMenu(s, {124,5}))
 	{
 	case 0:
 		profession = 1;
@@ -37,17 +38,20 @@ void Player::CreateCharacter()
 {
 	//system("cls");
 	//cout << "Podaj imiê" << endl;
-	CDrawText("Podaj imiê ", { 124,3 }, 0x0003);
+	CDrawText("Podaj imiê ", { 124,1 }, 0x0003);
 	cin >> name;
 
 	do
 	{
 		//cout << "Podaj p³eæ(m/k)" << endl;
-		CDrawText("Podaj p³eæ(m/k)", { 124,5 }, 0x0003);
+		CDrawText("Podaj p³eæ(m/k)", { 124,3 }, 0x0003);
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
 	Select_profession();
+
+	ClearInfoPlace();
+	ShowGfx_Hero(-1);
 	
 	//char pom;
 	vector<string> s;
@@ -58,21 +62,22 @@ void Player::CreateCharacter()
 	s.push_back("Uniki");
 	s.push_back("Uderzenia krytyczne");
 
-	CDrawText("Si³a (Wp³ywa na obra¿enia zadawne wrogom.", { 124,19}, 0x0004);
-	CDrawText("Dobre dla wojownika)", { 124,20}, 0x0004);
-	CDrawText("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom.", { 124,21}, 0x0004);
-	CDrawText("Dobre dla ³owcy)", { 124,22}, 0x0004);
-	CDrawText("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom.", { 124,23}, 0x0004);
-	CDrawText("Dobre dla maga)", { 124,24}, 0x0004);
-	CDrawText("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)", {124,22}, 0x0004);
-	CDrawText("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)", { 124,23}, 0x0004);
-	CDrawText("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)", { 124,24}, 0x0004);
+	CDrawText("Si³a - (Wp³ywa na obra¿enia zadawne wrogom.", { 124,17+5}, 0x0004);
+	CDrawText("Dobre dla wojownika)", { 124,18 + 5 }, 0x0004);
+	CDrawText("Zrêcznoœæ - (Wp³ywa na obra¿enia zadawne wrogom.", { 124,19 + 5 }, 0x0004);
+	CDrawText("Dobre dla ³owcy)", { 124,20+5}, 0x0004);
+	CDrawText("Inteligencja - (Wp³ywa na obra¿enia zadawne wrogom.", { 124,21 + 5 }, 0x0004);
+	CDrawText("Dobre dla maga)", { 124,22 + 5 }, 0x0004);
+	CDrawText("Celnoœæ - (Zwiêksza szanse na trafienie)", {124,23 + 5 }, 0x0004);
+	CDrawText("Uniki - (Wp³ywa na czêstoœæ unikania ciosów)", { 124,24 + 5 }, 0x0004);
+	CDrawText("Uderzenia krytyczne -", { 124,25 + 5 }, 0x0004);
+	CDrawText("(Zwiêksza szanse na silniejszy cios))", { 124,26 + 5 }, 0x0004);
 
 	for (int i = 15; i > 0; i--)
 	{
 		ShowStats();
-		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 114,17 }, 0x0002);
-		switch (DrawMenu(s,{107,13}))
+		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 124,20 }, 0x0002);
+		switch (DrawMenu(s,{124,13}))
 		{
 		case 0:
 			strength++;
@@ -255,35 +260,28 @@ void Player::ShowInventory()
 
 void Player::ShowStats()	
 {
-	ClearInfoPlace();
-	CDrawText(name, { 107, 1 }, 0x0003);
-	sex == 'm' ? CDrawText(L"\u2642", {(short) name.length() + 108, 1 }, 0x0003) : CDrawText(L"\u2640", { (short)name.length() + 108, 1 }, 0x0003);
-	CDrawText("Poziom: " +to_string( level), {107, 2}, 0x0003);
-	CDrawText("PD: " + to_string(xp), { 107,3 }, 0x0003);
-	CDrawText("¯ycie: " + to_string(life) + '/' + to_string(lifeMax), { 107,4 }, 0x0003);
-	CDrawText("Si³a: " + to_string(strength), { 107,5 }, 0x0003);
-	CDrawText("Inteligencja: " + to_string(inteligence), { 107,6 }, 0x0003);
-	CDrawText("Celnoœæ: " + to_string(accuracy), { 107,7 }, 0x0003);
-	CDrawText("Zrêcznoœæ: " + to_string(agility), { 107,8 }, 0x0003);
-	CDrawText("Uniki: "+ to_string(dodging), { 107,9 }, 0x0003);
-/*	cout << name << " poziom:" << level << " punkty doswiadczenia: " << xp << endl << endl;
-	cout << "¯ycie: " << life << "/" << lifeMax << endl;
-	cout << "Si³a: " << strength << endl;
-	cout << "Inteligencja" << inteligence << endl;
-	cout << "Celnoœæ" << accuracy << endl;
-	cout << "Zrêcznoœæ" << agility << endl;
-	cout << "Uniki" << dodging << endl;*/
+	//ClearInfoPlace();
+	CDrawText(name, { 124, 1 }, 0x0003);
+	sex == 'm' ? CDrawText(L"\u2642", {(short) name.length() + 125, 1 }, 0x0003) : CDrawText(L"\u2640", { (short)name.length() + 108, 1 }, 0x0003);
+	CDrawText("Poziom: " +to_string( level), {124, 2}, 0x0003);
+	CDrawText("PD: " + to_string(xp), { 124,3 }, 0x0003);
+	CDrawText("¯ycie: " + to_string(life) + '/' + to_string(lifeMax), { 124,4 }, 0x0003);
+	CDrawText("Si³a: " + to_string(strength), { 124,5 }, 0x0003);
+	CDrawText("Inteligencja: " + to_string(inteligence), { 124,6 }, 0x0003);
+	CDrawText("Celnoœæ: " + to_string(accuracy), { 124,7 }, 0x0003);
+	CDrawText("Zrêcznoœæ: " + to_string(agility), { 124,8 }, 0x0003);
+	CDrawText("Uniki: "+ to_string(dodging), { 124,9 }, 0x0003);
 
 	if (equipedWeapon != NULL)
 		CDrawText("Broñ: " + equipedWeapon->name + " atak:" + to_string( equipedWeapon->strength), { 107, 10 }, 0x0003);
 	else
-		CDrawText("Brak broni", { 107, 10 }, 0x0001);
+		CDrawText("Brak broni", { 124, 10 }, 0x0001);
 
 
 	if (equipedArmor != NULL)
 		CDrawText("Pancerz: " + equipedArmor->name + " pancerz:" + to_string(equipedArmor->armor), { 107, 11 }, 0x0003);
 	else
-		CDrawText("Brak pancerza", { 107, 11 }, 0x0001);
+		CDrawText("Brak pancerza", { 124, 11 }, 0x0001);
 
 	//_getch();
 }
