@@ -383,8 +383,6 @@ void X(short n, short textAtribute, ...)
 	short lenghtT = 0;
 	short x = 52, y = 29;
 	
-
-
 	for (short i = 0; i < n; i++)
 	{
 		text[i] = va_arg(arg, char*);

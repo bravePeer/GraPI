@@ -142,7 +142,7 @@
     <ClInclude Include="gfx.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="map.h" />
-    <ClInclude Include="mission.h" />
+    <ClInclude Include="quest.h" />
     <ClInclude Include="mob.h" />
     <ClInclude Include="person.h" />
     <ClInclude Include="player.h" />
@@ -154,7 +154,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="mission.cpp" />
+    <ClCompile Include="quest.cpp" />
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="person.cpp" />
     <ClCompile Include="player.cpp" />

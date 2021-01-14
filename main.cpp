@@ -14,7 +14,7 @@
 #include "something.h"
 #include "point.h"
 #include "gfx.h"
-#include <map>
+#include "quest.h"
 
 using namespace std;
 
@@ -330,9 +330,11 @@ void LoadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Ar
 	allArmor.push_back(Armor("Skurzane ubranko", "", 1.0f, 500, 7, 2));
 }
 
-void LoadQuests(list<Mission>& mainQuest)
+void LoadQuests(list<Quest*>& mainQuest)
 {
-
+	mainQuest.push_back(new MainQuest0());
+	mainQuest.push_back(new MainQuest1());
+	mainQuest.push_back(new MainQuest2());
 }
 
 void Game(Player &player, Map &map)
@@ -349,7 +351,7 @@ void Game(Player &player, Map &map)
 	vector<Food> allFood;
 	vector<Weapon> allWeapons;
 	vector<Armor> allArmor;
-	list<Mission> mainQuest;
+	list<Quest*> mainQuest;
 
 	Mob mob;
 	LoadGameAssets(allFood, allWeapons, allArmor);
@@ -425,21 +427,20 @@ void Game(Player &player, Map &map)
 		{
 			Shop(player, allFood, allWeapons, allArmor);
 		}
-		/*if (map.map[x][y] == 'P')		//przejście
+		
+		/*Zabawa z questami*/
+		if (mainQuest.size() > 0)
 		{
-			if (return_map == 1)
+			if (mainQuest.front()->IsQuestDone(player.positon))
 			{
-				//delete map.map;
-				map.Load2map(player.positon);
-				map_generator(player, map);
+				mainQuest.pop_front();
+				if (mainQuest.size() > 0)
+				{
+					mainQuest.front()->CreateQuest();
+				}
 			}
-			else if (return_map == 2)
-			{
-				//delete map.map;
-				map.Load3map(player.positon);
-				map_generator(player, map);
-			}
-		}*/
+			mainQuest.front()->UpdateQuest();
+		}
 		
 		if (player.xp >= player.xpToNextLvl)	//lvl up
 		{
@@ -468,6 +469,7 @@ void Game(Player &player, Map &map)
 	allArmor.clear();
 	allWeapons.clear();
 	allFood.clear();
+	mainQuest.clear();	//<wycieki mozliwe xd chyba xd
 }
 
 int main()

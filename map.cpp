@@ -64,6 +64,7 @@ int Map::LoadHome(Point& position)
 	map[40] = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
 	mapSize = Point(106, 41);
 	
+	/*Teoretycznie moby czysci*/
 	for (int i = 0; i < mobs.size(); i++)
 	{
 		delete mobs[i];
@@ -75,8 +76,8 @@ int Map::LoadHome(Point& position)
 	}
 	people.clear();
 
-	position = { 47,22 };
-	nextMap = { 61,19};
+	position = { 47,22 };	//pozycja gracza
+	nextMap = { 61,19};		//przejscie do nastepnej mapy
 	return 0;
 }
 

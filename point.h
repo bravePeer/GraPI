@@ -11,3 +11,4 @@ struct Point
 Point operator+ (Point& p1, Point& p2);
 Point operator- (Point& p1, Point& p2);
 bool operator== (Point& p1, Point& p2);
+ 

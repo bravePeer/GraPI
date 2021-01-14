@@ -27,3 +27,4 @@ bool operator==(Point& p1, Point& p2)
 	else
 		return 0;
 }
+ 

@@ -23,6 +23,8 @@ void ClearMapPlace();
 void ClearInfoPlace();
 /*wypisuje dialog*/
 //void X(short n, ...);
+/*n > liczba linijek, textAtt.. > kolor, tyle ile |n| tyle argumentow ""
+gdy n < 0 to nie czeka na przycisk*/
 void X(short n, short textAtribute, ...);
 
 int GetKey();

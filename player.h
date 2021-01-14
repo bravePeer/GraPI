@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "person.h"
-#include "mission.h"
+#include "quest.h"
 #include "something.h"
 #include "mob.h"
 
@@ -30,7 +30,7 @@ public:
 	void Bonus_stats_per_lvl(); 
 	//dodatkowe dodawanie statów przy nowych levelach
 	
-	Mission* quest = NULL;
+	Quest* quest = NULL;
 
 	void CreateCharacter();
 	void UsePreset();
