@@ -34,6 +34,7 @@ public:
 	Point mapSize = Point(10, 10);
 	Point lastPlayerPos;
 	Point nextMap = { 0,0 };
+	Point prevMap = { 0,0 };
 
 
 	/*Trzyma NPC i moby*/
@@ -43,9 +44,10 @@ public:
 	bool CanMove(Point& point);
 	bool MoveToHome(int x,int y);
 	bool IsNextMap(Point& point);
+	bool IsPrevMap(Point& point);
+	void GenerateMobs(int level);
 private:
 
 };
 
-void map_generator(Player& player, Map& map);
-Mob MobStats(Player& player, int return_map);
+//void map_generator(Player& player, Map& map);

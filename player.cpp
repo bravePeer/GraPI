@@ -6,23 +6,17 @@ Player::Player()
 
 Player::~Player()
 {
-	delete quest;
+//	delete quest;
 }
 
 void Player::Select_profession()
 {
-	/*int pom;
-	cout << "Wybierz klasê postaci:" << endl;
-	cout << "1 - Wojownik (Umiejêtnoœæ specjalna: Aura Pancerza)" << endl;
-	cout << "2 - Mag (Umiejêtnoœæ specjalna: Leczenie Ran)" << endl;
-	cout << "3 - £owca (Umiejêtnoœæ specjalna: Deszcz Strza³)" << endl;
-	cin >> pom;*/
 	vector<string> s;
-	s.push_back("Wojownik (Umiejêtnoœæ specjalna: Aura Pancerza)");
-	s.push_back("Mag (Umiejêtnoœæ specjalna: Leczenie Ran)");
-	s.push_back("£owca (Umiejêtnoœæ specjalna: Deszcz Strza³)");
+	s.push_back("Wojownik");
+	s.push_back("Mag");
+	s.push_back("£owca");
 
-	switch (DrawMenu(s, {0,1}))
+	switch (DrawMenu(s, {124,7}))
 	{
 	case 0:
 		profession = 1;
@@ -41,14 +35,15 @@ void Player::Select_profession()
 
 void Player::CreateCharacter()
 {
+	//system("cls");
 	//cout << "Podaj imiê" << endl;
-	CDrawText("Podaj imiê ", { 1,1 }, 0x0003);
+	CDrawText("Podaj imiê ", { 124,3 }, 0x0003);
 	cin >> name;
 
 	do
 	{
-		cout << "Podaj p³eæ(m/k)" << endl;
-		CDrawText("Podaj p³eæ(m/k)", { 1,1 }, 0x0003);
+		//cout << "Podaj p³eæ(m/k)" << endl;
+		CDrawText("Podaj p³eæ(m/k)", { 124,5 }, 0x0003);
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
@@ -56,27 +51,28 @@ void Player::CreateCharacter()
 	
 	//char pom;
 	vector<string> s;
-	s.push_back("Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)");
-	s.push_back("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)");
-	s.push_back("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)");
-	s.push_back("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)");
-	s.push_back("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)");
-	s.push_back("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)");
+	s.push_back("Si³a");	
+	s.push_back("Zrêcznoœæ");	
+	s.push_back("Inteligencja");	
+	s.push_back("Celnoœæ");	
+	s.push_back("Uniki");
+	s.push_back("Uderzenia krytyczne");
+
+	CDrawText("Si³a (Wp³ywa na obra¿enia zadawne wrogom.", { 124,19}, 0x0004);
+	CDrawText("Dobre dla wojownika)", { 124,20}, 0x0004);
+	CDrawText("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom.", { 124,21}, 0x0004);
+	CDrawText("Dobre dla ³owcy)", { 124,22}, 0x0004);
+	CDrawText("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom.", { 124,23}, 0x0004);
+	CDrawText("Dobre dla maga)", { 124,24}, 0x0004);
+	CDrawText("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)", {124,22}, 0x0004);
+	CDrawText("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)", { 124,23}, 0x0004);
+	CDrawText("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)", { 124,24}, 0x0004);
 
 	for (int i = 15; i > 0; i--)
 	{
 		ShowStats();
-		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
-		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
-		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
-		cout << "3 - Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)" << endl;
-		cout << "4 - Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)" << endl;
-		cout << "5 - Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)" << endl;
-		cout << "6 - Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)" << endl;
-		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;*/
-
-		//cin >> pom;
-		switch (DrawMenu(s))
+		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 114,17 }, 0x0002);
+		switch (DrawMenu(s,{107,13}))
 		{
 		case 0:
 			strength++;
@@ -106,7 +102,7 @@ void Player::CreateCharacter()
 			i++;
 			break;
 		}
-		//pom = '0';
+		
 	}
 }
 
@@ -121,30 +117,20 @@ void Player::Bonus_stats_per_lvl()
 	ClearMapPlace();
 
 	vector<string> s;
-	s.push_back("Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)");
-	s.push_back("Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)");
-	s.push_back("Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)");
-	s.push_back("Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)");
-	s.push_back("Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)");
-	s.push_back("Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)");
+	s.push_back("Si³a");
+	s.push_back("Zrêcznoœæ");
+	s.push_back("Inteligencja");
+	s.push_back("Celnoœæ");
+	s.push_back("Uniki");
+	s.push_back("Uderzenia krytyczne");
 
 	for (int i = 2; i > 0; i--)
 	{
-		X(-1, 0x0002, "Pozosta³e punkty:   do wydania.");
+		X(-1, 0x0002, "Pozosta³e punkty:   do rozdania.");
 		CDrawText(to_string(i), { 55,28 }, 0x0002);
 		ShowStats();
-		
-		/*cout << "Rozdaj punkty umiejêtnoœci:" << endl;
-		cout << "1 - Si³a (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla wojownika)" << endl;
-		cout << "2 - Zrêcznoœæ (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla ³owcy)" << endl;
-		cout << "3 - Inteligencja (Wp³ywa na obra¿enia zadawne wrogom. Dobre dla maga)" << endl;
-		cout << "4 - Celnoœæ (Wp³ywa na to jak czêsto twoje ataki trafiaj¹ w przeciwnika)" << endl;
-		cout << "5 - Uniki (Wp³ywa na to jak czêsto unikniesz uderzenia przeciwnika)" << endl;
-		cout << "6 - Uderzenia krytyczne (Wp³ywa na to jak czêsto bêdziesz atakowa³ uderzeniem krytyczym)" << endl;
-		cout << "Pozostalo ci " << i << " pkt do rozdania" << endl;*/
 
-		//cin >> pom;
-		switch (DrawMenu(s, { 20, 3 }))
+		switch (DrawMenu(s, { 109,10 }))
 		{
 		case 0:
 			strength++;
@@ -371,10 +357,7 @@ int Player::Dmg_formula()
 
 void Player::ShowQuests()
 {
-	if (quest != NULL)
-	{
-		cout << quest->name << endl;
-	}
+	 
 }
 
 bool Player::CritIs()

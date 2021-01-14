@@ -20,26 +20,21 @@ Quest::~Quest()
 {
 }
 
-bool Quest::IsOnQuestPoint(Point& playerPos)
-{
-	if (playerPos == QuestPoint)
-		return true;
-	return false;
-}
-
-bool Quest::IsQuestDone(Point& playerPos)
+bool Quest::IsQuestDone(Player& player, Map& map)
 {
 	cout << "eeeeeee" << endl;
 	return 1;
 }
 
-void Quest::CreateQuest()
+int Quest::CreateQuest( Player& player, Map& map)
 {
+	return 0;
 }
 
 void Quest::UpdateQuest()
 {
 }
+
 
 KillQuest::KillQuest(string _name, Point _point, int _needLvl, int _gainXp, int _gainMoney, Item _neededItem, Item _revardItem, int _mobType, int _quantity)
 {
@@ -59,17 +54,17 @@ KillQuest::~KillQuest()
 {
 }
 
-bool KillQuest::IsQuestDone(Point& playerPos)
+bool KillQuest::IsQuestDone(Player& player, Map& map)
 {
 	if (quantity <= 0)
 		return true;
 	return false;
 }
 
-void KillQuest::CreateQuest()
+int KillQuest::CreateQuest( Player& player, Map& map)
 {
+	return 1;
 }
-
 
 DeliverQuest::DeliverQuest(string _name, Point _point, int _needLvl, int _gainXp, int _gainMoney, Item _neededItem, Item _revardItem)
 {
@@ -87,24 +82,44 @@ DeliverQuest::~DeliverQuest()
 {
 }
 
-bool DeliverQuest::IsQuestDone(Point& playerPos)
+bool DeliverQuest::IsQuestDone(Player& player, Map& map)
 {
-	if (playerPos == point)
+	if (player.positon == point)
 		return true;
 	return false;
 }
 
-void DeliverQuest::CreateQuest()
+int DeliverQuest::CreateQuest(Player& player, Map& map)
 {
+	return 2;
+}
+
+MainQuest0::MainQuest0()
+{
+}
+
+int MainQuest0::CreateQuest( Player& player, Map& map)
+{
+	return 0;
+}
+
+void MainQuest0::UpdateQuest()
+{
+}
+
+bool MainQuest0::IsQuestDone(Player& player, Map& map)
+{
+	return true;
 }
 
 MainQuest1::MainQuest1()
 {
 }
 
-void MainQuest1::CreateQuest()
+int MainQuest1::CreateQuest(Player& player,Map& map)
 {
 	X(1, 0x000a, "*Budzisz siê i zauwa¿asz pod drzwiami list*");
+	return 0;
 }
 
 void MainQuest1::UpdateQuest()
@@ -112,9 +127,9 @@ void MainQuest1::UpdateQuest()
 	CDrawText(L"\u25ac", { 60, 19 }, 0x0007);
 }
 
-bool MainQuest1::IsQuestDone(Point& playerPos)
+bool MainQuest1::IsQuestDone(Player& player, Map& map)
 {
-	if (playerPos == p1 || playerPos == p2)
+	if (player.positon == p1 || player.positon == p2)
 	{
 		return true;
 	}
@@ -125,34 +140,21 @@ MainQuest2::MainQuest2()
 {
 }
 
-void MainQuest2::CreateQuest()
+int MainQuest2::CreateQuest(Player& player,Map& map)
 {
 	X(1, 0x000a, "*Otwiersz list i ...*");
 	X(6, 0x000a, "Witaj mê¿ny wojowniku!", "Prosimy Ciê o pomoc w pokonaniu stworów,", "które nas atakuj¹.", "Pozb¹dŸ siê ich, a zdobêdziesz wynagrodzenie!", "", "Dziêkujemy !!!");
+	return 0;
 }
 
 void MainQuest2::UpdateQuest()
 {
 }
 
-bool MainQuest2::IsQuestDone(Point& playerPos)
+bool MainQuest2::IsQuestDone(Player& player, Map& map)
 {
+	if (player.positon == p1)
+		return true;
 	return false;
 }
-
-MainQuest0::MainQuest0()
-{
-}
-
-void MainQuest0::CreateQuest()
-{
-}
-
-void MainQuest0::UpdateQuest()
-{
-}
-
-bool MainQuest0::IsQuestDone(Point& playerPos)
-{
-	return true;
-}
+/**/

@@ -335,6 +335,7 @@ void LoadQuests(list<Quest*>& mainQuest)
 	mainQuest.push_back(new MainQuest0());
 	mainQuest.push_back(new MainQuest1());
 	mainQuest.push_back(new MainQuest2());
+	mainQuest.push_back(new MainQuest3());
 }
 
 void Game(Player &player, Map &map)
@@ -344,8 +345,8 @@ void Game(Player &player, Map &map)
 	int x = 0, y = 0;
 	int return_map = map.LoadHome(player.positon); //<TU
 	
-	if(return_map !=0)
-		map_generator(player, map);
+	//if(return_map !=0)
+		//map_generator(player, map);
 	map.ShowMap(player.positon);
 
 	vector<Food> allFood;
@@ -431,12 +432,13 @@ void Game(Player &player, Map &map)
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)
 		{
-			if (mainQuest.front()->IsQuestDone(player.positon))
+			if (mainQuest.front()->IsQuestDone(player, map))
 			{
 				mainQuest.pop_front();
 				if (mainQuest.size() > 0)
 				{
-					mainQuest.front()->CreateQuest();
+					mainQuest.front()->CreateQuest(player, map);
+					map.ShowMap();
 				}
 			}
 			mainQuest.front()->UpdateQuest();
@@ -451,12 +453,19 @@ void Game(Player &player, Map &map)
 			map.ShowMap();
 		}
 
-		if ( map.IsNextMap(player.positon))
+		if (map.IsNextMap(player.positon))
 		{
 			return_map = map.LoadMap(return_map + 1, player.positon);
 			ClearMapPlace();
 			map.ShowMap();
 		}
+		if (map.IsPrevMap(player.positon))
+		{
+			return_map = map.LoadMap(return_map - 1, player.positon);
+			ClearMapPlace();
+			map.ShowMap();
+		}
+
 
 		if(player.dead)
 		{
@@ -476,11 +485,8 @@ int main()
 {
 	srand(time(NULL));
 	GenerateWindow();
-	
-	//ShowGfx_NPC(102);
 
-
-	//_getch();
+//	_getch();
 
 	Player player;
 	vector<string> s;
@@ -496,9 +502,12 @@ int main()
 		ClearMapPlace();
 		ClearInfoPlace();
 		ShowGfx_GameName();
+		DrawBorder();
 		switch (DrawMenu(s, {50, 15}))
 		{
 		case 0: //poczatek gry
+			system("cls");
+			ShowGfx_Hero(-1);
 			player.CreateCharacter();
 			player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
 			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
