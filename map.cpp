@@ -130,9 +130,12 @@ int Map::Load1map(Point& position)
 	map[40] = "................................................................................................_______---";
 	mapSize = Point(106,41);
 
-	position = {6,5};		//pozycja gracza
 	nextMap =  {105,39};	//przejscie do nastepnej mapy
 	prevMap =  {6,4};		//powrot do poprzedniej mapy
+
+	if (position.x ==  47 && position.y == 22)
+		position = { 6,5 };		//pozycja gracza
+
 
 	return 1;
 /*
@@ -244,6 +247,7 @@ int Map::Load3map(Point& position)
 	map[39] = " @@@@  @@@@   @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@";
 	map[40] = "..II....II.....II...II...II...II...II...II...II...II...II...II...II...II...II...II...II...II...II...II...I";
 	mapSize = Point(106, 41);
+	
 	position = {4,3};		//pozycja gracza
 	//nextMap	= {x,y}		//przejscie do nastepnej mapy
 	prevMap =  {3,3};		//powrot do poprzedniej mapy
@@ -262,7 +266,7 @@ void Map::ShowMap()
 		//cout << endl;
 	}
 	CDrawText(L"\u220f", { (short)nextMap.x, (short)nextMap.y }, 0x0001);
-	CDrawText(L"\u2229", { (short)prevMap.x, (short)nextMap.y}, 0x0006);
+	CDrawText(L"\u2229", { (short)prevMap.x, (short)prevMap.y}, 0x0006);
 }
 
 /*Wyswietla mape i moby*/
