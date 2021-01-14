@@ -45,6 +45,7 @@ public:
 
 	bool CritIs();
 	bool DodgeIs();
+	bool AccIs();
 
 private:
 

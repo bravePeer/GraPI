@@ -22,7 +22,7 @@ void Player::Select_profession()
 	s.push_back("Mag (Umiejêtnoœæ specjalna: Leczenie Ran)");
 	s.push_back("£owca (Umiejêtnoœæ specjalna: Deszcz Strza³)");
 
-	switch (DrawMenu(s, {1,1}))
+	switch (DrawMenu(s, {0,1}))
 	{
 	case 0:
 		profession = 1;
@@ -48,7 +48,7 @@ void Player::CreateCharacter()
 	do
 	{
 		cout << "Podaj p³eæ(m/k)" << endl;
-		CDrawText("Podaj p³eæ(m/k)", { 2,2 }, 0x0003);
+		CDrawText("Podaj p³eæ(m/k)", { 1,1 }, 0x0003);
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
@@ -388,4 +388,10 @@ bool Player::DodgeIs()
 {
 	int help = 1 + rand() % (100-1+1);
 	if((dodging*3)>help) return true;
+}
+
+bool Player::AccIs()
+{
+	int help = 1 + rand() % (100 - 1 + 1);
+	if (((dodging*2) +80) > help) return true;
 }

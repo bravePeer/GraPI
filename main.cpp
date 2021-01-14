@@ -40,6 +40,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 	int pom=0;
 	bool dodge = false;
 	bool crit = false;
+	bool acc=false;
 
 	player.Dmg_formula();
 
@@ -75,10 +76,16 @@ int Fight(Player& player, Mob& mobek, int return_map)
 			{
 			case 0:
 				crit = player.CritIs();
+				acc = player.AccIs();
 				if(crit)
 				{
 					player.dmg_output*=1.5;
 				}
+				if (acc)
+				{
+					mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+				}
+				else mobek.life = mobek.life;
 				mobek.life = mobek.life - (player.dmg_output - mobek.armor);
 				//cout << "Zadajesz: " << player.dmg_output - mobek.armor << " pkt obrażeń" << endl;
 				CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
