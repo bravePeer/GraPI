@@ -807,10 +807,10 @@ int main()
 	srand(time(NULL));
 	GenerateWindow();
 
-	PlaySound(TEXT("music/theme.wav"), NULL,  SND_LOOP | SND_ASYNC);
+	//PlaySound(TEXT("music/theme.wav"), NULL,  SND_LOOP | SND_ASYNC);
 	
-	_getch();
-	PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME);
+	//_getch();
+	//PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME);
 
 
 	vector<string> s;

@@ -39,16 +39,17 @@ void Player::CreateCharacter()
 {
 	//system("cls");
 	//cout << "Podaj imiê" << endl;
-	CDrawText("Podaj imiê ", { 124,1 }, 0x0003);
+	CDrawText("Podaj imiê ", { 80,5 }, 0x0003);
 	cin >> name;
-	
+	system("cls");
 	do
 	{
 		//cout << "Podaj p³eæ(m/k)" << endl;
-		CDrawText("Podaj p³eæ(m/k)", { 124,3 }, 0x0003);
+		CDrawText("Podaj p³eæ(m/k)", { 80,5 }, 0x0003);
 		cin >> sex;
+		system("cls");
 	} while ((sex != 'k') && (sex != 'm'));
-
+	
 	if(sex == 'm')
 		ShowGfx_Hero(-1);
 	else
