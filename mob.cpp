@@ -41,7 +41,6 @@ Mob  Mob::MobStats(int level, int return_map)
 {
 	Mob mob;
 	Mob boss;
-	mob.name = "BLEEE";
 	int pom_name = 1 + rand() % (6-1+1);
 	if (pom_name == 1) mob.name = "Wilk";
 	else if(pom_name == 2) mob.name = "Wiedüma";
@@ -52,7 +51,7 @@ Mob  Mob::MobStats(int level, int return_map)
 
 	if (return_map == 1)
 	{
-		mob.name=pom_name;
+		//mob.name=pom_name;
 		mob.armor = 5 + rand() % (30 - 5 + 1);
 		mob.life = 60 + rand() % (140 - 60 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);
@@ -62,7 +61,7 @@ Mob  Mob::MobStats(int level, int return_map)
 	}
 	else if(return_map == 2)
 	{
-		mob.name=pom_name;
+		//mob.name=pom_name;
 		mob.armor = 15 + rand() % (35 - 15 + 1);
 		mob.life = 90 + rand() % (180 - 90 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);
@@ -72,7 +71,7 @@ Mob  Mob::MobStats(int level, int return_map)
 	}
 	else if (return_map == 3)
 	{
-		mob.name=pom_name;
+		//mob.name=pom_name;
 		mob.armor = 25 + rand() % (50 - 25 + 1);
 		mob.life = 110 + rand() % (220 - 110 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);

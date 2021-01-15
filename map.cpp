@@ -51,7 +51,7 @@ void Map::ShowMap(Point& playerPos)
 
 	for (int i = 0; i < mobs.size(); i++)
 	{
-		CDrawText(L"\u1d6a", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x000c);
+		CDrawText(L"\u0230", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
 	}
 }
 
@@ -112,23 +112,25 @@ void Map::GenerateMobs(int level, Point p1, Point p2, int quantity)
 	Mob boss;
 	for (int i = 0; i < quantity;i++)
 	{
-		x = p1.x + rand() % p2.x;
-		y = p1.y + rand() % p2.y;
-		if (	map[x][y] == 'H' ||  map[x][y] == 'S' ||  map[x][y] == 'N'
-			||  map[x][y] == 'P' ||  map[x][y] == '|' ||  map[x][y] == 'B'
-			||  map[x][y] == '-' ||  map[x][y] == '_' ||  map[x][y] == '%'
-			||  map[x][y] == ' ' ||  map[x][y] == '@' ||  map[x][y] == 'I'
-			||  map[x][y] == '+' ||  map[x][y] == '[' ||  map[x][y] == ']'
-			||  map[x][y] == 'o' ||  map[x][y] == '#' ||  map[x][y] == 'L')
-		{
-			i--;
-			continue;
-		}
-		else
+		 x = p1.x + rand() % (p2.x - p1.x);
+		 y = p1.y + rand() % (p2.y - p1.y);
+		 if    (map[y][x] == 'H' || map[y][x] == 'S' || map[y][x] == 'N'
+			 || map[y][x] == 'P' || map[y][x] == '|' || map[y][x] == 'B'
+			 || map[y][x] == '-' || map[y][x] == '_' || map[y][x] == '%'
+			 || map[y][x] == ' ' || map[y][x] == '@' || map[y][x] == 'I'
+			 || map[y][x] == '+' || map[y][x] == '[' || map[y][x] == ']'
+			 || map[y][x] == 'o' || map[y][x] == '#' || map[y][x] == 'L')
+		 {
+			 i--;
+			 continue;
+		 }
+		else		  
 		{
 			 mobs.push_back(new Mob(mbo.MobStats(level, 1)));
 
-			 if (map[x][y] == '1'&& mapID==1)					//dopisać znaczki minibossa i bossa
+			 mobs[i]->position = { x,y };
+				 
+		/*	 if (map[x][y] == '1'&& mapID==1)					//dopisać znaczki minibossa i bossa
 			 {
 				 mobs.push_back(new Mob(boss.MobStats(level,1)));
 			 }
@@ -144,7 +146,7 @@ void Map::GenerateMobs(int level, Point p1, Point p2, int quantity)
 			if ( mobs.size() > 0)
 			{
 				 mobs[ mobs.size() - 1]->position = { x,y };
-			}
+			}*/
 
 			x = 0;
 			y = 0;

@@ -49,6 +49,12 @@ void Player::CreateCharacter()
 		cin >> sex;
 	} while ((sex != 'k') && (sex != 'm'));
 
+	if(sex == 'm')
+		ShowGfx_Hero(-1);
+	else
+		ShowGfx_Hero(-2);
+
+
 	Select_profession();
 
 	ClearInfoPlace();

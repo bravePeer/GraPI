@@ -137,18 +137,18 @@ public:
 		map.ShowMap();
 		X(4, 0x0005, "Widziano je na po³udniu st¹d.", "S³ysza³em, ¿e jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
 
-		map.GenerateMobs(player.level, { 2,27 }, {40, 39}, 8);
+		map.GenerateMobs(player.level, { 2,27 }, {20, 20}, 8);
 	}
 	void UpdateQuest()
 	{
 		if(shown)
-			CDrawText(L"\u203c",{ (short)p1.x,(short)p1.y }, 0x0003);
+			CDrawText(L"\u1d25", { (short)p1.x,(short)p1.y }, 0x0005);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
 		if (map.mobs.size() <= 0 && map.mapID == 1 && !shown)
 		{
-			X(2, 0x0002, "*Powinienem siê teraz udaæ do Zarz¹dcy wioski*");
+			X(1, 0x0002, "*Powinienem siê teraz udaæ do Zarz¹dcy wioski*");
 			shown = !shown;
 		}
 		if(shown && player.positon == p1)
@@ -158,4 +158,105 @@ public:
 	bool shown = false;
 	Point p1 = Point(20, 20);
 };
+class MainQuest5 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+
+class MainQuest6 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+class MainQuest7 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+
+class MainQuest8 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+
+class MainQuest9 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+
+class MainQuest10 : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest()
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+
+	}
+
+};
+
 

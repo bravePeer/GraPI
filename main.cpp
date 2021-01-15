@@ -550,6 +550,8 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 				player.money -= sellersItems[it]->price;
 				player.inventory.push_back(sellersItems[it]);
 				CDrawText("Kupiłeś " + player.inventory[player.inventory.size() - 1]->name, { 107,30 }, 0x0003);
+				PlaySound(TEXT("music/Coins8.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				GetKey();
 			}
 			else
 			{
@@ -563,7 +565,8 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 		if (it < player.inventory.size())
 		{
 			CDrawText("Sprzedałeś: " + player.inventory[it]->name + " za: " + to_string(player.inventory[it]->price), {107,30 }, 0x000c);
-
+			PlaySound(TEXT("music/Coins8.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			GetKey();
 			player.money += player.inventory[it]->price;
 			player.inventory[it] = NULL;
 			player.inventory.erase(player.inventory.begin() + it);
@@ -625,12 +628,7 @@ void Game(bool isNewGame)//, Map &map
 	int x = 0, y = 0;
 	//int return_map = map.LoadHome(player.positon); //<TU
 	int mapID = 0;
-
-	//plays
-
-	//if(return_map !=0)
-		//map_generator(player, map);
-	//map.ShowMap(player.positon);
+ 
 	Player player;
 	vector<Food> allFood;
 	vector<Weapon> allWeapons;
@@ -646,7 +644,7 @@ void Game(bool isNewGame)//, Map &map
 	//Tworzenie/Ładowanie gry
 	if (isNewGame)
 	{
-		ShowGfx_Hero(-1);
+		
 		player.CreateCharacter();
 		player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
@@ -730,9 +728,10 @@ void Game(bool isNewGame)//, Map &map
 		//walka
 		if (int buf = allMaps[mapID]->IsFight(player.positon))	
 		{
-			X(1, 0x000c ,"Na swojej drodze spotkałeś " + allMaps[mapID]->mobs[buf]->name + " musisz stanąć z nim do walki!");
+			X(3, 0x000c ,"Na swojej drodze spotkałeś " , allMaps[mapID]->mobs[buf]->name.c_str() ," musisz stanąć z nim do walki!");
 			if (Fight(player, *allMaps[mapID]->mobs[buf-1], mapID))
 			{
+
 				allMaps[mapID]->KillMob(buf - 1);
 			}
 			allMaps[mapID]->ShowMap();
@@ -745,9 +744,10 @@ void Game(bool isNewGame)//, Map &map
 		
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)
-		{
+		{mainQuest.front()->UpdateQuest();
 			if (mainQuest.front()->IsQuestDone(player, *allMaps[mapID]))
 			{
+				PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME  );
 				player.questID++;
 				mainQuest.pop_front();
 				if (mainQuest.size() > 0)
@@ -756,9 +756,8 @@ void Game(bool isNewGame)//, Map &map
 					allMaps[mapID]->ShowMap();
 				}
 			}
-			mainQuest.front()->UpdateQuest();
 		}
-		
+	
 		//lvl up
 		if (player.xp >= player.xpToNextLvl)	
 		{
@@ -808,7 +807,11 @@ int main()
 	srand(time(NULL));
 	GenerateWindow();
 
-	//PlaySound(TEXT("music/theme.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	PlaySound(TEXT("music/theme.wav"), NULL,  SND_LOOP | SND_ASYNC);
+	
+	_getch();
+	PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME);
+
 
 	vector<string> s;
 	s.push_back("Rozpocznij nowa grę");
