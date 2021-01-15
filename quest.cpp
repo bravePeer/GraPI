@@ -114,6 +114,9 @@ MainQuest1::MainQuest1()
 
 void MainQuest1::CreateQuest(Player& player,Map& map)
 {
+	player.positon = { 47,22 };
+	map.ShowMap();
+	map.ShowMap(player.positon);
 	X(1, 0x000a, "*Budzisz siê i zauwa¿asz pod drzwiami list*");
 }
 
@@ -138,7 +141,7 @@ MainQuest2::MainQuest2()
 void MainQuest2::CreateQuest(Player& player,Map& map)
 {
 	X(1, 0x000a, "*Otwiersz list i ...*");
-	X(6, 0x000a, "Witaj mê¿ny wojowniku!", "Prosimy Ciê o pomoc w pokonaniu stworów,", "które nas atakuj¹.", "Pozb¹dŸ siê ich, a zdobêdziesz wynagrodzenie!", "", "Dziêkujemy !!!");
+	X(7, 0x000a, "Witaj mê¿ny wojowniku!", "W imieniu ca³ej wsi proszê Ciê o pomoc", "w pokonaniu stworów, które nas atakuj¹.", "Spotkaj siê ze mn¹ a powiem Tobie coœ wiêcej o tych bestiach.", "Czekam przed Twoim domem.","",  "Dziêkujemy !!!");
 }
 
 void MainQuest2::UpdateQuest()
@@ -147,8 +150,11 @@ void MainQuest2::UpdateQuest()
 
 bool MainQuest2::IsQuestDone(Player& player, Map& map)
 {
-	if (player.positon == p1)
+	if (map.mapID == 1)
+	{
 		return true;
+	}
+		
 	return false;
 }
 /**/

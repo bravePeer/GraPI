@@ -197,32 +197,9 @@ void DrawBorder()
 	GetConsoleScreenBufferInfo(handle, &bufInfo);
 	COORD wSize = bufInfo.dwSize;
 	
+	DrawOnlyBorder();
+
 	_setmode(_fileno(stdout), _O_U16TEXT);
-
-	SetConsoleCursorPosition(handle, {0,0});
-	for (short i = 0; i < wSize.X - 1; i++)
-	{
-		wcout << L"\u2501";
-	}
-	
-	SetConsoleCursorPosition(handle, { 0, wSize.Y-1 });
-
-	for (short i = 0; i < wSize.X - 1; i++)
-	{
-		wcout << L"\u2501";
-	}
-	SetConsoleCursorPosition(handle, { 0, 0 });
-
-	for (short i = 0; i < wSize.Y-1; i++)
-	{
-		wcout << L"\u2503" << endl;
-	}
-
-	for (short i = 0; i < wSize.Y - 1; i++)
-	{
-		SetConsoleCursorPosition(handle, { wSize.X - 1, i });
-		wcout << L"\u2503";
-	}
 
 	for (short i = 0; i < wSize.Y; i++)
 	{
@@ -234,13 +211,51 @@ void DrawBorder()
 	wcout << L"\u2533";
 	SetConsoleCursorPosition(handle, { 106, wSize.Y - 1 });
 	wcout << L"\u253b";
+	_setmode(_fileno(stdout), _O_TEXT);
+
+}
+
+void DrawOnlyBorder()
+{
+	CONSOLE_SCREEN_BUFFER_INFO bufInfo;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(handle, &bufInfo);
+	COORD wSize = bufInfo.dwSize;
+
+	_setmode(_fileno(stdout), _O_U16TEXT);
+
+	SetConsoleCursorPosition(handle, { 0,0 });
+	for (short i = 0; i < wSize.X - 1; i++)
+	{
+		wcout << L"\u2501";
+	}
+
+	SetConsoleCursorPosition(handle, { 0, wSize.Y - 1 });
+
+	for (short i = 0; i < wSize.X - 1; i++)
+	{
+		wcout << L"\u2501";
+	}
+	SetConsoleCursorPosition(handle, { 0, 0 });
+
+	for (short i = 0; i < wSize.Y - 1; i++)
+	{
+		wcout << L"\u2503" << endl;
+	}
+
+	for (short i = 0; i < wSize.Y - 1; i++)
+	{
+		SetConsoleCursorPosition(handle, { wSize.X - 1, i });
+		wcout << L"\u2503";
+	}
+
 	SetConsoleCursorPosition(handle, { 0,0 });
 	wcout << L"\u250f";
 	SetConsoleCursorPosition(handle, { 0,wSize.Y - 1 });
 	wcout << L"\u2517";
-	SetConsoleCursorPosition(handle, { wSize.X-1,0 });
+	SetConsoleCursorPosition(handle, { wSize.X - 1,0 });
 	wcout << L"\u2513";
-	SetConsoleCursorPosition(handle, { wSize.X - 1,wSize.Y-1 });
+	SetConsoleCursorPosition(handle, { wSize.X - 1,wSize.Y - 1 });
 	wcout << L"\u251b";
 
 	_setmode(_fileno(stdout), _O_TEXT);

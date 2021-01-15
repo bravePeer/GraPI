@@ -25,6 +25,7 @@ void CDrawText(wstring s, COORD c, short textAtribute);
 
 /*Rysuje obramówke*/
 void DrawBorder();
+void DrawOnlyBorder();
 
 void ClearPlace(COORD pos, COORD size);
 void ClearMapPlace();
