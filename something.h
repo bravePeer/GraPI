@@ -3,6 +3,14 @@
 #include <vector>
 #include <Windows.h>
 #include <conio.h>
+#include <io.h>
+#include <fcntl.h>
+#include <iomanip>   
+#include <fstream>
+#include "player.h"
+#include "item.h"
+#include "map.h"
+
 
 using namespace std;
 
@@ -28,3 +36,8 @@ gdy n < 0 to nie czeka na przycisk*/
 void X(short n, short textAtribute, ...);
 
 int GetKey();
+
+
+
+//bool SaveGame(Player& player, vector<Map*>& allMaps);
+ 

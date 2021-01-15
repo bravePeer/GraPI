@@ -26,9 +26,8 @@ bool Quest::IsQuestDone(Player& player, Map& map)
 	return 1;
 }
 
-int Quest::CreateQuest( Player& player, Map& map)
+void Quest::CreateQuest( Player& player, Map& map)
 {
-	return 0;
 }
 
 void Quest::UpdateQuest()
@@ -61,9 +60,8 @@ bool KillQuest::IsQuestDone(Player& player, Map& map)
 	return false;
 }
 
-int KillQuest::CreateQuest( Player& player, Map& map)
+void KillQuest::CreateQuest( Player& player, Map& map)
 {
-	return 1;
 }
 
 DeliverQuest::DeliverQuest(string _name, Point _point, int _needLvl, int _gainXp, int _gainMoney, Item _neededItem, Item _revardItem)
@@ -89,18 +87,16 @@ bool DeliverQuest::IsQuestDone(Player& player, Map& map)
 	return false;
 }
 
-int DeliverQuest::CreateQuest(Player& player, Map& map)
+void DeliverQuest::CreateQuest(Player& player, Map& map)
 {
-	return 2;
 }
 
 MainQuest0::MainQuest0()
 {
 }
 
-int MainQuest0::CreateQuest( Player& player, Map& map)
+void MainQuest0::CreateQuest( Player& player, Map& map)
 {
-	return 0;
 }
 
 void MainQuest0::UpdateQuest()
@@ -116,10 +112,9 @@ MainQuest1::MainQuest1()
 {
 }
 
-int MainQuest1::CreateQuest(Player& player,Map& map)
+void MainQuest1::CreateQuest(Player& player,Map& map)
 {
 	X(1, 0x000a, "*Budzisz siê i zauwa¿asz pod drzwiami list*");
-	return 0;
 }
 
 void MainQuest1::UpdateQuest()
@@ -140,11 +135,10 @@ MainQuest2::MainQuest2()
 {
 }
 
-int MainQuest2::CreateQuest(Player& player,Map& map)
+void MainQuest2::CreateQuest(Player& player,Map& map)
 {
 	X(1, 0x000a, "*Otwiersz list i ...*");
 	X(6, 0x000a, "Witaj mê¿ny wojowniku!", "Prosimy Ciê o pomoc w pokonaniu stworów,", "które nas atakuj¹.", "Pozb¹dŸ siê ich, a zdobêdziesz wynagrodzenie!", "", "Dziêkujemy !!!");
-	return 0;
 }
 
 void MainQuest2::UpdateQuest()

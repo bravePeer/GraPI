@@ -13,18 +13,17 @@ public:
 	Person();
 	~Person();
 	
-	string name;
-
-	char sex;
-
 	bool dead = false;
+	
+	string name;
+	char sex;
 	int xp = 0;
 	int level = 1;
 
 	int money = 100;
 	float backpackMaxWeight = 5.0f;
 	float backpackWeight = 1.0f;
-	int armor=10;		// pancerz
+	int armor = 10;		// pancerz
 
 	int life = 100;		// wytrzymalosc -> zdrowie aktualne
 	int lifeMax = 100;
@@ -35,7 +34,8 @@ public:
 	int agility;		//zrêcznoœæ
 	int dodging;		//uniki
 	int crit_strike;	//uderzenia krytyczne
-
+	int gfxID = 0;
+	
 	Point positon = { 5,5 };
 	
 	//ekwipunek
@@ -45,8 +45,7 @@ public:
 	Weapon *equipedWeapon = NULL;
 	Armor *equipedArmor = NULL;
 
-	int gfxID = 0;
-
+	
 private:
 
 };

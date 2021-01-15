@@ -18,18 +18,323 @@
 
 using namespace std;
 
-void Testujemy()
+bool LoadGame(Player& player, vector<Map*>& allMaps)
 {
-	//map<Point, Point> s;
-	
+	fstream file;
+	int buf = 0;
+	Item  item;
+	Food  food;
+	Weapon  weapon;
+	Armor  armor;
+	Mob mob;
+	string sss;
+
+	file.open("save", ios::in | ios::binary);
+	if (!file.good())
+		return false;
+
+	/*zapis gracz*/
+	file.read((char*)&player.dmg_output, sizeof(player.dmg_output));
+	file.read((char*)&player.profession, sizeof(player.profession));
+	file.read((char*)&player.xpToNextLvl, sizeof(player.xpToNextLvl));
+	file.read((char*)&player.questID, sizeof(player.questID));
+	file.read((char*)&player.mapID, sizeof(player.mapID));
+
+	file.read((char*)&player.sex, sizeof(player.sex));
+	file.read((char*)&player.xp, sizeof(player.xp));
+	file.read((char*)&player.level, sizeof(player.level));
+	file.read((char*)&player.money, sizeof(player.money));
+	file.read((char*)&player.backpackMaxWeight, sizeof(player.backpackMaxWeight));
+	file.read((char*)&player.backpackWeight, sizeof(player.backpackWeight));
+	file.read((char*)&player.armor, sizeof(player.armor));
+	file.read((char*)&player.life, sizeof(player.life));
+	file.read((char*)&player.lifeMax, sizeof(player.lifeMax));
+	file.read((char*)&player.accuracy, sizeof(player.accuracy));
+	file.read((char*)&player.strength, sizeof(player.strength));
+	file.read((char*)&player.inteligence, sizeof(player.inteligence));
+	file.read((char*)&player.agility, sizeof(player.agility));
+	file.read((char*)&player.dodging, sizeof(player.dodging));
+	file.read((char*)&player.crit_strike, sizeof(player.crit_strike));
+	file.read((char*)&player.gfxID, sizeof(player.gfxID));
+	//imie
+	getline(file, player.name, '\0');
+	//pozycja
+	file.read((char*)&player.positon, sizeof(player.positon));
+
+
+	bool bbuf = true;
+	file.read((char*)&bbuf, sizeof(bbuf));
+
+	if (bbuf == true)
+	{
+		getline(file, weapon.name, '\0');
+		getline(file, weapon.desc, '\0');
+		file.read((char*)&weapon.weight, sizeof(weapon.weight));
+		file.read((char*)&weapon.price, sizeof(weapon.price));
+
+		file.read((char*)&weapon.strength, sizeof(weapon.strength));
+		file.read((char*)&weapon.critStrength, sizeof(weapon.critStrength));
+		file.read((char*)&weapon.critPropability, sizeof(weapon.critPropability));
+		file.read((char*)&weapon.professionBonus, sizeof(weapon.professionBonus));
+		file.read((char*)&weapon.neededLvl, sizeof(weapon.neededLvl));
+
+		player.equipedWeapon = new Weapon(weapon);
+	}
+
+	file.read((char*)&bbuf, sizeof(bbuf));
+	if (bbuf == true)
+	{
+		getline(file, armor.name, '\0');
+		getline(file, armor.desc, '\0');
+		file.read((char*)&armor.weight, sizeof(armor.weight));
+		file.read((char*)&armor.price, sizeof(armor.price));
+
+		file.read((char*)&armor.armor, sizeof(armor.armor));
+		file.read((char*)&armor.professionBonus, sizeof(armor.professionBonus));
+		file.read((char*)&armor.neededLvl, sizeof(armor.neededLvl));
+
+		player.equipedArmor = new Armor(armor);
+	}
+
+	//ekwipunek
+	file.read((char*)&buf, sizeof(buf));
+	int itemType = 0;
+	for (int i = 0; i < buf; i++)
+	{
+		file.read((char*)&itemType, sizeof(itemType));
+
+		switch (itemType)
+		{
+		case 0:
+			getline(file, item.name, '\0');
+			getline(file, item.desc, '\0');
+			file.read((char*)&item.weight, sizeof(item.weight));
+			file.read((char*)&item.price, sizeof(item.price));
+
+			player.inventory.push_back(new Item(item));
+			break;
+		case 1:
+			getline(file, food.name, '\0');
+			getline(file, food.desc, '\0');
+			file.read((char*)&food.weight, sizeof(item.weight));
+			file.read((char*)&food.price, sizeof(item.price));
+			file.read((char*)&food.healthModifier, sizeof(food.healthModifier));
+
+			player.inventory.push_back(new Food(food));
+			break;
+		case 2:
+			getline(file, weapon.name, '\0');
+			getline(file, weapon.desc, '\0');
+			file.read((char*)&weapon.weight, sizeof(weapon.weight));
+			file.read((char*)&weapon.price, sizeof(weapon.price));
+
+			file.read((char*)&weapon.strength, sizeof(weapon.strength));
+			file.read((char*)&weapon.critStrength, sizeof(weapon.critStrength));
+			file.read((char*)&weapon.critPropability, sizeof(weapon.critPropability));
+			file.read((char*)&weapon.professionBonus, sizeof(weapon.professionBonus));
+			file.read((char*)&weapon.neededLvl, sizeof(weapon.neededLvl));
+
+			player.inventory.push_back(new Weapon(weapon));
+			break;
+		case 3:
+			getline(file, armor.name, '\0');
+			getline(file, armor.desc, '\0');
+			file.read((char*)&armor.weight, sizeof(armor.weight));
+			file.read((char*)&armor.price, sizeof(armor.price));
+
+			file.read((char*)&armor.armor, sizeof(armor.armor));
+			file.read((char*)&armor.professionBonus, sizeof(armor.professionBonus));
+			file.read((char*)&armor.neededLvl, sizeof(armor.neededLvl));
+
+			player.inventory.push_back(new Armor(armor));
+			break;
+		}
+	}/**/
+
+	//moby na mapach
+	int mapID = 0;
+	int numMobs = 0;
+		
+	for (int i = 0; i < allMaps.size(); i++)
+	{
+		//file.read((char*)&mapID, sizeof(mapID));
+		file.read((char*)&numMobs, sizeof(numMobs));
+
+		for (int j = 0; j < numMobs; j++)
+		{
+								 
+			file.read((char*)&mob.life, sizeof(mob.life));
+			file.read((char*)&mob.armor, sizeof(mob.armor));
+			file.read((char*)&mob.dmg, sizeof(mob.dmg));
+			file.read((char*)&mob.mob_lvl, sizeof(mob.mob_lvl));
+			file.read((char*)&mob.money_from_mob, sizeof(mob.money_from_mob));
+			file.read((char*)&mob.exp_after_win, sizeof(mob.exp_after_win));
+			file.read((char*)&mob.position, sizeof(mob.position));
+			file.read((char*)&mob.gfxID, sizeof(mob.gfxID));
+			getline(file, mob.name, '\0');
+
+			allMaps[i]->mobs.push_back(new Mob(mob));
+		}
+	}
+
+
+	file.close();
+	return true;
 }
 
-void console_clean()
+bool SaveGame(Player& player, vector<Map*>& allMaps)
 {
-	cout << "(wcisnij dowolny klawisz)" << endl;
-	int a;
-	a = _getch();
-	system("cls");
+	fstream file;
+	//bool bbuf = false;
+	Item* item = NULL;
+	Food* food = NULL;
+	Weapon* weapon = NULL;
+	Armor* armor = NULL;
+	string sss = "";
+
+
+	file.open("save", ios::out | ios::binary);
+	if (!file.good())
+		return false;
+
+	/*zapis gracz*/
+	file.write((const char*)&player.dmg_output, sizeof(player.dmg_output));
+	file.write((const char*)&player.profession, sizeof(player.profession));
+	file.write((const char*)&player.xpToNextLvl, sizeof(player.xpToNextLvl));
+	file.write((const char*)&player.questID, sizeof(player.questID));
+	file.write((const char*)&player.mapID, sizeof(player.mapID));
+
+	file.write((const char*)&player.sex, sizeof(player.sex));
+	file.write((const char*)&player.xp, sizeof(player.xp));
+	file.write((const char*)&player.level, sizeof(player.level));
+	file.write((const char*)&player.money, sizeof(player.money));
+	file.write((const char*)&player.backpackMaxWeight, sizeof(player.backpackMaxWeight));
+	file.write((const char*)&player.backpackWeight, sizeof(player.backpackWeight));
+	file.write((const char*)&player.armor, sizeof(player.armor));
+	file.write((const char*)&player.life, sizeof(player.life));
+	file.write((const char*)&player.lifeMax, sizeof(player.lifeMax));
+	file.write((const char*)&player.accuracy, sizeof(player.accuracy));
+	file.write((const char*)&player.strength, sizeof(player.strength));
+	file.write((const char*)&player.inteligence, sizeof(player.inteligence));
+	file.write((const char*)&player.agility, sizeof(player.agility));
+	file.write((const char*)&player.dodging, sizeof(player.dodging));
+	file.write((const char*)&player.crit_strike, sizeof(player.crit_strike));
+	file.write((const char*)&player.gfxID, sizeof(player.gfxID));
+	//imie
+	file.write(player.name.c_str(), player.name.size()+1);
+	//pozycja
+	file.write((const char*)&player.positon, sizeof(player.positon));
+	
+	if (player.equipedWeapon != NULL)
+	{
+		bool bbuf = true;
+		file.write((const char*)&bbuf, sizeof(bbuf));
+
+		file.write(player.equipedWeapon->name.c_str(), player.equipedWeapon->name.size()+1);
+		file.write(player.equipedWeapon->desc.c_str(), player.equipedWeapon->desc.size() + 1);
+		file.write((const char*)&player.equipedWeapon->weight, sizeof(player.equipedWeapon->weight));
+		file.write((const char*)&player.equipedWeapon->price, sizeof(player.equipedWeapon->price));
+
+		file.write((const char*)&player.equipedWeapon->strength, sizeof(player.equipedWeapon->strength));
+		file.write((const char*)&player.equipedWeapon->critStrength, sizeof(player.equipedWeapon->critStrength));
+		file.write((const char*)&player.equipedWeapon->critPropability, sizeof(player.equipedWeapon->critPropability));
+		file.write((const char*)&player.equipedWeapon->professionBonus, sizeof(player.equipedWeapon->professionBonus));
+		file.write((const char*)&player.equipedWeapon->neededLvl, sizeof(player.equipedWeapon->neededLvl));
+
+	}
+	else
+	{
+		bool bbuf = false;
+		file.write((const char*)&bbuf, sizeof(bbuf));
+	}
+	if (player.equipedArmor != NULL)
+	{
+		bool bbuf = true;
+		file.write((const char*)&bbuf, sizeof(bbuf));
+		
+		file.write(player.equipedArmor->name.c_str(), player.equipedArmor->name.size()+1);
+		file.write(player.equipedArmor->desc.c_str(), player.equipedArmor->desc.size() + 1);
+		file.write((const char*)&player.equipedArmor->weight, sizeof(player.equipedArmor->weight));
+		file.write((const char*)&player.equipedArmor->price, sizeof(player.equipedArmor->price));
+
+		file.write((const char*)&player.equipedArmor->armor, sizeof(player.equipedArmor->armor));
+		file.write((const char*)&player.equipedArmor->professionBonus, sizeof(player.equipedArmor->professionBonus));
+		file.write((const char*)&player.equipedArmor->neededLvl, sizeof(player.equipedArmor->neededLvl));
+	}
+	else
+	{
+		bool bbuf = false;
+		file.write((const char*)&bbuf, sizeof(bbuf));
+	}
+
+	//ekwipunek
+	int buf = player.inventory.size();
+	file.write((const char*) & buf, sizeof(buf));
+	int buf2 = 0;
+	for (int i = 0; i < player.inventory.size(); i++)
+	{
+		buf2 = player.inventory[i]->ItemType();
+		file.write((const char*)&buf2, sizeof(buf2));
+		
+		file.write(player.inventory[i]->name.c_str(), player.inventory[i]->name.size() + 1);
+		file.write(player.inventory[i]->desc.c_str(), player.inventory[i]->desc.size() + 1);
+		file.write((const char*)&player.inventory[i]->weight, sizeof(player.inventory[i]->weight));
+		file.write((const char*)&player.inventory[i]->price, sizeof(player.inventory[i]->price));
+
+		switch (player.inventory[i]->ItemType())
+		{
+		case 0://item
+			break;
+		case 1://food
+			food = (Food*)player.inventory[i];
+			file.write((const char*)&food->healthModifier, sizeof(food->healthModifier));
+			break;
+		case 2://weapon
+			weapon = (Weapon*)player.inventory[i];
+
+			file.write((const char*)&weapon->strength, sizeof(weapon->strength));
+			file.write((const char*)&weapon->critStrength, sizeof(weapon->critStrength));
+			file.write((const char*)&weapon->critPropability, sizeof(weapon->critPropability));
+			file.write((const char*)&weapon->professionBonus, sizeof(weapon->professionBonus));
+			file.write((const char*)&weapon->neededLvl, sizeof(weapon->neededLvl));
+			break;
+		case 3://armor
+			armor = (Armor*)player.inventory[i];
+
+			file.write((const char*)&armor->armor, sizeof(armor->armor));
+			file.write((const char*)&armor->professionBonus, sizeof(armor->professionBonus));
+			file.write((const char*)&armor->neededLvl, sizeof(armor->neededLvl));
+			break;
+		}
+	}/**/
+
+	//moby na mapach
+	for (int i = 0; i < allMaps.size(); i++)
+	{
+		buf = allMaps[i]->mobs.size();
+		//file.write((const char*)&allMaps[i]->mapID, sizeof(allMaps[i]->mapID));
+		file.write((const char*)&buf, sizeof(buf));
+		for (int j = 0; j < allMaps[i]->mobs.size(); j++)
+		{
+
+			file.write((const char*)&allMaps[i]->mobs[j]->life, sizeof( allMaps[i]->mobs[j]->life));
+			file.write((const char*)&allMaps[i]->mobs[j]->armor, sizeof( allMaps[i]->mobs[j]->armor));
+			file.write((const char*)&allMaps[i]->mobs[j]->dmg, sizeof( allMaps[i]->mobs[j]->dmg));
+			file.write((const char*)&allMaps[i]->mobs[j]->mob_lvl, sizeof( allMaps[i]->mobs[j]->mob_lvl));
+			file.write((const char*)&allMaps[i]->mobs[j]->money_from_mob, sizeof( allMaps[i]->mobs[j]->money_from_mob));
+			file.write((const char*)&allMaps[i]->mobs[j]->exp_after_win, sizeof(allMaps[i]->mobs[j]->exp_after_win));
+			file.write((const char*)&allMaps[i]->mobs[j]->position, sizeof(allMaps[i]->mobs[j]->position));
+			file.write((const char*)&allMaps[i]->mobs[j]->gfxID, sizeof( allMaps[i]->mobs[j]->gfxID));
+			
+			file.write(allMaps[i]->mobs[j]->name.c_str(), allMaps[i]->mobs[j]->name.size() + 1);
+
+			
+		}
+	}
+
+
+	file.close();
+	return true;
 }
 
 int Fight(Player& player, Mob& mobek, int return_map)
@@ -338,57 +643,95 @@ void LoadQuests(list<Quest*>& mainQuest)
 	mainQuest.push_back(new MainQuest3());
 }
 
-void Game(Player &player, Map &map)
+void LoadMaps(vector<Map*>& allMaps)
 {
-	system("cls");
-	
+	allMaps.push_back(new MapHome());
+	allMaps.push_back(new Map1());
+	allMaps.push_back(new Map2());
+	allMaps.push_back(new Map3());
+}
+
+void Game(bool isNewGame)//, Map &map
+{
 	int x = 0, y = 0;
-	int return_map = map.LoadHome(player.positon); //<TU
-	
+	//int return_map = map.LoadHome(player.positon); //<TU
+	int mapID = 0;
+
+
 	//if(return_map !=0)
 		//map_generator(player, map);
-	map.ShowMap(player.positon);
-
+	//map.ShowMap(player.positon);
+	Player player;
 	vector<Food> allFood;
 	vector<Weapon> allWeapons;
 	vector<Armor> allArmor;
 	list<Quest*> mainQuest;
+	vector<Map*> allMaps;
 
-	Mob mob;
+	//Mob mob;
 	LoadGameAssets(allFood, allWeapons, allArmor);
 	LoadQuests(mainQuest);
+	LoadMaps(allMaps);
 
-	map.ShowMap();
+	//Tworzenie/Ładowanie gry
+	if (isNewGame)
+	{
+		ShowGfx_Hero(-1);
+		player.CreateCharacter();
+		player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.mapID = 0;
+		SaveGame(player,  allMaps);
+	}
+	else
+	{
+		LoadGame(player, allMaps);
+		mapID = player.mapID;
+		for (int i = 0; i < player.questID; i++)
+		{
+			mainQuest.pop_front();
+		}
+	}
+	
+	
+	allMaps[mapID]->LoadVMap(player.positon);
+	allMaps[mapID]->ShowMap();
+	//map.ShowMap();
 	DrawBorder();
 
+	
 
+	//system("cls");
 	//clock_t endTime = clock() + 5 * CLOCKS_PER_SEC;
 	while (1)	//głowna petla gry
 	{
 		//system("cls");
-		map.ShowMap(player.positon);
+		allMaps[mapID]->ShowMap(player.positon);
 
 		//Osługa klawiatury
 		switch (GetKey())
 		{
 		case 'w':
 			player.positon.y -= 1;
-			if (player.positon.y < 1 || !map.CanMove(player.positon))
+			if (player.positon.y < 1 || !allMaps[mapID]->CanMove(player.positon))
 				player.positon.y += 1;
 			break;
 		case 's':
 			player.positon.y += 1;
-			if (player.positon.y > map.mapSize.y - 1 || !map.CanMove(player.positon))
+			if (player.positon.y > allMaps[mapID]->mapSize.y - 1 || !allMaps[mapID]->CanMove(player.positon))
 				player.positon.y -= 1;
 			break;
 		case 'a':
 			player.positon.x -= 1;
-			if (player.positon.x < 1 || !map.CanMove(player.positon))
+			if (player.positon.x < 1 || !allMaps[mapID]->CanMove(player.positon))
 				player.positon.x += 1;
 			break;
 		case 'd':
 			player.positon.x += 1;
-			if (player.positon.x > map.mapSize.x - 1 || !map.CanMove(player.positon))
+			if (player.positon.x > allMaps[mapID]->mapSize.x - 1 || !allMaps[mapID]->CanMove(player.positon))
 				player.positon.x -= 1;
 			break;
 		case 'i':
@@ -407,24 +750,29 @@ void Game(Player &player, Map &map)
 			player.ShowQuests();
 			ClearInfoPlace();
 			break;
+		case 'l':
+			player.mapID = mapID;
+			SaveGame(player, allMaps);
+			return;
+			break;
 		}
 		
 		y = player.positon.x;
 		x = player.positon.y;
 
-		
-		if (int buf = map.IsFight(player.positon))		//walka
+		//walka
+		if (int buf = allMaps[mapID]->IsFight(player.positon))	
 		{
 			//cout << "Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!" << endl;
 			X(1, 0x000c ,"Na swojej drodze spotkałeś potwora, musisz stanąć z nim do walki!");
-			if (Fight(player, *map.mobs[buf-1],return_map))
+			if (Fight(player, *allMaps[mapID]->mobs[buf-1], mapID))
 			{
-				map.KillMob(buf - 1);
+				allMaps[mapID]->KillMob(buf - 1);
 			}
-			map.ShowMap();
+			allMaps[mapID]->ShowMap();
 		}
-		
-		if (map.map[x][y] == 'S')		//sklep
+		//sklep
+		if (allMaps[mapID]->map[x][y] == 'S')		
 		{
 			Shop(player, allFood, allWeapons, allArmor);
 		}
@@ -432,44 +780,50 @@ void Game(Player &player, Map &map)
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)
 		{
-			if (mainQuest.front()->IsQuestDone(player, map))
+			if (mainQuest.front()->IsQuestDone(player, *allMaps[mapID]))
 			{
+				player.questID++;
 				mainQuest.pop_front();
 				if (mainQuest.size() > 0)
 				{
-					mainQuest.front()->CreateQuest(player, map);
-					map.ShowMap();
+					mainQuest.front()->CreateQuest(player, *allMaps[mapID]);
+					allMaps[mapID]->ShowMap();
 				}
 			}
 			mainQuest.front()->UpdateQuest();
 		}
 		
-		if (player.xp >= player.xpToNextLvl)	//lvl up
+		//lvl up
+		if (player.xp >= player.xpToNextLvl)	
 		{
 			player.xp -= player.xpToNextLvl;
 			player.xpToNextLvl = (int)player.xpToNextLvl * 1.5;
 			player.level++;
 			player.Bonus_stats_per_lvl();
-			map.ShowMap();
+			allMaps[mapID]->ShowMap();
 		}
 
-		if (map.IsNextMap(player.positon))
+		//Następna/poprzednia mapa
+		if (allMaps[mapID]->IsNextMap(player.positon))
 		{
-			return_map = map.LoadMap(return_map + 1, player.positon);
+			//allMaps[mapID]->LoadMap(return_map + 1, player.positon);
+			mapID++;
+			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
-			map.ShowMap();
+			allMaps[mapID]->ShowMap();
 		}
-		if (map.IsPrevMap(player.positon))
+		if (allMaps[mapID]->IsPrevMap(player.positon))
 		{
-			return_map = map.LoadMap(return_map - 1, player.positon);
+			 //allMaps[mapID]->LoadMap(return_map - 1, player.positon);
+			mapID--;
+			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
-			map.ShowMap();
+			allMaps[mapID]->ShowMap();
 		}
 
-
+		//czy gracz żyje
 		if(player.dead)
 		{
-			//cout << "Koniec gry." << endl;
 			X(1, 0x0004, "Koniec gry");
 			break;
 		}
@@ -481,6 +835,8 @@ void Game(Player &player, Map &map)
 	mainQuest.clear();	//<wycieki mozliwe xd chyba xd
 }
 
+
+
 int main()
 {
 	srand(time(NULL));
@@ -488,14 +844,16 @@ int main()
 
 //	_getch();
 
-	Player player;
+	//Player player;
 	vector<string> s;
 	s.push_back("Rozpocznij nowa grę");
 	s.push_back("Wczytaj zapis");
+	s.push_back("Sterowanie");
 	s.push_back("wyjdź");
+	s.push_back("DEBUG");
 
-	Map map;
-	map.LoadHome(player.positon);
+	//Map map;
+	//map.LoadHome(player.positon);
 
 	while (1)//główna 
 	{
@@ -507,24 +865,28 @@ int main()
 		{
 		case 0: //poczatek gry
 			system("cls");
-			ShowGfx_Hero(-1);
-			player.CreateCharacter();
-			player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
-			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
-			player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
-			player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-			Game(player, map);
+			
+		//	player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
+		//	player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
+		//	player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
+		//	player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+			Game(true);//, map
 			break;
 		case 1:	//wczytanie zapisu
-			player.UsePreset();
-			player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
-			player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
-			player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
-			player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-			Game(player, map);
+		//	player.inventory.push_back(new Item("Sztabka stali", "Ciężka", 2.0f, 10));
+		//	player.inventory.push_back(new Weapon("Miecz jednoręczny", "", 1.5f, 1000, 5, 3, 0.1, 1));
+		//	player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
+		//	player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+			Game(false);
 			break;
 		case 2:	//wyjscie
 			return 0;
+			break;
+		case 3:	//wyjscie
+			return 0;
+			break;
+		case 4:
+			Game(false);
 			break;
 		}
 	}

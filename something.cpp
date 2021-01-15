@@ -1,7 +1,5 @@
 ﻿#include "something.h"
-#include <io.h>
-#include <fcntl.h>
-#include <iomanip>       
+    
 
 void GenerateWindow()
 {
@@ -295,11 +293,6 @@ void ClearInfoPlace()
 	}
 }
 
-void DrawDialog(string who, string text)
-{
-
-}
-
 void X(short n, ...)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -444,3 +437,8 @@ int GetKey()
 		a += _getch();
 	return a;
 }
+
+/*-----------------------------*/
+/*Ładowanie i zapisywanie plikó*/
+/*-----------------------------*/
+ 

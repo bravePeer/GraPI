@@ -40,10 +40,11 @@ int Mob::Exp_to_player( int lvl_gracza)
 Mob  Mob::MobStats(int level, int return_map)
 {
 	Mob mob;
+	mob.name = "BLEEE";
 	int pom_name = 1 + rand() % (5-1+1);
 	if (pom_name == 1) mob.name = "Wilk";
-	else (pom_name == 1) mob.name = "Bies";
-	else (pom_name == 1) mob.name = "Bies";
+	else if(pom_name == 1) mob.name = "Bies";
+	else if(pom_name == 1) mob.name = "Bies";
 
 	if (return_map == 1)
 	{

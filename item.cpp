@@ -29,6 +29,14 @@ Food::Food()
 {
 }
 
+Food::Food(Item item)
+{
+	name = item.name;
+	desc = item.desc;
+	weight = item.weight;
+	price = item.price;
+}
+
 Food::Food(string _name, string _desc, float _weight, int _price, int _healthModifier)
 {
 	name = _name;
@@ -50,6 +58,18 @@ int Food::UseItem()
 
 void Food::ShowItemInfo()
 {
+}
+
+Weapon::Weapon()
+{
+}
+
+Weapon::Weapon(Item item)
+{
+	name = item.name;
+	desc = item.desc;
+	weight = item.weight;
+	price = item.price;
 }
 
 Weapon::Weapon(string _name, string _desc, float _weight, int _price, int _strength, int _critStrength, float _critPropability, int _profBonus)
@@ -76,6 +96,18 @@ int Weapon::UseItem()
 
 void Weapon::ShowItemInfo()
 {
+}
+
+Armor::Armor()
+{
+}
+
+Armor::Armor(Item item)
+{
+	name = item.name;
+	desc = item.desc;
+	weight = item.weight;
+	price = item.price;
 }
 
 Armor::Armor(string _name, string _desc, float _weight, int _price, int _armor, int _profBonus)

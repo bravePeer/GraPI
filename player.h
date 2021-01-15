@@ -3,7 +3,6 @@
 #include <string>
 #include "person.h"
 #include "something.h"
-#include "mob.h"
 
 using namespace std;
 
@@ -13,24 +12,15 @@ public:
 	
 	Player();
 	~Player();
-
-	int dmg_output;		//obra¿enia zadawane przez bohatera
-	int profession; //klasa postaci
-	int xpToNextLvl = 100;
-
-	string profession_name;
-
-	void Select_profession(); // wybieranie klasy
-
-	int Spell(int atak_moba);	// skille dla postaci 
-
-	int Dmg_formula();	//wylicza obra¿enia bazowe bohatera
-
-	void Bonus_stats_per_lvl(); 
+	// wybieranie klasy
+	void Select_profession(); 
+	// skille dla postaci
+	int Spell(int atak_moba);	 
+	//wylicza obra¿enia bazowe bohatera
+	int Dmg_formula();	
 	//dodatkowe dodawanie statów przy nowych levelach
-	
-	//Quest* quest = NULL;
-
+	void Bonus_stats_per_lvl(); 
+	//Tworzenie Postaci
 	void CreateCharacter();
 	void UsePreset();
 	/*Otwiera plecak*/
@@ -46,6 +36,13 @@ public:
 	bool DodgeIs();
 	bool AccIs();
 
+	int dmg_output;		//obra¿enia zadawane przez bohatera
+	int profession; //klasa postaci
+	int xpToNextLvl = 100;
+	int questID = 0;
+	int mapID = 0;
+
+	string profession_name;
 private:
 
 };
