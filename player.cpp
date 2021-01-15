@@ -1,6 +1,7 @@
 #include "player.h"
 #include "gfx.h"
 
+
 Player::Player()
 {
 }
@@ -40,7 +41,7 @@ void Player::CreateCharacter()
 	//cout << "Podaj imiê" << endl;
 	CDrawText("Podaj imiê ", { 124,1 }, 0x0003);
 	cin >> name;
-
+	
 	do
 	{
 		//cout << "Podaj p³eæ(m/k)" << endl;
@@ -109,13 +110,14 @@ void Player::CreateCharacter()
 		}
 		
 	}
+	ClearInfoPlace();
 }
 
 void Player::Bonus_stats_per_lvl()
 {
 	
 	//cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
-
+	ClearInfoPlace();
 	//X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
 	CDrawText("Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.", { 107,1 }, 0x0002);
 	GetKey();
@@ -166,7 +168,7 @@ void Player::Bonus_stats_per_lvl()
 			break;
 		}
 	}
-	ShowStats();
+	ClearInfoPlace();
 
 }
 

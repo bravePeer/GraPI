@@ -28,7 +28,7 @@ public:
 	string desc;
 
 	int needLvl = 0;
-	int gainXp = 10;
+	int gainXp = 0;
 	int gainMoney = 0;
 
 	Item neededItem;
@@ -108,21 +108,20 @@ public:
 	~MainQuest3() {}
 	void CreateQuest( Player& player, Map& map)
 	{
-		X(1, 0x000a, "To pora rozprawiæ siê z tymi BESTIAMI! ");
-		map.GenerateMobs(player.level);
+		X(1, 0x000a, "*Widzisz cz³owieka ubranego w fioletowe ubranie*");
 	}
 	void UpdateQuest()
 	{
-
+		CDrawText(L"\u1d25", { (short)p1.x,(short)p1.y }, 0x0005);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
-		if (map.mobs.size() <= 0 && map.mapID == 1)
+		if (player.positon == p1)
 			return true;
 		return false;
 	}
 	
-	Point p1 = Point(6, 4);
+	Point p1 = Point(5, 6);
 };
 
 class MainQuest4 : public Quest
@@ -132,20 +131,31 @@ public:
 	~MainQuest4() {}
 	void CreateQuest(Player& player, Map& map)
 	{
-		if(player.sex == 'm')
-			X(1, 0x000a, "Teraz powinienem pójœæ do zarz¹dcy wioski");
-		else
-			X(1, 0x000a, "Teraz powinnam pójœæ do zarz¹dcy wioski");
+		X(3, 0x0005, "Witaj jestem nowym zarz¹dcom tutejszej wioski.", "Przepraszam, ¿e od razu zawracam Tobie g³owê", "ale mamy straszny problem z bestiami.");
+		map.ShowMap();
+		X(2, 0x0002, "Coœ o tych potworach wiadomo?", "Gdzie s¹? Ile ich jest?");
+		map.ShowMap();
+		X(4, 0x0005, "Widziano je na po³udniu st¹d.", "S³ysza³em, ¿e jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
+
+		map.GenerateMobs(player.level, { 2,27 }, {40, 39}, 8);
 	}
 	void UpdateQuest()
 	{
-		CDrawText(L"\u203c",{ (short)p1.x,(short)p1.y }, 0x0003);
+		if(shown)
+			CDrawText(L"\u203c",{ (short)p1.x,(short)p1.y }, 0x0003);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
+		if (map.mobs.size() <= 0 && map.mapID == 1 && !shown)
+		{
+			X(2, 0x0002, "*Powinienem siê teraz udaæ do Zarz¹dcy wioski*");
+			shown = !shown;
+		}
+		if(shown && player.positon == p1)
+			return true;
 		return false;
 	}
-	 
+	bool shown = false;
 	Point p1 = Point(20, 20);
 };
 
