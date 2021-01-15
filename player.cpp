@@ -119,10 +119,10 @@ void Player::Bonus_stats_per_lvl()
 	//cout << "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci." << endl;
 	ClearInfoPlace();
 	//X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
-	CDrawText("Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.", { 107,1 }, 0x0002);
+	CDrawText("Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.", { 107,13 }, 0x0002);
 	GetKey();
 
-	ClearMapPlace();
+	//ClearMapPlace();
 
 	vector<string> s;
 	s.push_back("Si³a");
@@ -135,9 +135,9 @@ void Player::Bonus_stats_per_lvl()
 	for (int i = 2; i > 0; i--)
 	{
 		ShowStats();
-		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 107,10 }, 0x0002);
+		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 107,15 }, 0x0002);
 
-		switch (DrawMenu(s, { 107,3 }))
+		switch (DrawMenu(s, { 107,17 }))
 		{
 		case 0:
 			strength++;

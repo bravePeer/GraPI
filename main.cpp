@@ -442,7 +442,8 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		}
 
 		GetKey();
-		CDrawText("Twój przeciwnik uderza...", { 107,12 }, 0x000b);
+		
+		CDrawText("Twój przeciwnik uderza...", { 107,15 }, 0x000b);
 		if (return_map == 1)
 		{
 			mobek.dmg = 20 + rand() % (30 - 20 + 1);
@@ -457,7 +458,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		}
 		if (player.profession == 1 && pom > 0)
 		{
-			CDrawText("Aura zablokowała : " + to_string((int)mobek.dmg * 0.5) + " pkt obrażeń.", { 107,14 }, 0x000b);
+			CDrawText("Aura zablokowała : " + to_string((int)mobek.dmg * 0.5) + " pkt obrażeń.", { 107,17 }, 0x000b);
 		}
 		dodge = player.DodgeIs();
 		if (crit)
@@ -466,7 +467,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		}
 		else
 			player.life = player.life - (mobek.dmg - player.armor);
-		CDrawText("Zadaje ci: : " + to_string(mobek.dmg - player.armor) + " pkt obrażeń.", { 107,14 }, 0x000b);
+		CDrawText("Zadaje ci: : " + to_string(mobek.dmg - player.armor) + " pkt obrażeń.", { 107,16 }, 0x000b);
 
 		if (player.life <= 0)
 		{
