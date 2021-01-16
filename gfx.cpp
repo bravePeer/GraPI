@@ -222,36 +222,36 @@ void TakeGfx_Hero(int id, wstring hero_gfx[])
 		hero_gfx[29] = L"       ▒███                ▒█▓███▓▒     ";
 		break;
 	case 12:// male mag
-		hero_gfx[0] =  L"                                        ";
-		hero_gfx[1] =  L" ▓▓▓▓██                                 ";
-		hero_gfx[2] =  L" ███ ██            ▓█████               ";
-		hero_gfx[3] =  L" █████▓          ▓█████████             ";
-		hero_gfx[4] =  L"  ▓██           ██████████▓             ";
-		hero_gfx[5] =  L"   ██           ██████████▓             ";
-		hero_gfx[6] =  L"  ▓██           ███▓▓▓████▓             ";
-		hero_gfx[7] =  L"  ▓██            ▓█▓  ██████▓▓          ";
-		hero_gfx[8] =  L"  ▓▓█▓          ▓████  ▓███████         ";
-		hero_gfx[9] =  L"    ███        ██████████▓███████       ";
-		hero_gfx[10] = L"    ▓██      ▓▓██████████████████▓      ";
-		hero_gfx[11] = L"    ███      ██▓▓██▓▓▓▓▓▓▓██▓▓████      ";
-		hero_gfx[12] = L"    ▓█▓      ██▓██▓████████▓▓█████   ▓▓ ";
-		hero_gfx[13] = L"    ▒▒▒▓▓▓▓▓▓▓▓▓██▓██▓▓▓██▓      █  ███ ";
-		hero_gfx[14] = L"    ▓▓▓ ▓█████████▓█████▓  ▓▓▓▓█▓ ███▓  ";
-		hero_gfx[15] = L"    ███  ▓▓  ███▓▓▓▓▓█▓▓ █████████▓▓    ";
-		hero_gfx[16] = L"    ███      █▓   █▓▓▓ ▓██████▓▒▒▒▒▓    ";
-		hero_gfx[17] = L"    ███    ▓██▓  ▓█▓▓▓▓▓▓▓▓▓▓▓▒▒▒███    ";
-		hero_gfx[18] = L"    ▓██▓   ▓██▓ █████████████████████   ";
-		hero_gfx[19] = L"     ▓██▓  ▓█████████████████████████   ";
-		hero_gfx[20] = L"     ▓██▓  ▓██████▓███▓▓▓▓▓██████▓█████ ";
-		hero_gfx[21] = L"     ▓██▓  ▓██████▓███▓▓▓▓▓████████████ ";
-		hero_gfx[22] = L"       █▓  ▓████▓▓▓▓▓▓▓▓█▓▓████████████ ";
-		hero_gfx[23] = L"       █▓  ▓████▓▓▓▓▓▓▓██▓▓▓███████████ ";
-		hero_gfx[24] = L"       █▓   ▓███▓▓▓▓▓▓███▓▓▓▓▓▓▓███████ ";
-		hero_gfx[25] = L"        ▓█   █████▓▓▓██████▓▓▓█████████ ";
-		hero_gfx[26] = L"        ▓█   ▓███████████████████████   ";
-		hero_gfx[27] = L"        ▓█     ▓██████████████████▓▓    ";
-		hero_gfx[28] = L"        ▓█         ███        ███       ";
-		hero_gfx[29] = L"        ▓█        ▓▓▓▓       ▓▓▓▓       ";
+		hero_gfx[0] =  L"    ▒░                                  ";
+		hero_gfx[1] =  L"▓▓ ▓█▓░                                 ";
+		hero_gfx[2] =  L"▓▓░▓█▓             ░▒▒▒▒▒▒              ";
+		hero_gfx[3] =  L"▓▓░             ░░▓▒▒▒▒▒▒▒▓             ";
+		hero_gfx[4] =  L"   ░▒           ▒▒░░░░░░▒▒▒             ";
+		hero_gfx[5] =  L"  █▓▒           ▒▒      ▒▒▒             ";
+		hero_gfx[6] =  L"  ▓▓░           ▒▒ ▓█▓▓ ▒▒▒░            ";
+		hero_gfx[7] =  L"  ▒░░            ░░▓▓█▓ ░░ ▒▒░          ";
+		hero_gfx[8] =  L"  ▓▓            ░░░  ███▒ ░▒▒▓▒░        ";
+		hero_gfx[9] =  L"   ░▓░         ▒░ ░▓▓▒▒▒▓▓▓▒░░░░▓░      ";
+		hero_gfx[10] = L"   ▓█▒       ░▒▓▒░        ░  ░░▒░░░     ";
+		hero_gfx[11] = L"    ▒        ░▓▓▓▓ ▒▓▓▓▒▓▓▓▒░▓▓  ░▓   ░▒";
+		hero_gfx[12] = L"   ▒▓▓▒▓     ▒▒▓▒▒▓▒░▒▒▒▒▒ ▒▒▓░   ▒  ▓██";
+		hero_gfx[13] = L"   ▓████▓▓▓▓▓▓▓▓▒▒▓▒░▒▒▒▒▒ ▓█████▓ ▓██▓░";
+		hero_gfx[14] = L"   ▓████▓▓▓▓▓▓▒▒  ▓▒░▒▒▒▒▓█▓▓▓▓▓▓▓█▓▓░  ";
+		hero_gfx[15] = L"    ▒▒▒░▒▒▒  ░  ▒▒▓▒▒▒▒▒█▓▒▒    ▒▒▓▒▓   ";
+		hero_gfx[16] = L"    ░        ░▓▓██▒▒▒▒▓█▒  ░░░▒▓█████   ";
+		hero_gfx[17] = L"   ▒▓▓░    ░▒ ▓███▒▒▓▒▒▒▒▒▓▓▓▒████▓▒    ";
+		hero_gfx[18] = L"   ▓▓▒     ░▓ ▓█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░  ░▒  ";
+		hero_gfx[19] = L"     ░░    ░▓ ░▒▒░ ▒▒░░    ▒▒░  ░░░ ░▓░ ";
+		hero_gfx[20] = L"     ▓▓▒   ░▒ ░▒▒▒▒▒▒░▒▓▒▒▒▒▒▒▒▒▒▒▓░ ░░░";
+		hero_gfx[21] = L"     ▓▓▒   ░▒ ░▒░▒▓▒░░▒▓▓▓▓▒▒▒▒▒▒▒▓░  ▒▒";
+		hero_gfx[22] = L"     ░░▓   ░▒   ▒▒▓▒▒▓▒▓▒▒▓▒░▒▒▒▒▒░░  ▒▒";
+		hero_gfx[23] = L"       ▒   ░▓   ▓▓▓▒▒▒▓▓▒▒▓▒▒░░░▒░  ░ ▒▒";
+		hero_gfx[24] = L"       ▒   ░▒░  ▓▓▒▒▒▓▒▒ ▒▓▓▓▒▒▓▒░ ░░ ▒▒";
+		hero_gfx[25] = L"       ▒░    ▒▒ ▓▓▓▓▓▒▒░ ░▓▓▓▓▓▓▒░ ░░ ▒▒";
+		hero_gfx[26] = L"        ▒▓   ▓▒  ░▓▓▒▒░░   ▓▓▓▒░░░  ░▒░░";
+		hero_gfx[27] = L"        ▒▒    ░▒░  ░▒▒░ ░░░  ▒▒▒  ░▒▒░  ";
+		hero_gfx[28] = L"        ▒▒      ░▒ ▒▒▒░  ░░░  ▒▓▒▒▒     ";
+		hero_gfx[29] = L"        ▒▒        ░▒▒▒░      ░▒▒▓░      ";
 		break;
 	case 22: //female mag
 		hero_gfx[0] =  L"                  ▒▓██▓                 ";
@@ -713,6 +713,8 @@ void ShowGfx_Mobs(int id, COORD c)
 		SetConsoleCursorPosition(handle, { 1,1 + i });
 		wcout << mob_gfx[i];
 	}*/
+	
+	//pozycjonowanie grafiki 
 	if (id==503)
 	{
 		c.Y = 1;
@@ -722,13 +724,70 @@ void ShowGfx_Mobs(int id, COORD c)
 		c.X = (WHEREINFO - 30) / 2;
 		c.Y = (10);
 	}
+	else if (id == 505)
+	{
+		c.X = (WHEREINFO - 40) / 2;
+		c.Y = (10);
+	}
 
 
 	TakeGfx_Mobs(id, mob_gfx, lenght);
-	for (short i = 0; i < lenght; i++)
+	
+	if (id == 500)
 	{
-		CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x0003);
+		for (short i = 0; i < lenght; i++)
+		{
+
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x0007); //kolorowanie szkieleta
+		}
 	}
+	else if (id==501)
+	{ 
+		for (short i = 0; i < lenght; i++)
+		{
+		
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x0004);//kolorowanie wiedzmy
+		}
+		
+	}
+	else if (id == 502)
+	{
+		for (short i = 0; i < lenght; i++)
+		{
+
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x0008);//kolorowanie wilka
+		}
+
+	}
+	else if (id == 503)
+	{
+		for (short i = 0; i < lenght; i++)
+		{
+
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x0002);//kolorowanie drzewca
+		}
+
+	}
+	else if (id == 504)
+	{
+		for (short i = 0; i < lenght; i++)
+		{
+
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x000B);//kolorowanie ghula
+		}
+
+	}
+	else if (id == 505)
+	{
+		for (short i = 0; i < lenght; i++)
+		{
+
+			CDrawText(mob_gfx[i], { c.X,c.Y + i }, 0x000A);//kolorowanie goblina
+		}
+
+	}
+	
+
 	_setmode(_fileno(stdout), _O_TEXT);
 }
 
@@ -740,36 +799,36 @@ void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght)
 	switch (id)
 	{
 	case 500:
-		mob_gfx[0] =  L"        ████▓                  ▒███████████       ";
-		mob_gfx[1] =  L"       █░   ▓█               ░█▓          ▒█▒     ";
-		mob_gfx[2] =  L"     ██      ▒█             ██              ███   ";
-		mob_gfx[3] =  L"   ░█    ░     ██          █▒                 ▓█  ";
-		mob_gfx[4] =  L"   ░█   ░▒     ██          █▒ ▒░   ░          ▓█  ";
-		mob_gfx[5] =  L"   ░█   ░▒     ██        ░▒█▒░░░  ░▒░      ▒  ▓█  ";
-		mob_gfx[6] =  L"   ░█   ░▒     ██       ████   ░██▒         ▓██▓█ ";
-		mob_gfx[7] =  L"   ░█   ░▓     ██▓▓▓▓░ ▓█      ▒█████      ████ █ ";
-		mob_gfx[8] =  L"   ░█    ░     ██▒▒▒▒▓█████           █  ▓█   ▓█  ";
-		mob_gfx[9] =  L"   ░█    ░     ██▓▓▓▒▓█▓███▓▓▓█░      █  ██  ▒▓▓  ";
-		mob_gfx[10] = L"    █   ░▒     ██░███░     █████░         ▒ ███   ";
-		mob_gfx[11] = L"    █████████████   █████████████    █   ▓█ ▓██   ";
-		mob_gfx[12] = L"    █▓▓░░░░ ▒▓███   ██ ▓███████████████████████   ";
-		mob_gfx[13] = L"    █████████████   ██   ████████████████▓▒█░     ";
-		mob_gfx[14] = L"    ▒██▓▓▓  ██   █  ███▒ ░░████████████   ▓█░     ";
-		mob_gfx[15] = L"    █  ▓▓▒████░  █  ██▓██▓▒░░  ▓█████  ░░██       ";
-		mob_gfx[16] = L"   ░█▒▒▒  ███████     █▓   ████████▓██████        ";
-		mob_gfx[17] = L"██████████▓▒█▓         ██░░   █░ █▓   ░██░        ";
-		mob_gfx[18] = L"███  ▒░██▓▓▓█▓    ████████████   ████████░ █████  ";
-		mob_gfx[19] = L"   ███▓█▓ ▓███ ▒░█     ░███░████▒▓▓▓███  ██▒▒▒  █ ";
-		mob_gfx[20] = L"        ████▓  ██      ▓███▓▒▓███    █ ██▒    ▓██ ";
-		mob_gfx[21] = L"         ▓▒▒   ▒░▓██   ▓▓▒▒   ▓▓█  █▓  ███▒▓▓▓██  ";
-		mob_gfx[22] = L"                 ████▓  ░███    █▓███  ░▒██▓█▓██  ";
-		mob_gfx[23] = L"               ▓▒█  █████████████████▒    █████▓  ";
-		mob_gfx[24] = L"             ░█▓▓ ██             ▓░  ▓█           ";
-		mob_gfx[25] = L"             ▓█  █                ▒██ █           ";
-		mob_gfx[26] = L"             ▒█  █                ▒██ █           ";
-		mob_gfx[27] = L"            ▓█   █                ▒██ ░██▒        ";
-		mob_gfx[28] = L"          ████    ██             ▓█░░  ███▓       ";
-		mob_gfx[29] = L"        ██▒░░ ░░░ ██             ██  ░    ░█▒     ";
+		mob_gfx[0] =  L"       █▓ ░ ▒█                 █▒░░░░░░░░░ ▒█     ";
+		mob_gfx[1] =  L"      █▓░    ▒█               █▒            ▒█    ";
+		mob_gfx[2] =  L"    █  ░▓████░ █            █ ░▒▓██████████▓▒░ ░█ ";
+		mob_gfx[3] =  L"   █ ░░▓█▓████▒░░▓█       █▓  ▓██████████████▒  ░█";
+		mob_gfx[4] =  L"  █▓ ███▓▒▓████  ▒█       █▒ █▓▓▓██████████████▒ █";
+		mob_gfx[5] =  L"  █▓ ███▓░█████  ▒█       █▒ ▓▓▒▓▓▓▒▒▒██████▒▓█▒ █";
+		mob_gfx[6] =  L"  █▓ ███▓▒█████  ▓█    █▓░   ▓▓▓▒▒▒▓▓▓██████▓▓▓▒ █";
+		mob_gfx[7] =  L"  █▓ ███▓░█████  ▒█▓▓▓██ ▒█▓████   ░▓▒▓████▓▓   █ ";
+		mob_gfx[8] =  L"  █▓ ███▓▒█████   ░░ ░▒▒ ░░▒████▓▒▒░░▒█░██▓░░░░░░▒";
+		mob_gfx[9] =  L"  █▓ ███▓▒█████  ░▓▓▓▓      ▓▒▓▒███████ ██  ██▓▒ █";
+		mob_gfx[10] = L"  █▓ ████▒█████  ░░  ░████▓░    ▒█▓████░██▒░█░  █ ";
+		mob_gfx[11] = L"   █          ░  ▓██▒ ░  ░▒░      ███▓ ███▒░█▒  █ ";
+		mob_gfx[12] = L"   █ ░░▒▓▓▓▓▒░░  ▒██▒ ░▒          ░░░  ░    ░   █ ";
+		mob_gfx[13] = L"  █▓             ▒██▒ ▓██                 ░▒ ▒█   ";
+		mob_gfx[14] = L"  ██▓  ░▒░▓█▒ ███░░█░  ░▓▓▓▒   ░        ███▒ ▒█   ";
+		mob_gfx[15] = L"   █ ██▒▒▒░   ▒▓▓░░█▓░░░░▒▒▒▓▓▓█░     ▓▓▓▓  █     ";
+		mob_gfx[16] = L"  █▓ ▒▒▒▓█░      ▓████▒░▒███░░   ░ ░▒▒░░   █      ";
+		mob_gfx[17] = L"   ░░     ░▒░ █   █▒▓▓██ ░▒▓██▓░██ ▓███▒  ▓█▓▒▓▒▓█";
+		mob_gfx[18] = L"░ ░▓▓▒▒  ▒░░     █░           ░███        ▒▓     █";
+		mob_gfx[19] = L"█ █░▒▒▒  █▒░  █░░░▓█████▒  ░▒   ░▒▓▓▓░ ░██░ ▒▒▒▓█ ";
+		mob_gfx[20] = L"   ██▒   ░██  ▒█    █▓▓▓   ░▓▓░   ████▒█  ▒████▒ ░";
+		mob_gfx[21] = L"        █▓█     █▒  ░▓▓▓▓▓▓▓██▓▓▓▒█▒ ░██         █";
+		mob_gfx[22] = L"                █░ ▓  ▒▓▓    ▓▓█░     █  █  ▒▒▒░ █";
+		mob_gfx[23] = L"              █  ▒▓▒     ▓█▒       ▓█▒ ████▒   ░█ ";
+		mob_gfx[24] = L"             █ ▒▓▒░░▓█           █▒▒▓▓▓ █         ";
+		mob_gfx[25] = L"             █ ▒█  █              █  ░█ ██        ";
+		mob_gfx[26] = L"            █▒ ██  █              █░ ░█ ▒▒█       ";
+		mob_gfx[27] = L"         █▓▒  ▓██▒░▒█            █▓░ ▒██   ▓█     ";
+		mob_gfx[28] = L"       █▒  ░░░▒▓▓█▓ ░█           █ ░▓▓▓█▓▓▓░ ▒█   ";
+		mob_gfx[29] = L"       █▓ ▓████▓▓██ ▓█           █░▒█▓▓█████ ▓█   ";
 		lenght = 30;
 		break;
 	case 501:
@@ -984,14 +1043,31 @@ void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght)
 		min_boss_gfx[29] = L"";
 */
 
-void ShowGfx_MiniBoss(int id)
+void ShowGfx_MiniBoss(int id, COORD c)
 {
-	TakeGfx_MiniBoss(id);
+	wstring* min_boss_gfx=new wstring[40];
+	int lenght = 0;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	_setmode(_fileno(stdout), _O_U16TEXT);
+
+	if (id == 700)
+	{
+		//c.X=
+		//c.Y=
+	}
+
+	TakeGfx_MiniBoss(id, min_boss_gfx, lenght);
+	for (short i = 0; i < lenght; i++)
+	{
+		CDrawText(min_boss_gfx[i], { c.X,c.Y + i }, 0x0003);
+	}
+	_setmode(_fileno(stdout), _O_TEXT);
+
 }
 
-void TakeGfx_MiniBoss(int id)
+void TakeGfx_MiniBoss(int id, wstring min_boss_gfx[], int& lenght)
 {
-	wstring min_boss_gfx[40];
+	//wstring min_boss_gfx[40];
 
 	switch (id)
 	{
@@ -1006,6 +1082,7 @@ void TakeGfx_MiniBoss(int id)
 		min_boss_gfx[7] = L"      ▓░ ████  ░    ";
 		min_boss_gfx[8] = L"     ▓█▒░   ██▓▓    ";
 		min_boss_gfx[9] = L"    ▒█▒     ██▓     ";
+		lenght = 10;
 		break;
 	case 701:
 		min_boss_gfx[0] =  L"                               ░░                           ";
@@ -1038,6 +1115,7 @@ void TakeGfx_MiniBoss(int id)
 		min_boss_gfx[27] = L"           ▒██████▒                ▒████▓▓█▒░░              ";
 		min_boss_gfx[28] = L"          ██ ▒▓ ▓░░               ███████░███▒█             ";
 		min_boss_gfx[29] = L"████████████████████████████████████████████████████████████";
+		lenght = 30;
 		break;
 	case 702:
 		min_boss_gfx[0] =  L"                                          ▓▓▓▓▓                                              ";
@@ -1080,11 +1158,12 @@ void TakeGfx_MiniBoss(int id)
 		min_boss_gfx[37] = L"                    ▓▓▓▓▓▓▓                               █████▓▓▓                           ";
 		min_boss_gfx[38] = L"                   ▓▓▓▓▓▓▓▓                                ▓▓▓  ▓▓▓▓▓▓▓                      ";
 		min_boss_gfx[39] = L"                    ▓▓▓▓▓█████▓                           ▓█  ▓███████████▓                  ";
+		lenght = 40;
 		break;
 
 	}
 
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	/*HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	_setmode(_fileno(stdout), _O_U16TEXT);
 
 	for (short i = 0; i < 40; i++)
@@ -1103,6 +1182,7 @@ void TakeGfx_MiniBoss(int id)
 	}
 
 	_setmode(_fileno(stdout), _O_TEXT);
+	*/
 }
 
 /*
@@ -1197,23 +1277,56 @@ void TakeGfx_Boss(int id)
 void ShowGfx_Envi(int id)
 {
 	
-	//TakeGfx_Envi(id);
+	TakeGfx_Envi(id);
 }
 
 void TakeGfx_Envi(int id)
 {
-	wstring envi_gfx[30];
+	wstring envi_gfx[40];
 
 	switch (id)
 	{
 		case 1000:
+			envi_gfx[0] = L"░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░";
+			envi_gfx[1] = L" ░   ░░     ░ ░   ░ ░   ░ ░    ░                  ░   ░  ░  ░   ░ ░   ░ ░   ░ ░░      ░";
+			envi_gfx[2] = L" ░         ░        ░░     ░                               ░░    ░      ░░            ░";
+			envi_gfx[3] = L"░░░     ░ ░       ░  ░  ░  ░    ░▒    ░▒▒░█▒███▒░           ░   ░ ░   ░         ░   ░  ";
+			envi_gfx[4] = L" ░ ░       ░         ░ ░   ░  ░▒▒░ ░▓▓█▒▒▒▓▓██████▓▒     ░        ░░ ░ ░         ░     ";
+			envi_gfx[5] = L"    ░   ░   ░   ░   ░ ░       ░    ░░ ░░██░░▒█████▓▓██▒   ░             ░   ░ ░ ░     ░";
+			envi_gfx[6] = L" ░     ░ ░   ░   ░░       ░▒░  ░███████▒▒▓███████▒█░░▒█      ░       ░ ░       ░       ";
+			envi_gfx[7] = L" ░░   ░     ░   ░ ░ ░   ░███  ▓███▒▒▓▓▓▓░▒███████░ ░▓░            ░         ░   ░ ░   ░";
+			envi_gfx[8] = L" ░░    ░ ░           ░   █▓  ░█▓░  ▓▓▓▒░▒▓▓██▒█▓██▓ ███▒       ░ ░░  ░   ░ ░         ░ ";
+			envi_gfx[9] = L"    ░   ░ ░     ░ ░               ▓  ░▒▓▓▓███▒▒░▒▒██ ▓███ ░▒      ░   ░       ░ ░ ░   ░";
+			envi_gfx[10] = L" ░ ░ ░ ░ ░ ░ ░   ░░    ░       ▒███▓██▒▒▒▒███░▓█░  ▓ ░███  █▒      ░ ░   ░   ░   ░░   ░";
+			envi_gfx[11] = L" ░ ░  ░ ░ ░   ░ ░ ░   ░    ░██████████████████▓▓▒▒▒   ░██▒ ▒█    ░░ ░         ░ ░   ░ ░";
+			envi_gfx[12] = L" ░░░ ░ ░ ░ ░ ░ ░   ░   ░  ▓████████████████████▓█▓▒▒        ▓   ░░    ░      ░ ░ ░     ";
+			envi_gfx[13] = L"  ░ ░ ░ ░░░     ░   ░     ▓████████████████████▓▒▒▓░░▓▓▓░       ░     ░ ░ ░           ░";
+			envi_gfx[14] = L"░░ ░      ░    ░ ░        ▓███████████████████████████████▒        ░   ░     ░ ░ ░  ░  ";
+			envi_gfx[15] = L" ░  ░ ░   ░     ░     ░   ▓█████████████████████████████████░       ░   ░ ░ ░   ░ ░   ░";
+			envi_gfx[16] = L" ░           ░ ░     ░    ▓██████████████████████████████████▒   ░       ░   ░   ░ ░   ";
+			envi_gfx[17] = L"  ░ ░   ░     ░       ░   ▓██████████████████████████████████▒    ░ ░       ░ ░   ░    ";
+			envi_gfx[18] = L" ░   ░ ░ ░       ░ ░      ▓██████████████████████████████████▓       ░ ░ ░           ░░";
+			envi_gfx[19] = L"      ░     ░   ░   ░    ░████████▓▓███▓███▓█▓███▓███▓████████░         ░ ░   ░ ░ ░ ░ ░";
+			envi_gfx[20] = L" ░ ░   ░   ░ ░           ░▓▓▓▒▓▒░░▒▒░░░▒  ▒▒▒▒▒▒░░▒▒▒▒▒▒▒▒▒▓▓▓░    ░   ░   ░░░ ░ ░ ░  ░";
+			envi_gfx[21] = L"░   ░   ░ ░         ░ ░▓▓▓░       ░▒▒░░▒ ░▒░░░░▒░ ▒░░ ░░░░   ░▓▒          ░     ░ ░ ░ ░";
+			envi_gfx[22] = L"     ░     ░ ░   ░ ░  ░▓▒▓▒▒░▒░▒░░ ░░░░░ ░░   ░░  ░   ░░░░░░░▒▒▒▒      ░       ░ ░   ░ ";
+			envi_gfx[23] = L"░ ░   ░       ░ ░ ░░░  ░▒░ ░▒▒▒▒▓░░▒▓▒▒▒▓▓▓░▒▓▓▒▓▓▓▓▓▒▓▓█▓▓██████▒    ░   ░ ░         ░";
+			envi_gfx[24] = L" ░ ░   ░       ░      ░░░▒▒  ░▒▒░███████████▓██████████▒█████▓▓▒▓░  ░░ ░ ░       ░     ";
+			envi_gfx[25] = L" ░░ ░ ░ ░   ░ ░ ░ ░   ▓▓▒▒░░░ ░▓░▒▓▓▓▓▓▓▓▓▒░ ▒▓▓▓▓▓▓▓▓▒  ▒▓▓  ▓███          ░ ░       ░";
+			envi_gfx[26] = L" ░ ░ ░░░     ░        ░▒▒░  ▒▒▒▒░█████  ████████░░██████████  ▒░▓░               ░   ░ ";
+			envi_gfx[27] = L"      ░                ▒▒▒▒░░░░░▒▓▓▒▓▓  ░▓▒▒▓▓▓▓ ░█▓▓▓▓▒▒░▒░▓█▓██   ░░              ░ ░";
+			envi_gfx[28] = L" ░           ░░▒░      ▒▒▓▒▓▓▒▒▒  ░▓██████░ ██████▓▓██▓ ▒░ ░▒▓█▒░  ▒▒▒▒░  ░░░    ░   ░░";
+			envi_gfx[29] = L"  ░   ░▒░░▒▒░░░░▒▒░      ░░░░▒▒    ░░   ▒▓░ █████▒░███▓            ░░░▒▒▒▒▒░▒▒░░░ ░   ░";
+			envi_gfx[30] = L" ░ ░  ░░   ░░      ░           ░                           ░                   ░   ░ ░ ";
+			
+			
 			break;
 	}
 
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	_setmode(_fileno(stdout), _O_U16TEXT);
 
-	for (short i = 0; i < 60; i++)
+	for (short i = 0; i < 40; i++)
 	{
 		SetConsoleCursorPosition(handle, { 1,1 + i });
 		wcout << envi_gfx[i];
