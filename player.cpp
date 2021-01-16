@@ -11,12 +11,13 @@ Player::~Player()
 
 void Player::Select_profession()
 {
+	CDrawText("Wybierz klasê:", { WHEREINFO + (WIDTHCONSOLE - WHEREINFO- 15)/2  ,8 }, 0x000b);
 	vector<string> s;
 	s.push_back("Wojownik");
-	s.push_back("Mag");
-	s.push_back("£owca");
+	s.push_back("  Mag");
+	s.push_back(" £owca");
 
-	switch (DrawMenu(s, {124,5}))
+	switch (DrawMenu(s, { WHEREINFO + (WIDTHCONSOLE - WHEREINFO - 8) / 2 ,10}))
 	{
 	case 0:
 		profession = 1;
@@ -316,33 +317,36 @@ void Player::ShowStandardStats()
 	CDrawText("Celnoœæ:      " + to_string(accuracy), { WIDTHCONSOLE - 22,7 }, 0x0003);
 	CDrawText("Zrêcznoœæ:    " + to_string(agility), { WIDTHCONSOLE - 22,8 }, 0x0003);
 	CDrawText("Uniki:        " + to_string(dodging), { WIDTHCONSOLE - 22,9 }, 0x0003);
+	CDrawText("UK:           " + to_string(crit_strike), { WIDTHCONSOLE - 22,10 }, 0x0003);
+
+	CDrawText(profession_name, {WHEREINFO,3}, 0x0003);
 }
 
 void Player::ShowStats()	
 {
  
-	life = 1000000;
+	life = 100000;
 	lifeMax = life;
-	strength = 100;
+	strength = 8;
 	xp = -10000;
 	ShowStandardStats();
 	
 	if (equipedWeapon != NULL)
 	{
-		//CDrawText("Broñ: " + equipedWeapon->name  ), { WHEREINFO, 10 }, 0x0003);
-		CDrawText( " atak:" + to_string(equipedWeapon->strength), { WHEREINFO, 10 }, 0x0003);
-
+		CDrawText("Broñ: " + equipedWeapon->name  , { WHEREINFO, 5}, 0x0003);
+		CDrawText( "Atak: " + to_string(equipedWeapon->strength), { WHEREINFO, 6 }, 0x0003);
 	}
 	else
-		CDrawText("Brak broni", { WHEREINFO, 3 }, 0x0001);
+		CDrawText("Brak broni", { WHEREINFO, 5 }, 0x0001);
 
 
 	if (equipedArmor != NULL)
 	{
-		CDrawText("Pancerz: " + equipedArmor->name + " pancerz:" + to_string(equipedArmor->armor), { WHEREINFO, 11 }, 0x0003);
+		CDrawText("Pancerz: " + equipedArmor->name, { WHEREINFO, 7 }, 0x0003);
+		CDrawText(  "Obrnona: " + to_string(equipedArmor->armor), { WHEREINFO, 9 }, 0x0003);
 	}
 	else
-		CDrawText("Brak pancerza", { WHEREINFO, 5 }, 0x0001);
+		CDrawText("Brak pancerza", { WHEREINFO, 7 }, 0x0001);
 
 	//_getch();
 }

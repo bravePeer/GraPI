@@ -62,6 +62,18 @@ bool LoadGame(Player& player, vector<Map*>& allMaps)
 	//pozycja
 	file.read((char*)&player.positon, sizeof(player.positon));
 
+	switch (player.profession)
+	{
+	case 0:
+		player.profession_name = "Wojownik";
+		break;
+	case 1:
+		player.profession_name = "Mag";
+		break;
+	case 2:
+		player.profession_name = "Łowca";
+		break;
+	}
 
 	bool bbuf = true;
 	file.read((char*)&bbuf, sizeof(bbuf));

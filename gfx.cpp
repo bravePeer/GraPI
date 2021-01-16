@@ -51,7 +51,7 @@ void ShowGfx_Hero(int id, COORD c)
 {
 	wstring* hero_gfx = new wstring[30];
 	
-	int colors[3] = { 0x0004, 0x0002, 0x0001 };
+	int colors[3] = { 0x0004,0x0001,   0x0002};
 
 	if (id == -1 || id == -2)
 	{
@@ -72,11 +72,11 @@ void ShowGfx_Hero(int id, COORD c)
 			}
 		}
 		CDrawText("Wojownik", { 20,35 }, colors[0]);
-		CDrawText("Łowca", { 20 + 41,35 }, colors[1]);
-		CDrawText("Mag", { 20 + 82,35 }, colors[2]);
-		CDrawText("Aura Pancerza ", { 20,37 }, colors[0]);
-		CDrawText("Leczenie Ran ", { 20 + 41,37 }, colors[1]);
-		CDrawText("Deszcz Strzał ", { 20 + 82,37}, colors[2]);
+		CDrawText("Mag", { 20 + 41,35 }, colors[1]);
+		CDrawText("Łowca", { 20 + 82,35 }, colors[2]);
+		CDrawText("Aura Pancerza", { 20+4-7 ,37 }, colors[0]); 
+		CDrawText("Leczenie Ran ", { 20+1-7 + 42,37 }, colors[1]);	//wybacznie bo moze pomylilem spele
+		CDrawText("Deszcz Strzał", { 20 +3-7+ 82,37}, colors[2]);
 	}
 	else
 	{

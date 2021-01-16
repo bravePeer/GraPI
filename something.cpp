@@ -159,13 +159,20 @@ int DrawMenu(vector<string>& option, COORD c)
 	return pos;
 }
 
-int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText)
+int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, COORD c2, short adTextAttribute)
 {
 	int pos = 0;
 	int key = 0;
 	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	int lenght = option[0].length();
+	int lenghtA = option[0].length();
+
+	for (int i = 1; i < option.size(); i++)
+	{
+		if (option[i].length() > lenght)
+			lenght = option[i].length();
+	}
 
 	for (int i = 1; i < option.size(); i++)
 	{
@@ -185,7 +192,18 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText)
 			}
 			cout << endl;
 		}
+		for (int i = 0; i < additionalText.size(); i++)
+		{
+			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
+			for (int j = 0; j < lenght; j++)
+			{
+				cout << " ";
+			}
+			cout << endl;
+		}
 
+
+		//Rysowanie opcji
 		for (int i = 0; i < option.size(); i++)
 		{
 			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
@@ -201,8 +219,9 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText)
 				SetConsoleTextAttribute(handlee, FOREGROUND_BLUE);
 				cout << option[i];
 			}
-
 		}
+		//rysowanie opisow
+		CDrawText(additionalText[pos], c2, adTextAttribute);
 
 		key = GetKey();
 
