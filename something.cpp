@@ -158,7 +158,7 @@ int DrawMenu(vector<string>& option, COORD c)
 
 	return pos;
 }
-
+/*Rysuje Menu wyboru ktore wyswietla dodatkowe opcje*/
 int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, COORD c2, short adTextAttribute)
 {
 	int pos = 0;
@@ -166,7 +166,11 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	int lenght = option[0].length();
-	int lenghtA = option[0].length();
+	int lenghtA = additionalText[0].length();
+	int heightA = 1, buf = 0;
+	short j = 0;
+
+	string s;
 
 	for (int i = 1; i < option.size(); i++)
 	{
@@ -174,12 +178,24 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 			lenght = option[i].length();
 	}
 
-	for (int i = 1; i < option.size(); i++)
+	for (int i = 1; i < additionalText.size(); i++)
 	{
-		if (option[i].length() > lenght)
-			lenght = option[i].length();
+		if (additionalText[i].length() > lenghtA)
+			lenghtA = additionalText[i].length();
 	}
 
+	for (int i = 1; i < additionalText.size(); i++)
+	{
+		buf = 0;
+		for (int j = 0;j < additionalText[i].length();j++)
+		{
+			if (j == '\n')
+				buf++;
+		}
+		if (buf > heightA)
+			heightA = buf  ;//-3 ?
+	}
+	stringstream ss =  stringstream(additionalText[0]);
 	do
 	{
 		//lepsze czyszczenie bo czysci tylko fragment nie calosc
@@ -190,18 +206,15 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 			{
 				cout << " ";
 			}
-			cout << endl;
 		}
-		for (int i = 0; i < additionalText.size(); i++)
+		for (int i = 0; i < heightA; i++)
 		{
-			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
-			for (int j = 0; j < lenght; j++)
+			SetConsoleCursorPosition(handlee, { c2.X, short(c2.Y +i) });
+			for (int j = 0; j < lenghtA; j++)
 			{
-				cout << " ";
+				cout << "%";
 			}
-			cout << endl;
 		}
-
 
 		//Rysowanie opcji
 		for (int i = 0; i < option.size(); i++)
@@ -221,7 +234,14 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 			}
 		}
 		//rysowanie opisow
-		CDrawText(additionalText[pos], c2, adTextAttribute);
+		ss = stringstream(additionalText[pos]);
+		while (getline(ss   , s,'\n'))
+		{
+			CDrawText(s, {c2.X, c2.Y + j}, adTextAttribute);
+			j++;
+		}
+		j = 0;
+		
 
 		key = GetKey();
 
@@ -288,6 +308,22 @@ void DrawBorder()
 		SetConsoleCursorPosition(handle, { 106, i });
 		wcout << L"\u2503";
 	}
+
+	
+	for (short i = 0; i < WIDTHCONSOLE - WHEREINFO -1 ; i++)
+	{
+		SetConsoleCursorPosition(handle, { WHEREINFO + i, 11 });
+		wcout << L"\u2500";
+	}
+
+	for (short i = 0; i < 10; i++)
+	{
+		SetConsoleCursorPosition(handle, { WIDTHCONSOLE - 23, 1+i });
+		wcout << L"\u2502";
+	}
+
+	SetConsoleCursorPosition(handle, { WIDTHCONSOLE - 23, 11 });
+	wcout << L"\u2534";
 
 	SetConsoleCursorPosition(handle, { 106, 0 });
 	wcout << L"\u2533";
@@ -358,11 +394,13 @@ void ClearPlace(COORD pos, COORD size)
 
 void ClearMapPlace()
 {
+	ClearPlace({ 1,1 }, { WHEREINFO - 2,40 });
+
+	/*
 	CONSOLE_SCREEN_BUFFER_INFO bufInfo;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	GetConsoleScreenBufferInfo(handle, &bufInfo);
 	COORD wSize = bufInfo.dwSize;
-
 	for (short i = 0; i < wSize.Y - 2; i++)
 	{
 		SetConsoleCursorPosition(handle, { 1, i + 1 });
@@ -370,12 +408,15 @@ void ClearMapPlace()
 		{
 			cout << " ";
 		}
-	}
+	}*/
  }
 
 void ClearInfoPlace()
 {
-	CONSOLE_SCREEN_BUFFER_INFO bufInfo;
+	ClearPlace({ WHEREINFO,1 }, { WIDTHCONSOLE - WHEREINFO - 1,40 });
+
+
+	/*CONSOLE_SCREEN_BUFFER_INFO bufInfo;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	GetConsoleScreenBufferInfo(handle, &bufInfo);
 	COORD wSize = bufInfo.dwSize;
@@ -383,11 +424,16 @@ void ClearInfoPlace()
 	for (short i = 0; i < wSize.Y - 2; i++)
 	{
 		SetConsoleCursorPosition(handle, { 107, i + 1 });
-		for (short i = 0; i < wSize.X-108; i++)
+		for (short i = 0; i < wSize.X - 108; i++)
 		{
 			cout << " ";
 		}
-	}
+	}*/
+}
+
+void ClearEqPlace()
+{
+	ClearPlace({ WHEREINFO,12 }, { WIDTHCONSOLE-WHEREINFO - 1,28 });
 }
 
 void X(short n, ...)
@@ -471,7 +517,7 @@ void X(short n, short textAtribute, ...)
 
 	string* text = new string[n];
 	short lenghtT = 0;
-	short x = 52, y = 29;
+	short x = 52, y = 34;
 	
 	for (short i = 0; i < n; i++)
 	{
@@ -534,8 +580,3 @@ int GetKey()
 		a += _getch();
 	return a;
 }
-
-/*-----------------------------*/
-/*Ładowanie i zapisywanie plikó*/
-/*-----------------------------*/
- 

@@ -7,8 +7,8 @@
 
 using namespace std;
 
-void ShowGfx_NPC(int id);
-void TakeGfx_NPC(int id);
+void ShowGfx_NPC(int id, COORD c);
+void TakeGfx_NPC(int id, wstring npc_gfx[]);
 
 void ShowGfx_Mobs(int id, COORD c);
 void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght);
@@ -16,8 +16,8 @@ void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght);
 void ShowGfx_MiniBoss(int id, COORD c);
 void TakeGfx_MiniBoss(int id, wstring min_boss_gfx[], int& lenght);
 
-void ShowGfx_Boss(int id);
-void TakeGfx_Boss(int id);
+void ShowGfx_Boss(int id, COORD c);
+void TakeGfx_Boss(int id, wstring boss_gfx[]);
 
 void ShowGfx_Envi(int id);
 void TakeGfx_Envi(int id);

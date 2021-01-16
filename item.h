@@ -18,8 +18,8 @@ public:
 		return 0;
 	}
 
-	string name;
-	string desc;
+	string name = " ";
+	string desc = " ";
 
 	float weight;
 	int price;

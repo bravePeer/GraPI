@@ -709,6 +709,7 @@ void Game(bool isNewGame)//, Map &map
 	//map.ShowMap();
 	DrawBorder();
 
+	player.ShowStats();
 	//system("cls");
 	while (1)	//głowna petla gry
 	{
@@ -738,20 +739,12 @@ void Game(bool isNewGame)//, Map &map
 				player.positon.x -= 1;
 			break;
 		case 'i':
-			ClearInfoPlace();
 			player.ShowInventory();
-			ClearInfoPlace();
-			break;
-		case 'k':
-			ClearInfoPlace();
-			player.ShowStats();
-			_getch();
-			ClearInfoPlace();
+			ClearEqPlace();
 			break;
 		case 'j':
-			ClearInfoPlace();
 			player.ShowQuests();
-			ClearInfoPlace();
+			ClearEqPlace();
 			break;
 		case 'l':
 			player.mapID = mapID;
@@ -784,7 +777,6 @@ void Game(bool isNewGame)//, Map &map
 
 			
 		}*/
-
 
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)

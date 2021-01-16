@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <iomanip>   
 #include <fstream>
+#include <sstream>
 #include "player.h"
 #include "item.h"
 #include "map.h"
@@ -20,6 +21,7 @@ using namespace std;
 void GenerateWindow();
 int DrawMenu(vector<string>& option);
 int DrawMenu(vector<string>& option, COORD c);
+int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, COORD c2, short adTextAttribute);
 
 /*Wypisuje napis w odpowiednim miejscu i z atrybutem (0x1234)
 1- nwm 2- chyba podkreslenie 3-tlo 4-tekst*/
@@ -33,6 +35,7 @@ void DrawOnlyBorder();
 void ClearPlace(COORD pos, COORD size);
 void ClearMapPlace();
 void ClearInfoPlace();
+void ClearEqPlace();
 /*wypisuje dialog*/
 //void X(short n, ...);
 /*n > liczba linijek, textAtt.. > kolor, tyle ile |n| tyle argumentow ""

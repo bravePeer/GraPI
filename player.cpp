@@ -103,7 +103,16 @@ void Player::CreateCharacter()
 	s.push_back("Uniki");
 	s.push_back("Uderzenia krytyczne");
 
-	CDrawText("Si³a - (Wp³ywa na obra¿enia zadawne wrogom.", { 124,17+5}, 0x0004);
+
+	vector<string> ad;
+	ad.push_back("Si³a - Wp³ywa na obra¿enia zadawne wrogom.\nDobre dla wojownika.");
+	ad.push_back("Inteligencja - (Wp³ywa na obra¿enia zadawne wrogom.\nDobre dla maga");
+	ad.push_back("Zrêcznoœæ - (Wp³ywa na obra¿enia zadawne wrogom.\nDobre dla ³owcy");
+	ad.push_back("Celnoœæ - (Zwiêksza szanse na trafienie)");
+	ad.push_back("Uniki - (Wp³ywa na czêstoœæ unikania ciosów)");
+	ad.push_back("Uderzenia krytyczne -(Zwiêksza szanse na silniejszy cios)");
+
+	/*CDrawText("Si³a - (", { 124,17+5}, 0x0004);
 	CDrawText("Dobre dla wojownika)", { 124,18 + 5 }, 0x0004);
 	CDrawText("Zrêcznoœæ - (Wp³ywa na obra¿enia zadawne wrogom.", { 124,19 + 5 }, 0x0004);
 	CDrawText("Dobre dla ³owcy)", { 124,20+5}, 0x0004);
@@ -112,13 +121,14 @@ void Player::CreateCharacter()
 	CDrawText("Celnoœæ - (Zwiêksza szanse na trafienie)", {124,23 + 5 }, 0x0004);
 	CDrawText("Uniki - (Wp³ywa na czêstoœæ unikania ciosów)", { 124,24 + 5 }, 0x0004);
 	CDrawText("Uderzenia krytyczne -", { 124,25 + 5 }, 0x0004);
-	CDrawText("(Zwiêksza szanse na silniejszy cios))", { 124,26 + 5 }, 0x0004);
+	CDrawText("(Zwiêksza szanse na silniejszy cios))", { 124,26 + 5 }, 0x0004);*/
 
 	for (int i = 15; i > 0; i--)
 	{
 		ShowStats();
-		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { 124,20 }, 0x0002);
-		switch (DrawMenu(s,{124,13}))
+		CDrawText("Przydziel punkty umiejêtnoœci", { WHEREINFO,12 }, 0x0002);
+		CDrawText("Pozosta³e punkty: "+to_string(i)+" do rozdania.", { WHEREINFO,20 }, 0x0002);
+		switch (DrawMenu(s, { WHEREINFO,13 }, ad, { WHEREINFO, 23 },0x0004))
 		{
 		case 0:
 			strength++;
@@ -237,22 +247,30 @@ void Player::ShowInventory()
 	Armor* armor = NULL;
 
 	vector<string> s;
+	vector<string> ad;
 	
-	CDrawText("Ekwipunek", { 107,1 }, 0x000a);
-	CDrawText("Posiadasz" + to_string(money) + "G", { 107, 2 }, 0x0003);
+	
 
 	if (inventory.size() > 0)
 	{
-		//cout << "Ekwipunek\t Pieni¹dze: " << money << endl;
-		for (int i = 0; i < inventory.size(); i++)
+		while (1)
 		{
-			s.push_back(inventory[i]->name);
-		}
-		s.push_back("Powrot");
-		buf = DrawMenu(s, {107,4});
-		if (buf == inventory.size())
-			return;
+			ClearEqPlace();
+			CDrawText("Ekwipunek", { WHEREINFO, 12 }, 0x000a);
+			ShowStats();
+			s.clear();
+			ad.clear();
+			for (int i = 0; i < inventory.size(); i++)
+			{
+				s.push_back(inventory[i]->name);
+				ad.push_back(inventory[i]->desc);
+			}
+			s.push_back("Powrot");
+			ad.push_back(" ");
 
+			buf = DrawMenu(s, { WHEREINFO,14 }, ad, { WHEREINFO,38 }, 0x000c);
+			if (buf == inventory.size())
+				return;
 		switch (inventory[buf]->UseItem())
 		{
 		case 1://zjedz
@@ -290,7 +308,9 @@ void Player::ShowInventory()
 				inventory.erase(inventory.begin() + buf);
 			}
 			break;
-		} 
+		}
+		}
+		 
 	}
 	else
 	{
@@ -300,17 +320,22 @@ void Player::ShowInventory()
 	delete food;
 }
 
-void Player::ShowStandardStats()
+void Player::ShowStandardStats()	//do testowania bylo usunac
 {
-	CDrawText(name, { WHEREINFO + 1, 1 }, 0x0003);
 	
+}
+
+void Player::ShowStats()	
+{
+	CDrawText(name, { WHEREINFO  , 1 }, 0x0003);
+
 	if (sex == 1)
 		CDrawText(L"\u2642", { (short)name.length() + WHEREINFO + 1, 1 }, 0x0003);
 	else
 		CDrawText(L"\u2640", { (short)name.length() + WHEREINFO + 1, 1 }, 0x0003);
 
 	CDrawText("Poziom: " + to_string(level), { WIDTHCONSOLE - 22, 1 }, 0x0003);
-	CDrawText("PD:           " + to_string(xp), { WIDTHCONSOLE -22,3 }, 0x0003);
+	CDrawText("PD:           " + to_string(xp), { WIDTHCONSOLE - 22,3 }, 0x0003);
 	CDrawText("¯ycie:        " + to_string(life) + '/' + to_string(lifeMax), { WIDTHCONSOLE - 22,4 }, 0x0003);
 	CDrawText("Si³a:         " + to_string(strength), { WIDTHCONSOLE - 22,5 }, 0x0003);
 	CDrawText("Inteligencja: " + to_string(inteligence), { WIDTHCONSOLE - 22,6 }, 0x0003);
@@ -318,19 +343,10 @@ void Player::ShowStandardStats()
 	CDrawText("Zrêcznoœæ:    " + to_string(agility), { WIDTHCONSOLE - 22,8 }, 0x0003);
 	CDrawText("Uniki:        " + to_string(dodging), { WIDTHCONSOLE - 22,9 }, 0x0003);
 	CDrawText("UK:           " + to_string(crit_strike), { WIDTHCONSOLE - 22,10 }, 0x0003);
+	CDrawText("Posiadasz" + to_string(money) + "G", { WHEREINFO  ,  10 }, 0x0003);
 
-	CDrawText(profession_name, {WHEREINFO,3}, 0x0003);
-}
+	CDrawText(profession_name, { WHEREINFO,3 }, 0x0006);
 
-void Player::ShowStats()	
-{
- 
-	life = 100000;
-	lifeMax = life;
-	strength = 8;
-	xp = -10000;
-	ShowStandardStats();
-	
 	if (equipedWeapon != NULL)
 	{
 		CDrawText("Broñ: " + equipedWeapon->name  , { WHEREINFO, 5}, 0x0003);
@@ -343,12 +359,10 @@ void Player::ShowStats()
 	if (equipedArmor != NULL)
 	{
 		CDrawText("Pancerz: " + equipedArmor->name, { WHEREINFO, 7 }, 0x0003);
-		CDrawText(  "Obrnona: " + to_string(equipedArmor->armor), { WHEREINFO, 9 }, 0x0003);
+		CDrawText(  "Obrona: " + to_string(equipedArmor->armor), { WHEREINFO, 8 }, 0x0003);
 	}
 	else
 		CDrawText("Brak pancerza", { WHEREINFO, 7 }, 0x0001);
-
-	//_getch();
 }
 
 void Player::AddItem(Item* item)
