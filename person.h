@@ -4,6 +4,8 @@
 #include <vector>
 #include "item.h"
 #include "point.h"
+#include <string>
+
 
 using namespace std;
 
@@ -45,7 +47,7 @@ public:
 	Weapon *equipedWeapon = NULL;
 	Armor *equipedArmor = NULL;
 
-	
 private:
 
 };
+

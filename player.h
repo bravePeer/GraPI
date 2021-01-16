@@ -3,10 +3,12 @@
 #include <string>
 #include "person.h"
 #include "something.h"
+#include "gfx.h"
+
 
 using namespace std;
 
-class Player : public Person //dziedziczenie
+class Player :public Person //dziedziczenie
 {
 public:
 	
@@ -46,3 +48,84 @@ public:
 private:
 
 };
+
+class Npc
+{
+public:
+	string name;
+	Point position;
+	Npc() {}
+	Npc(string _name, Point _position)
+	{
+		name = _name;
+		position = _position;
+	}
+	virtual void OnInteraction();
+	 
+	virtual int NpcType()
+	{
+		return 0;
+	}
+	//wstring wc = L"";
+};
+
+/*
+class NpcFood : public Npc
+{
+public:
+
+	NpcFood(string _name, Point _position)
+	{
+		name = _name;
+		position = _position;
+	}
+
+	void OnInteraction()
+	{
+		//X(2, 0x000e, "G³odny? A mo¿e spragniony?", "U mnie wszystko znajdziesz co najlepszze mo¿na spo¿yæ!");
+	}
+	int NpcType()
+	{
+		return 1;
+	}
+};
+
+class NpcWeapon : public Npc
+{
+public:
+
+	NpcWeapon(string _name, Point _position)
+	{
+		name = _name;
+		position = _position;
+	}
+
+	void OnInteraction()
+	{
+		//X(1, 0x000e, "Potrzebujesz ostrej jak brzytwa broni?");
+		//X(1, 0x000e, "Dobrze trafi³eœ!");
+	}
+	int NpcType()
+	{
+		return 2;
+	}
+};
+
+class NpcArmor : public Npc
+{
+public:
+	NpcArmor(string _name, Point _position)
+	{
+		name = _name;
+		position = _position;
+	}
+
+	void OnInteraction();
+	
+	int NpcType()
+	{
+		return 3;
+	}
+	//wc = L"\u0414";
+};
+/**/

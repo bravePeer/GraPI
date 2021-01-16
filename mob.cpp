@@ -42,12 +42,12 @@ Mob  Mob::MobStats(int level, int return_map)
 	Mob mob;
 	Mob boss;
 	int pom_name = 1 + rand() % (6-1+1);
-	if (pom_name == 1) mob.name = "Wilk";
+	if	   (pom_name == 1) mob.name = "Wilk";
 	else if(pom_name == 2) mob.name = "Wiedüma";
 	else if(pom_name == 3) mob.name = "Szkielet";
 	else if(pom_name == 4) mob.name = "Ghul";
-	else if(pom_name == 5) mob.name = "Leúnica";
-	else if(pom_name == 6) mob.name = "Troll skalny";
+	else if(pom_name == 5) mob.name = "Drzewiec";
+	else if(pom_name == 6) mob.name = "Goblin";
 
 	if (return_map == 1)
 	{

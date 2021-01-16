@@ -622,11 +622,10 @@ void LoadMaps(vector<Map*>& allMaps)
 	allMaps.push_back(new Map2());
 	allMaps.push_back(new Map3());
 }
-
+ 
 void Game(bool isNewGame)//, Map &map
 {
 	int x = 0, y = 0;
-	//int return_map = map.LoadHome(player.positon); //<TU
 	int mapID = 0;
  
 	Player player;
@@ -731,23 +730,29 @@ void Game(bool isNewGame)//, Map &map
 			X(3, 0x000c ,"Na swojej drodze spotkałeś " , allMaps[mapID]->mobs[buf]->name.c_str() ," musisz stanąć z nim do walki!");
 			if (Fight(player, *allMaps[mapID]->mobs[buf-1], mapID))
 			{
-
 				allMaps[mapID]->KillMob(buf - 1);
 			}
 			allMaps[mapID]->ShowMap();
 		}
-		//sklep
-		if (allMaps[mapID]->map[x][y] == 'S')		
+
+		//czy spotka npc
+		/*if (allMaps[mapID]->map[x][y] == 'S')		
 		{
 			Shop(player, allFood, allWeapons, allArmor);
-		}
-		
+		}*/
+		/*if (int buf = allMaps[mapID]->IsWithNpc(player.positon))
+		{
+			allMaps[mapID]->npcs[buf - 1]->OnInteraction();
+
+			
+		}*/
+
+
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)
 		{mainQuest.front()->UpdateQuest();
 			if (mainQuest.front()->IsQuestDone(player, *allMaps[mapID]))
 			{
-				PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME  );
 				player.questID++;
 				mainQuest.pop_front();
 				if (mainQuest.size() > 0)
@@ -771,7 +776,6 @@ void Game(bool isNewGame)//, Map &map
 		//Następna/poprzednia mapa
 		if (allMaps[mapID]->IsNextMap(player.positon))
 		{
-			//allMaps[mapID]->LoadMap(return_map + 1, player.positon);
 			mapID++;
 			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
@@ -779,7 +783,6 @@ void Game(bool isNewGame)//, Map &map
 		}
 		if (allMaps[mapID]->IsPrevMap(player.positon))
 		{
-			 //allMaps[mapID]->LoadMap(return_map - 1, player.positon);
 			mapID--;
 			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
@@ -815,17 +818,18 @@ int main()
 
 	vector<string> s;
 	s.push_back("Rozpocznij nowa grę");
-	s.push_back("Wczytaj zapis");
-	s.push_back("Sterowanie");
-	s.push_back("wyjdź");
+	s.push_back("   Wczytaj zapis   ");
+	s.push_back("    Sterowanie     ");
+	s.push_back("       Wyjdź       ");
 
 	while (1)//główna 
 	{
-		ClearMapPlace();
-		ClearInfoPlace();
+		system("cls");
 		ShowGfx_GameName();
-		DrawBorder();
-		switch (DrawMenu(s, {50, 15}))
+		DrawOnlyBorder();
+		DrawMenuCharacters();
+
+		switch (DrawMenu(s, {(WIDTHCONSOLE - 20)/2, 15}))
 		{
 		case 0: //poczatek gry
 			system("cls");

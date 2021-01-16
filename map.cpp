@@ -12,11 +12,11 @@ Map::~Map()
 		delete mobs[i];
 	}
 	mobs.clear();
-	for (int i = 0; i < people.size(); i++)
+	/*for (int i = 0; i < npcs.size(); i++)
 	{
-		delete people[i];
+		delete npcs[i];
 	}
-	people.clear();
+	npcs.clear();*/
 }
 
 int Map::LoadVMap(Point& position)
@@ -39,7 +39,7 @@ void Map::ShowMap()
 	CDrawText(L"\u2229", { (short)prevMap.x, (short)prevMap.y }, 0x0006);
 }
 
-/*Wyswietla mape i moby*/
+/*Wyswietla mape i moby i npc*/
 void Map::ShowMap(Point& playerPos)
 {
 	CDrawText(buf, { (short)lastPlayerPos.x,(short)lastPlayerPos.y }, 0x0003);
@@ -53,6 +53,26 @@ void Map::ShowMap(Point& playerPos)
 	{
 		CDrawText(L"\u0230", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
 	}
+
+	/*for (int i = 0; i < npcs.size(); i++)
+	{
+		switch (npcs[i]->NpcType())
+		{
+		case 0:
+			CDrawText(L"\u1d25", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
+			break;
+		case 1:
+			CDrawText(L"\u026f", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
+			break;
+		case 2:
+			CDrawText(L"\u0230", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
+			break;
+		case 3:
+			CDrawText(L"\u2126", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
+			break;
+		}
+
+	}*/
 }
 
 /*Czy walka*/
@@ -63,6 +83,16 @@ int Map::IsFight(Point &playerPos)
 		if (mobs[i]->position.x == playerPos.x && mobs[i]->position.y == playerPos.y)
 			return i + 1;
 	}
+	return 0;
+}
+/*Czy spotkal npc*/
+int Map::IsWithNpc(Point& playerPos)
+{
+	/*for (int i = 0; i < npcs.size(); i++)
+	{
+		if (npcs[i]->positon.x == playerPos.x && npcs[i]->positon.y == playerPos.y)
+			return i + 1;
+	}*/
 	return 0;
 }
 /*Zabicie moba*/
@@ -82,12 +112,6 @@ bool Map::CanMove(Point &point)
 	{
 		return false;
 	}
-	return true;
-}
-
-bool Map::MoveToHome(int x,int y)
-{
-	
 	return true;
 }
 

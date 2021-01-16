@@ -51,6 +51,13 @@ void GenerateWindow()
 	setlocale(LC_CTYPE, "Polish");	//<- polskie literki
 }
 
+/*
+1----
+2----
+3----
+
+*/
+
 int DrawMenu(vector<string>& option)
 {
 	int pos = 0;
@@ -186,7 +193,6 @@ void CDrawText(wstring s, COORD c, short textAtribute)
 	wcout << s;
 	SetConsoleTextAttribute(handlee, buf);
 	_setmode(_fileno(stdout), _O_TEXT);
-
 }
 
 /*Jakaś obramówka*/

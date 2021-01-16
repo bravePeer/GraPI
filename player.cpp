@@ -1,5 +1,4 @@
 #include "player.h"
-#include "gfx.h"
 
 
 Player::Player()
@@ -8,7 +7,6 @@ Player::Player()
 
 Player::~Player()
 {
-//	delete quest;
 }
 
 void Player::Select_profession()
@@ -37,32 +35,54 @@ void Player::Select_profession()
 
 void Player::CreateCharacter()
 {
+	vector<string> s;
+	s.push_back("Kobieta");
+	s.push_back("Mê¿czyzna");
 	//system("cls");
 	//cout << "Podaj imiê" << endl;
-	CDrawText("Podaj imiê ", { 80,5 }, 0x0003);
-	cin >> name;
-	system("cls");
-	do
-	{
-		//cout << "Podaj p³eæ(m/k)" << endl;
-		CDrawText("Podaj p³eæ(m/k)", { 80,5 }, 0x0003);
-		cin >> sex;
-		system("cls");
-	} while ((sex != 'k') && (sex != 'm'));
-	
-	if(sex == 'm')
-		ShowGfx_Hero(-1);
-	else
-		ShowGfx_Hero(-2);
 
+	CDrawText("Podaj imiê:", { (WIDTHCONSOLE-12)/2,5 }, 0x0003);
+	//cin >> name;
+	char a = 'a';
+	while (a != 13)
+	{
+		
+		if (a == 8)
+		{
+			if (name.size() > 0)
+				name.erase(name.size() - 1);
+		}
+		else
+		{
+			if(name.size()<=20)
+				name += a;
+		}
+	a = _getch();
+		CDrawText("                    ", { (short)(WIDTHCONSOLE - 20) / 2,6 }, 0x000a);
+		CDrawText(name, { (short)(WIDTHCONSOLE - name.size()) / 2,6 }, 0x000a);
+	}
+
+	system("cls");
+	
+	CDrawText("Wybierz p³eæ", { 80,5 }, 0x0003);
+	switch (DrawMenu(s, { 80,7 }))
+	{
+		case 0:
+			ShowGfx_Hero(-2, {0,0});
+			break;
+		case 1:
+			ShowGfx_Hero(-1, {0,0});
+			break;
+	}
+	ClearMapPlace();
 
 	Select_profession();
 
 	ClearInfoPlace();
-	ShowGfx_Hero(-1);
+	//ShowGfx_Hero(-1);
 	
 	//char pom;
-	vector<string> s;
+	s.clear();
 	s.push_back("Si³a");	
 	s.push_back("Zrêcznoœæ");	
 	s.push_back("Inteligencja");	
@@ -385,3 +405,5 @@ bool Player::AccIs()
 	int help = 1 + rand() % (100 - 1 + 1);
 	if (((dodging*2) +80) > help) return true;
 }
+
+ 

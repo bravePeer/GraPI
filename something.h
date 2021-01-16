@@ -10,7 +10,7 @@
 #include "player.h"
 #include "item.h"
 #include "map.h"
-
+#define WIDTHCONSOLE 174
 
 using namespace std;
 
