@@ -35,8 +35,10 @@ void Player::Select_profession()
 
 void Player::CreateCharacter()
 {
+	DrawOnlyBorder();
+	DrawMenuCharacters();
 	vector<string> s;
-	s.push_back("Kobieta");
+	s.push_back(" Kobieta ");
 	s.push_back("Mê¿czyzna");
 	//system("cls");
 	//cout << "Podaj imiê" << endl;
@@ -44,9 +46,9 @@ void Player::CreateCharacter()
 	CDrawText("Podaj imiê:", { (WIDTHCONSOLE-12)/2,5 }, 0x0003);
 	//cin >> name;
 	char a = 'a';
-	while (a != 13)
+	do
 	{
-		
+		a = _getch();
 		if (a == 8)
 		{
 			if (name.size() > 0)
@@ -54,41 +56,48 @@ void Player::CreateCharacter()
 		}
 		else
 		{
-			if(name.size()<=20)
+			if (name.size() <= 20)
 				name += a;
+			else
+				X(1, 0x000c, "Nazwa nie moze przekraczac 20 znaków.");
 		}
-	a = _getch();
-		CDrawText("                    ", { (short)(WIDTHCONSOLE - 20) / 2,6 }, 0x000a);
-		CDrawText(name, { (short)(WIDTHCONSOLE - name.size()) / 2,6 }, 0x000a);
-	}
+		CDrawText("                      ", { (short)(WIDTHCONSOLE - 21) / 2,7 }, 0x000a);
+		CDrawText(name, { (short)(WIDTHCONSOLE - name.size()) / 2,7 }, 0x000a);
+	}while (a != 13);
 
-	system("cls");
-	
-	CDrawText("Wybierz p³eæ", { 80,5 }, 0x0003);
-	
-	switch (DrawMenu(s, { 80,7 }))
+	//system("cls");
+	CDrawText("           ", { (WIDTHCONSOLE - 12) / 2,5 }, 0x0003);
+	CDrawText("                        ", { (WIDTHCONSOLE - 24) / 2,7 }, 0x0003);
+
+	CDrawText("Wybierz p³eæ", { (WIDTHCONSOLE - 12)/2,5 }, 0x0003);
+	switch (DrawMenu(s, { (WIDTHCONSOLE - 9)/2,7 }))
 	{
 		case 0:
-			ClearMapPlace();
+			system("cls");
+			sex = 2;
 			ShowGfx_Hero(-2, {0,0});
 			break;
 		case 1:
-			ClearMapPlace();
+			system("cls");
+			sex = 1;
 			ShowGfx_Hero(-1, {0,0});
 			break;
 	}
-	
 
+	DrawOnlyBorder();
 	Select_profession();
 
-	ClearInfoPlace();
-	//ShowGfx_Hero(-1);
-	
+	system("cls");
+
+	//ClearInfoPlace();
+	DrawBorder();
+	ShowGfx_Hero(sex * 10 + (short)profession, {(WHEREINFO - 40)/2,2});
+
 	//char pom;
 	s.clear();
 	s.push_back("Si³a");	
+	s.push_back("Inteligencja");
 	s.push_back("Zrêcznoœæ");	
-	s.push_back("Inteligencja");	
 	s.push_back("Celnoœæ");	
 	s.push_back("Uniki");
 	s.push_back("Uderzenia krytyczne");
@@ -156,8 +165,8 @@ void Player::Bonus_stats_per_lvl()
 
 	vector<string> s;
 	s.push_back("Si³a");
-	s.push_back("Zrêcznoœæ");
 	s.push_back("Inteligencja");
+	s.push_back("Zrêcznoœæ");
 	s.push_back("Celnoœæ");
 	s.push_back("Uniki");
 	s.push_back("Uderzenia krytyczne");
@@ -290,30 +299,50 @@ void Player::ShowInventory()
 	delete food;
 }
 
+void Player::ShowStandardStats()
+{
+	CDrawText(name, { WHEREINFO + 1, 1 }, 0x0003);
+	
+	if (sex == 1)
+		CDrawText(L"\u2642", { (short)name.length() + WHEREINFO + 1, 1 }, 0x0003);
+	else
+		CDrawText(L"\u2640", { (short)name.length() + WHEREINFO + 1, 1 }, 0x0003);
+
+	CDrawText("Poziom: " + to_string(level), { WIDTHCONSOLE - 22, 1 }, 0x0003);
+	CDrawText("PD:           " + to_string(xp), { WIDTHCONSOLE -22,3 }, 0x0003);
+	CDrawText("¯ycie:        " + to_string(life) + '/' + to_string(lifeMax), { WIDTHCONSOLE - 22,4 }, 0x0003);
+	CDrawText("Si³a:         " + to_string(strength), { WIDTHCONSOLE - 22,5 }, 0x0003);
+	CDrawText("Inteligencja: " + to_string(inteligence), { WIDTHCONSOLE - 22,6 }, 0x0003);
+	CDrawText("Celnoœæ:      " + to_string(accuracy), { WIDTHCONSOLE - 22,7 }, 0x0003);
+	CDrawText("Zrêcznoœæ:    " + to_string(agility), { WIDTHCONSOLE - 22,8 }, 0x0003);
+	CDrawText("Uniki:        " + to_string(dodging), { WIDTHCONSOLE - 22,9 }, 0x0003);
+}
+
 void Player::ShowStats()	
 {
-	//ClearInfoPlace();
-	CDrawText(name, { 124, 1 }, 0x0003);
-	sex == 'm' ? CDrawText(L"\u2642", {(short) name.length() + 125, 1 }, 0x0003) : CDrawText(L"\u2640", { (short)name.length() + 108, 1 }, 0x0003);
-	CDrawText("Poziom: " +to_string( level), {124, 2}, 0x0003);
-	CDrawText("PD: " + to_string(xp), { 124,3 }, 0x0003);
-	CDrawText("¯ycie: " + to_string(life) + '/' + to_string(lifeMax), { 124,4 }, 0x0003);
-	CDrawText("Si³a: " + to_string(strength), { 124,5 }, 0x0003);
-	CDrawText("Inteligencja: " + to_string(inteligence), { 124,6 }, 0x0003);
-	CDrawText("Celnoœæ: " + to_string(accuracy), { 124,7 }, 0x0003);
-	CDrawText("Zrêcznoœæ: " + to_string(agility), { 124,8 }, 0x0003);
-	CDrawText("Uniki: "+ to_string(dodging), { 124,9 }, 0x0003);
-
+ 
+	life = 1000000;
+	lifeMax = life;
+	strength = 100;
+	xp = -10000;
+	ShowStandardStats();
+	
 	if (equipedWeapon != NULL)
-		CDrawText("Broñ: " + equipedWeapon->name + " atak:" + to_string( equipedWeapon->strength), { 107, 10 }, 0x0003);
+	{
+		//CDrawText("Broñ: " + equipedWeapon->name  ), { WHEREINFO, 10 }, 0x0003);
+		CDrawText( " atak:" + to_string(equipedWeapon->strength), { WHEREINFO, 10 }, 0x0003);
+
+	}
 	else
-		CDrawText("Brak broni", { 124, 10 }, 0x0001);
+		CDrawText("Brak broni", { WHEREINFO, 3 }, 0x0001);
 
 
 	if (equipedArmor != NULL)
-		CDrawText("Pancerz: " + equipedArmor->name + " pancerz:" + to_string(equipedArmor->armor), { 107, 11 }, 0x0003);
+	{
+		CDrawText("Pancerz: " + equipedArmor->name + " pancerz:" + to_string(equipedArmor->armor), { WHEREINFO, 11 }, 0x0003);
+	}
 	else
-		CDrawText("Brak pancerza", { 124, 11 }, 0x0001);
+		CDrawText("Brak pancerza", { WHEREINFO, 5 }, 0x0001);
 
 	//_getch();
 }

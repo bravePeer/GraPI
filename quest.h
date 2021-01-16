@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include "item.h"
 #include "something.h"
@@ -20,7 +20,7 @@ public:
 	//virtual void ShowMessege();
 	virtual bool IsQuestDone(Player& player, Map& map);
 	virtual void CreateQuest(Player& player, Map& map);
-	virtual void UpdateQuest();
+	virtual void UpdateQuest(Map& map);
 	//virtual int GetTypeOfQuest();
 	Point QuestPoint = { 5,5 };
 	
@@ -28,8 +28,8 @@ public:
 	string desc;
 
 	int needLvl = 0;
-	int gainXp = 0;
-	int gainMoney = 0;
+	int gainXp  ;
+	int gainMoney  ;
 
 	Item neededItem;
 	Item revardItem;
@@ -69,20 +69,36 @@ private:
 class MainQuest0 : public Quest
 {
 public:
-	MainQuest0();
-	void CreateQuest(Player& player, Map& map);
-	void UpdateQuest();
-	bool IsQuestDone(Player& player, Map& map);
+	MainQuest0() {}
+	void CreateQuest(Player& player, Map& map) {}
+	void UpdateQuest(Map& map) {}
+	bool IsQuestDone(Player& player, Map& map) { return true; }
 };
 
 class MainQuest1 : public Quest
 {
 public:
-	MainQuest1();
-	~MainQuest1();
-	void CreateQuest( Player& player, Map& map);
-	void UpdateQuest();
-	bool IsQuestDone(Player& player, Map& map);
+	MainQuest1() {}
+	~MainQuest1() {}
+	void CreateQuest(Player& player, Map& map)
+	{
+		player.positon = { 47,22 };
+		map.ShowMap();
+		map.ShowMap(player.positon);
+		X(1, 0x000a, "*Budzisz się i zauważasz pod drzwiami list*");
+	}
+	void UpdateQuest(Map& map)
+	{
+		CDrawText(L"\u25ac", { 60, 19 }, 0x0007);
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+		if (player.positon == p1 || player.positon == p2)
+		{
+			return true;
+		}
+		return false;
+	}
 
 private:
 	Point p1 = Point(60, 19);
@@ -92,11 +108,23 @@ private:
 class MainQuest2 : public Quest
 {
 public:
-	MainQuest2();
-	~MainQuest2();
-	void CreateQuest( Player& player, Map& map);
-	void UpdateQuest();
-	bool IsQuestDone(Player& player, Map& map);
+	MainQuest2() {}
+	~MainQuest2() {}
+	void CreateQuest(Player& player, Map& map)
+	{
+		X(1, 0x000a, "*Otwiersz list i ...*");
+		X(7, 0x000a, "Witaj mężny wojowniku!", "W imieniu całej wsi proszę Cię o pomoc", "w pokonaniu stworów, które nas atakują.", "Spotkaj się ze mną a powiem Tobie coś więcej o tych bestiach.", "Czekam przed Twoim domem.", "", "Dziękujemy !!!");
+	}
+	void UpdateQuest(Map& map) {}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+		if (map.mapID == 1)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	Point p1 = Point(5, 5);
 };
@@ -108,11 +136,12 @@ public:
 	~MainQuest3() {}
 	void CreateQuest( Player& player, Map& map)
 	{
-		X(1, 0x000a, "*Widzisz cz�owieka ubranego w fioletowe ubranie*");
+		X(1, 0x000a, "*Widzisz człowieka ubranego w fioletowe ubranie*");
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
-		CDrawText(L"\u1d25", { (short)p1.x,(short)p1.y }, 0x0005);
+		if(map.mapID == 1)
+			CDrawText(L"\u1d25", { (short)p1.x,(short)p1.y }, 0x0005);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -126,20 +155,22 @@ public:
 
 class MainQuest4 : public Quest
 {
+	int gainMoney = 300;
+	int gainXp = 50;
 public:
 	MainQuest4() {}
 	~MainQuest4() {}
 	void CreateQuest(Player& player, Map& map)
 	{
-		X(3, 0x0005, "Witaj jestem nowym zarz�dcom tutejszej wioski.", "Przepraszam, �e od razu zawracam Tobie g�ow�", "ale mamy straszny problem z bestiami.");
+		X(3, 0x0005, "Witaj jestem nowym zarządcom tutejszej wioski.", "Przepraszam, że od razu zawracam Tobie głowę", "ale mamy straszny problem z bestiami.");
 		map.ShowMap();
-		X(2, 0x0002, "Co� o tych potworach wiadomo?", "Gdzie s�? Ile ich jest?");
+		X(2, 0x0002, "Coś o tych potworach wiadomo?", "Gdzie są? Ile ich jest?");
 		map.ShowMap();
-		X(4, 0x0005, "Widziano je na po�udniu st�d.", "S�ysza�em, �e jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
+		X(4, 0x0005, "Widziano je na południu stąd.", "Słyszałem, że jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
 
-		map.GenerateMobs(player.level, { 2,27 }, {20, 20}, 8);
+		map.GenerateMobs(player.level, { 2,27 }, {20, 20},10);
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
 		if(shown)
 			CDrawText(L"\u1d25", { (short)p1.x,(short)p1.y }, 0x0005);
@@ -148,62 +179,111 @@ public:
 	{
 		if (map.mobs.size() <= 0 && map.mapID == 1 && !shown)
 		{
-			X(1, 0x0002, "*Powinienem si� teraz uda� do Zarz�dcy wioski*");
+			X(1, 0x0002, "*Powinienem się teraz udać do Zarządcy wioski*");
 			shown = !shown;
 		}
-		if(shown && player.positon == p1)
+		if (shown && player.positon == p1)
+		{
+			X(2, 0x0005, "Dziękuję za pokonanie bestii.", "Proszę o to Twoja należność." );
+			CDrawText("+ " + to_string(gainMoney) + "G", { 108,38 }, 0x000a);
+			player.money += gainMoney;
+			CDrawText("+ " + to_string(gainXp) + "XP", { 108,38 }, 0x000e);
+			player.xp += gainXp;
 			return true;
+
+		}
 		return false;
 	}
+	
 	bool shown = false;
 	Point p1 = Point(20, 20);
 };
 class MainQuest5 : public Quest
 {
+	Mob boss;
+	
 	void CreateQuest(Player& player, Map& map)
 	{
-
+		boss.name="Wilkołak";
+		boss.armor = 30;
+		boss.life = 250;
+		boss.mob_lvl = 5;
+		boss.money_from_mob = 500;
+		boss.exp_after_win = 300;
+		boss.position = { 104,39 };
+		map.mobs.push_back(new Mob(boss));
+		//map.GenerateMobs()
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
-
+		if (map.mapID == 1) CDrawText(L"ጰ",{104,39},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
-
+		if (map.mobs.size() <= 0)
+		{
+			map.is_boss_dead = true;
+			return true;
+		}
+		return false;
 	}
 
 };
 
 class MainQuest6 : public Quest
 {
+	Mob boss;
+
 	void CreateQuest(Player& player, Map& map)
 	{
-
+		boss.name="Golem";
+		boss.armor = 40;
+		boss.life = 350;
+		boss.mob_lvl = 10;
+		boss.money_from_mob = 750;
+		boss.exp_after_win = 600;
+		map.mobs.push_back(new Mob(boss));
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
-
+	if (map.mapID == 2)		CDrawText(L"ጰ",{60,15},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
-
+		if (map.mobs.size() <= 0)
+		{
+			map.is_boss_dead = true;
+			return true;
+		}
+		return false;
 	}
 
 };
 class MainQuest7 : public Quest
 {
+
+Mob boss;
 	void CreateQuest(Player& player, Map& map)
 	{
-
+		boss.name="Smok dzikiego wzgórza";
+		boss.armor = 60;
+		boss.life = 5000;
+		boss.mob_lvl = 15;
+		boss.money_from_mob = 1000;
+		boss.exp_after_win = 1000;
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
-
+		if (map.mapID == 3)		CDrawText(L"ጰ",{53,20},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
-
+		if (map.mobs.size() <= 0)
+		{
+			map.is_boss_dead = true;
+			return true;
+		}
+		return false;
 	}
 
 };
@@ -214,15 +294,36 @@ class MainQuest8 : public Quest
 	{
 
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
 
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
+		vector<string> s;
+		s.push_back("Tak");
+		s.push_back("Nie");
+		if (map.mapID == 2 && punkt == player.positon)
+		{
+			X(-4, 0x0004, "Z dala zobaczyłeś dziwnego potwora\n", "Czy chcesz podejść bliżej?\n","\n","\n");
 
+			switch (DrawMenu(s,{(WHEREINFO-2)/2,20}))
+			{
+			case 0:
+				 player.positon = { 58,15 };
+				 map.ShowMap();
+				 return true;
+				 break;
+			case 1:
+				map.ShowMap();
+				player.positon = { 44,15 };
+				break;
+			}
+		}
+		return false;
 	}
 
+	Point punkt = { 45,15 };
 };
 
 class MainQuest9 : public Quest
@@ -231,7 +332,7 @@ class MainQuest9 : public Quest
 	{
 
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
 
 	}
@@ -248,7 +349,7 @@ class MainQuest10 : public Quest
 	{
 
 	}
-	void UpdateQuest()
+	void UpdateQuest(Map& map)
 	{
 
 	}

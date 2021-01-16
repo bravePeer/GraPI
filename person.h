@@ -18,7 +18,7 @@ public:
 	bool dead = false;
 	
 	string name;
-	char sex;
+	short sex;
 	int xp = 0;
 	int level = 1;
 

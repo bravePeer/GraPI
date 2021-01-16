@@ -29,6 +29,8 @@ public:
 	void ShowInventory();
 	/*Wyswietla statystyki*/
 	void ShowStats();
+	void ShowStandardStats();
+
 	/*Dodaj element do plecaka*/
 	void AddItem(Item* item);
 	/*Pokazuje questy*/

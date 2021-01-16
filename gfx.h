@@ -10,8 +10,8 @@ using namespace std;
 void ShowGfx_NPC(int id);
 void TakeGfx_NPC(int id);
 
-void ShowGfx_Mobs(int id);
-void TakeGfx_Mobs(int id);
+void ShowGfx_Mobs(int id, COORD c);
+void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght);
 
 void ShowGfx_MiniBoss(int id);
 void TakeGfx_MiniBoss(int id);

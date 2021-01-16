@@ -155,11 +155,15 @@ bool LoadGame(Player& player, vector<Map*>& allMaps)
 	//moby na mapach
 	int mapID = 0;
 	int numMobs = 0;
-		
+	bool bufd;
+
 	for (int i = 0; i < allMaps.size(); i++)
 	{
 		//file.read((char*)&mapID, sizeof(mapID));
 		file.read((char*)&numMobs, sizeof(numMobs));
+		file.read((char*)&bufd, sizeof(bufd));
+
+		allMaps[i]->is_boss_dead = bufd;
 
 		for (int j = 0; j < numMobs; j++)
 		{
@@ -177,7 +181,6 @@ bool LoadGame(Player& player, vector<Map*>& allMaps)
 			allMaps[i]->mobs.push_back(new Mob(mob));
 		}
 	}
-
 
 	file.close();
 	return true;
@@ -308,13 +311,14 @@ bool SaveGame(Player& player, vector<Map*>& allMaps)
 			break;
 		}
 	}/**/
-
+	bool bb;
 	//moby na mapach
 	for (int i = 0; i < allMaps.size(); i++)
 	{
 		buf = allMaps[i]->mobs.size();
 		//file.write((const char*)&allMaps[i]->mapID, sizeof(allMaps[i]->mapID));
 		file.write((const char*)&buf, sizeof(buf));
+		file.write((const char*)&allMaps[i]->is_boss_dead, sizeof(allMaps[i]->is_boss_dead));
 		for (int j = 0; j < allMaps[i]->mobs.size(); j++)
 		{
 
@@ -352,7 +356,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 	{
 		ClearInfoPlace();
 		CDrawText("Tura: " + to_string(tura), { 107,1 }, 0x0003);
-		CDrawText("p: " + to_string(pom), { 107,2 }, 0x0003);
+		//CDrawText("p: " + to_string(pom), { 107,2 }, 0x0003);
 		CDrawText("HP twojego bohatera: " + to_string(player.life), { 107,3 }, 0x0003);
 		CDrawText("HP przeciwnika: " + to_string(mobek.life), { 107,4 }, 0x0003);
 		CDrawText("Mana: " + to_string(mana), { 107,5 }, 0x0003);
@@ -371,17 +375,22 @@ int Fight(Player& player, Mob& mobek, int return_map)
 				crit = player.CritIs();
 				acc = player.AccIs();
 				if (crit)
-				{
+				{		
 					player.dmg_output *= 1.5;
 				}
 				if (acc)
 				{
 					mobek.life = mobek.life - (player.dmg_output - mobek.armor);
 				}
-				else mobek.life = mobek.life;
+				else
+				{
+					mobek.life = mobek.life;
+					CDrawText("Przeciwnik uniknął twojego ciosu", { 107,13 }, 0x000b);
+				};
 				CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
 				if (crit)
 				{
+					CDrawText("Uderzenie krytyczne", { 107,13 }, 0x000b);
 					player.dmg_output = player.dmg_output / 1.5;
 				}
 				continue;
@@ -446,24 +455,26 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		CDrawText("Twój przeciwnik uderza...", { 107,15 }, 0x000b);
 		if (return_map == 1)
 		{
-			mobek.dmg = 20 + rand() % (30 - 20 + 1);
+			mobek.dmg = 30;// + rand() % (40 - 30 + 1);
 		}
 		else if (return_map == 2)
 		{
-			mobek.dmg = 30 + rand() % (45 - 30 + 1);
+			mobek.dmg = 40 + rand() % (50 - 40 + 1);
 		}
 		else if (return_map == 3)
 		{
-			mobek.dmg = 40 + rand() % (55 - 40 + 1);
+			mobek.dmg = 50 + rand() % (60 - 50 + 1);
 		}
-		if (player.profession == 1 && pom > 0)
+		dodge = player.DodgeIs();
+		if (player.profession == 1 && pom > 0 && dodge == false)
 		{
 			CDrawText("Aura zablokowała : " + to_string((int)mobek.dmg * 0.5) + " pkt obrażeń.", { 107,17 }, 0x000b);
 		}
-		dodge = player.DodgeIs();
-		if (crit)
+
+		if (dodge)
 		{
 			player.life = player.life;
+			CDrawText("Udało ci sie uniknąć ciosu przeciwnika!", { 107,16 }, 0x000b);
 		}
 		else
 			player.life = player.life - (mobek.dmg - player.armor);
@@ -471,7 +482,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 
 		if (player.life <= 0)
 		{
-			CDrawText("Poległeś na polu bitwy...", { 107,14 }, 0x000b);
+			CDrawText("Poległeś na polu bitwy...", { 107,19 }, 0x000b);
 			player.dead = true;
 			break;
 
@@ -613,6 +624,9 @@ void LoadQuests(list<Quest*>& mainQuest)
 	mainQuest.push_back(new MainQuest2());
 	mainQuest.push_back(new MainQuest3());
 	mainQuest.push_back(new MainQuest4());
+	mainQuest.push_back(new MainQuest5());
+	mainQuest.push_back(new MainQuest8());
+
 }
 
 void LoadMaps(vector<Map*>& allMaps)
@@ -623,9 +637,11 @@ void LoadMaps(vector<Map*>& allMaps)
 	allMaps.push_back(new Map3());
 }
  
+
+
+
 void Game(bool isNewGame)//, Map &map
 {
-	int x = 0, y = 0;
 	int mapID = 0;
  
 	Player player;
@@ -643,9 +659,22 @@ void Game(bool isNewGame)//, Map &map
 	//Tworzenie/Ładowanie gry
 	if (isNewGame)
 	{
-		
 		player.CreateCharacter();
 		player.inventory.push_back(new Armor("Zbroja", "", 3.0f, 1000, 1, 1));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
+		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
@@ -663,14 +692,12 @@ void Game(bool isNewGame)//, Map &map
 		}
 	}
 	
-	
 	allMaps[mapID]->LoadVMap(player.positon);
 	allMaps[mapID]->ShowMap();
 	//map.ShowMap();
 	DrawBorder();
 
 	//system("cls");
-	//clock_t endTime = clock() + 5 * CLOCKS_PER_SEC;
 	while (1)	//głowna petla gry
 	{
 		allMaps[mapID]->ShowMap(player.positon);
@@ -720,14 +747,13 @@ void Game(bool isNewGame)//, Map &map
 			return;
 			break;
 		}
-		
-		y = player.positon.x;
-		x = player.positon.y;
 
 		//walka
 		if (int buf = allMaps[mapID]->IsFight(player.positon))	
 		{
-			X(3, 0x000c ,"Na swojej drodze spotkałeś " , allMaps[mapID]->mobs[buf]->name.c_str() ," musisz stanąć z nim do walki!");
+			X(3, 0x000c ,"Na swojej drodze spotkałeś" , allMaps[mapID]->mobs[buf-1]->name.c_str() ,"musisz stanąć z nim do walki!");
+			ClearMapPlace();
+			ShowGfx_Mobs(allMaps[mapID]->mobs[buf - 1]->gfxID, {(WHEREINFO-50)/2, 5});
 			if (Fight(player, *allMaps[mapID]->mobs[buf-1], mapID))
 			{
 				allMaps[mapID]->KillMob(buf - 1);
@@ -736,10 +762,10 @@ void Game(bool isNewGame)//, Map &map
 		}
 
 		//czy spotka npc
-		/*if (allMaps[mapID]->map[x][y] == 'S')		
+		if (allMaps[mapID]->map[player.positon.y][player.positon.x] == 'S')		
 		{
 			Shop(player, allFood, allWeapons, allArmor);
-		}*/
+		}/**/
 		/*if (int buf = allMaps[mapID]->IsWithNpc(player.positon))
 		{
 			allMaps[mapID]->npcs[buf - 1]->OnInteraction();
@@ -750,7 +776,8 @@ void Game(bool isNewGame)//, Map &map
 
 		/*Zabawa z questami*/
 		if (mainQuest.size() > 0)
-		{mainQuest.front()->UpdateQuest();
+		{
+			mainQuest.front()->UpdateQuest(*allMaps[mapID]);
 			if (mainQuest.front()->IsQuestDone(player, *allMaps[mapID]))
 			{
 				player.questID++;

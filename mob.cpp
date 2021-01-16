@@ -1,5 +1,6 @@
 #include "mob.h"
 #include "player.h"
+#include "gfx.h"
 
 Mob::Mob() //konstruktor domyslny, wykonuje sie gdy tworzy sie obiekt
 {
@@ -42,13 +43,37 @@ Mob  Mob::MobStats(int level, int return_map)
 	Mob mob;
 	Mob boss;
 	int pom_name = 1 + rand() % (6-1+1);
-	if	   (pom_name == 1) mob.name = "Wilk";
-	else if(pom_name == 2) mob.name = "Wiedüma";
-	else if(pom_name == 3) mob.name = "Szkielet";
-	else if(pom_name == 4) mob.name = "Ghul";
-	else if(pom_name == 5) mob.name = "Drzewiec";
-	else if(pom_name == 6) mob.name = "Goblin";
-
+	if (pom_name == 1)
+	{
+		mob.name = "Wilk";
+		mob.gfxID = 502;
+		//ShowGfx_Mobs(502, { 20,50 });
+	}
+	else if (pom_name == 2)
+	{
+		mob.name = "Wiedüma";
+		mob.gfxID = 501;
+	}
+	else if (pom_name == 3)
+	{
+		mob.name = "Szkielet";
+		mob.gfxID = 500;
+	}
+	else if (pom_name == 4)
+	{
+		mob.name = "Ghul";
+		mob.gfxID = 504;
+	}
+	else if (pom_name == 5)
+	{
+		mob.name = "Drzewiec";
+		mob.gfxID = 503;
+	}
+	else if (pom_name == 6)
+	{
+		mob.name = "Goblin";
+		mob.gfxID = 505;
+	}
 	if (return_map == 1)
 	{
 		//mob.name=pom_name;
@@ -79,7 +104,7 @@ Mob  Mob::MobStats(int level, int return_map)
 		mob.exp_after_win = mob.Exp_to_player( level);
 		return mob;
 	}
-	else if (return_map ==1)
+	if (return_map ==1)
 	{
 		boss.name="Wilko≥ak";
 		boss.armor = 20;

@@ -51,13 +51,8 @@ void GenerateWindow()
 	setlocale(LC_CTYPE, "Polish");	//<- polskie literki
 }
 
-/*
-1----
-2----
-3----
-
-*/
-
+ 
+/*Rysuje Menu wyboru*/
 int DrawMenu(vector<string>& option)
 {
 	int pos = 0;
@@ -100,7 +95,7 @@ int DrawMenu(vector<string>& option)
 
 	return pos;
 }
-
+/*Rysuje Menu wyboru */
 int DrawMenu(vector<string>& option, COORD c)
 {
 	int pos = 0;
@@ -153,6 +148,68 @@ int DrawMenu(vector<string>& option, COORD c)
 		if (key == 296)
 			pos--;
 		
+		if (pos < 0)
+			pos = 0;
+		if (pos > option.size() - 1)
+			pos = option.size() - 1;
+
+	} while (key != 13);
+	SetConsoleTextAttribute(handlee, 0x0003);
+
+	return pos;
+}
+
+int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText)
+{
+	int pos = 0;
+	int key = 0;
+	HANDLE handlee = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	int lenght = option[0].length();
+
+	for (int i = 1; i < option.size(); i++)
+	{
+		if (option[i].length() > lenght)
+			lenght = option[i].length();
+	}
+
+	do
+	{
+		//lepsze czyszczenie bo czysci tylko fragment nie calosc
+		for (int i = 0; i < option.size(); i++)
+		{
+			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
+			for (int j = 0; j < lenght; j++)
+			{
+				cout << " ";
+			}
+			cout << endl;
+		}
+
+		for (int i = 0; i < option.size(); i++)
+		{
+			SetConsoleCursorPosition(handlee, { c.X, short(c.Y + i) });
+
+			SetConsoleTextAttribute(handlee, 0x0003);
+			if (i == pos)
+			{
+				SetConsoleTextAttribute(handlee, FOREGROUND_RED);
+				cout << option[i];
+			}
+			else
+			{
+				SetConsoleTextAttribute(handlee, FOREGROUND_BLUE);
+				cout << option[i];
+			}
+
+		}
+
+		key = GetKey();
+
+		if (key == 304)
+			pos++;
+		if (key == 296)
+			pos--;
 
 		if (pos < 0)
 			pos = 0;

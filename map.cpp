@@ -117,7 +117,7 @@ bool Map::CanMove(Point &point)
 
 bool Map::IsNextMap(Point& point)
 {
-	if (nextMap == point)
+	if (nextMap == point&& is_boss_dead)
 		return true;
 	return false;
 }
@@ -154,7 +154,7 @@ void Map::GenerateMobs(int level, Point p1, Point p2, int quantity)
 
 			 mobs[i]->position = { x,y };
 				 
-		/*	 if (map[x][y] == '1'&& mapID==1)					//dopisać znaczki minibossa i bossa
+			 if (map[x][y] == '1'&& mapID==1)					//dopisać znaczki minibossa i bossa
 			 {
 				 mobs.push_back(new Mob(boss.MobStats(level,1)));
 			 }
@@ -170,7 +170,7 @@ void Map::GenerateMobs(int level, Point p1, Point p2, int quantity)
 			if ( mobs.size() > 0)
 			{
 				 mobs[ mobs.size() - 1]->position = { x,y };
-			}*/
+			}
 
 			x = 0;
 			y = 0;

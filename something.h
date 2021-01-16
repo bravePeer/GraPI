@@ -10,7 +10,10 @@
 #include "player.h"
 #include "item.h"
 #include "map.h"
+/*szerokoœæ okna*/
 #define WIDTHCONSOLE 174
+/*gdzie zaczyna sie prawa strona*/
+#define WHEREINFO 107
 
 using namespace std;
 
