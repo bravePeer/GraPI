@@ -65,16 +65,19 @@ void Player::CreateCharacter()
 	system("cls");
 	
 	CDrawText("Wybierz p³eæ", { 80,5 }, 0x0003);
+	
 	switch (DrawMenu(s, { 80,7 }))
 	{
 		case 0:
+			ClearMapPlace();
 			ShowGfx_Hero(-2, {0,0});
 			break;
 		case 1:
+			ClearMapPlace();
 			ShowGfx_Hero(-1, {0,0});
 			break;
 	}
-	ClearMapPlace();
+	
 
 	Select_profession();
 
