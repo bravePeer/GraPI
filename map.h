@@ -235,7 +235,7 @@ class Map2 : public Map
 
 		if (position.x == 105 && position.y == 39)
 			position = { 3,39 };		//pozycja gracza na przejsciu
-		else if (position.x == 2 && position.y == 2)
+		else if (position.x == 1 && position.y == 22)
 			position = { 104, 3 };		//pozycja przy powrocie
 		mapID = 2;
 		return 2;
@@ -295,7 +295,7 @@ class Map3 : public Map
 		mapSize = Point(106, 41);
 
 		position = { 2,22 };		//pozycja gracza
-		//nextMap	= {x,y}		//przejscie do nastepnej mapy
+		nextMap	= {1,0}		//przejscie do nastepnej mapy
 		prevMap = { 1,22 };		//powrot do poprzedniej mapy
 		mapID = 3;
 		return 3;

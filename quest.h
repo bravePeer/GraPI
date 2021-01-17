@@ -366,7 +366,7 @@ class MainQuest9 : public Quest
 		if (map.mapID == 2 && punkt == player.positon)
 		{
 			ClearMapPlace();
-			ShowGfx_Envi(1000, {(WHEREINFO-75)/2,18});
+			ShowGfx_Envi(1000, {40,18});
 			X(-4, 0x0004, "Widzisz tajemniczą studnie.", "Czy chcesz zaglądnąć co jest w środku?","","");
 			switch (DrawMenu(s,{(WHEREINFO-2)/2,32}))
 			{

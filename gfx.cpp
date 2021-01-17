@@ -744,6 +744,7 @@ void ShowGfx_Mobs(int id )
 		break;
 	case 702://duży wilkolaczek
 		c.X = ((WHEREINFO - 70) / 2);
+		c.Y = 2;
 		break;
 	case 703://Golem
 		c.X = ((WHEREINFO - 94) / 2);
@@ -754,7 +755,7 @@ void ShowGfx_Mobs(int id )
 		c.Y = 1;
 	deafult:
 		c.X = 1;
-		c.Y = 10;
+		c.Y = 1;
 		break;
 	}
 
@@ -1363,7 +1364,7 @@ void ShowGfx_Envi(int id, COORD c)
 
 	if (id == 1000)
 	{
-		c.X = ((WHEREINFO - 75 / 2));
+		c.X = ((40));
 		c.Y = 18;
 	}
 	
@@ -1433,6 +1434,7 @@ void TakeGfx_Envi(int id, wstring envi_gfx[], int& lenght)
 
 	
 }
+
 
 
 // |33 -137
