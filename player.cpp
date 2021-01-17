@@ -438,20 +438,22 @@ void Player::ShowQuests()
 bool Player::CritIs()
 {
 	int help = 1 + rand() % (100-1+1);
-	if((crit_strike*3)>help) 
-		return true;
+	if((crit_strike*3)>help) return true;
+	else return false;
 }
 
 bool Player::DodgeIs()
 {
 	int help = 1 + rand() % (100-1+1);
-	if((dodging*3)>help) return true;
+	if ((dodging * 3) > help) return true;
+	else return false;
 }
 
 bool Player::AccIs()
 {
 	int help = 1 + rand() % (100 - 1 + 1);
-	if (((dodging*2) +80) > help) return true;
+	if (((accuracy * 2) + 80) > help) return true;
+	else return false;
 }
 
  

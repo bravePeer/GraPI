@@ -42,6 +42,11 @@ void ClearEqPlace();
 gdy n < 0 to nie czeka na przycisk*/
 void X(short n, short textAtribute, ...);
 
+//ramki z tekstem dla klas postaci
+void W(short n, short textAtribute, ...); 
+void L(short n, short teztAtribute, ...);
+void M(short n, short teztAtribute, ...);
+
 int GetKey();
 
 

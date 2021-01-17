@@ -384,28 +384,57 @@ int Fight(Player& player, Mob& mobek, int return_map)
 			switch (DrawMenu(s, { 107,9 }))
 			{
 			case 0:
-				crit = player.CritIs();
-				acc = player.AccIs();
-				if (crit)
-				{		
-					player.dmg_output *= 1.5;
-				}
-				if (acc)
+				if (mobek.armor < player.dmg_output)
 				{
-					mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+					crit = player.CritIs();
+					acc = player.AccIs();
+					if (crit)
+					{
+						player.dmg_output *= 1.5;
+					}
+					if (acc)
+					{
+						mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+					}
+					else
+					{
+						mobek.life = mobek.life;
+						CDrawText("Przeciwnik uniknął twojego ciosu", { 107,14 }, 0x000b);
+					};
+					CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
+					if (crit)
+					{
+						CDrawText("Uderzenie krytyczne", { 107,13 }, 0x000b);
+						player.dmg_output = player.dmg_output / 1.5;
+					}
+					continue;
 				}
 				else
 				{
-					mobek.life = mobek.life;
-					CDrawText("Przeciwnik uniknął twojego ciosu", { 107,13 }, 0x000b);
-				};
-				CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
-				if (crit)
-				{
-					CDrawText("Uderzenie krytyczne", { 107,13 }, 0x000b);
-					player.dmg_output = player.dmg_output / 1.5;
+					player.dmg_output = (mobek.armor + 1);
+					crit = player.CritIs();
+					acc = player.AccIs();
+					if (crit)
+					{
+						player.dmg_output *= 1.5;
+					}
+					if (acc)
+					{
+						mobek.life = mobek.life - (player.dmg_output - mobek.armor);
+					}
+					else
+					{
+						mobek.life = mobek.life;
+						CDrawText("Przeciwnik uniknął twojego ciosu", { 107,14 }, 0x000b);
+					};
+					CDrawText("Zadajesz: " + to_string(player.dmg_output - mobek.armor) + " pkt obrażeń", { 107,12 }, 0x000b);
+					if (crit)
+					{
+						CDrawText("Uderzenie krytyczne", { 107,13 }, 0x000b);
+						player.dmg_output = player.dmg_output / 1.5;
+					}
+					continue;
 				}
-				continue;
 			case 1:
 				if (player.profession == 2 && player.life == player.lifeMax)
 				{
@@ -432,7 +461,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 				else if (player.profession == 3 && mana == 4)
 				{
 
-					CDrawText("Wypuszczasz deszcz strzał...", { 107,12 }, 0x000b);
+					CDrawText("Wypuszczasz deszcz strzał...", { 107,11 }, 0x000b);
 					CDrawText("Zadajesz: " + to_string(player.Spell(mobek.dmg)) + " pkt obrażeń", { 107,12 }, 0x000b);
 
 					mana = 0;
@@ -453,8 +482,8 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		if (mobek.life <= 0)
 		{
 			ClearInfoPlace();
-			CDrawText("Brawo wygrałeś tę walkę!", { 107,1 }, 0x000b);
-			CDrawText("Zdobywasz: " + to_string(mobek.money_from_mob) + "G", { 107,2 }, 0x000b);
+			CDrawText("Brawo wygrałeś tę walkę!", { 107,12 }, 0x000b);
+			CDrawText("Zdobywasz: " + to_string(mobek.money_from_mob) + "G", { 107,13 }, 0x000b);
 
 			mobek.dead = true;
 			player.money += mobek.money_from_mob;
@@ -755,6 +784,7 @@ void Game(bool isNewGame)//, Map &map
 			{
 				allMaps[mapID]->KillMob(buf - 1);
 			}
+			DrawBorder();
 			allMaps[mapID]->ShowMap();
 		}
 
@@ -762,6 +792,7 @@ void Game(bool isNewGame)//, Map &map
 		if (allMaps[mapID]->map[player.positon.y][player.positon.x] == 'S')		
 		{
 			Shop(player, allFood, allWeapons, allArmor);
+			DrawBorder();
 		}/**/
 		/*if (int buf = allMaps[mapID]->IsWithNpc(player.positon))
 		{

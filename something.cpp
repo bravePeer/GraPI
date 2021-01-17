@@ -587,7 +587,7 @@ int GetKey()
 	return a;
 }
 
-void Y(short n, ...)
+/*void Y(short n, ...)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -646,9 +646,9 @@ void Y(short n, ...)
 	ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
 	//delete text;
 	va_end(arg);
-}
+}*/
 
-void Y(short n, short textAtribute, ...)
+void W(short n, short textAtribute, ...)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO info;
@@ -668,7 +668,7 @@ void Y(short n, short textAtribute, ...)
 
 	string* text = new string[n];
 	short lenghtT = 0;
-	short x = 52, y = 34;
+	short x = 20, y = 37;//20,35
 
 	for (short i = 0; i < n; i++)
 	{
@@ -713,13 +713,162 @@ void Y(short n, short textAtribute, ...)
 	wcout << L"\u255d";
 	_setmode(_fileno(stdout), _O_TEXT);
 
-	if (wait)
+	/*if (wait)
 	{
 		GetKey();
 		ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
-	}
+	}*/
 	//sprzatanie
 	SetConsoleTextAttribute(handle, buf);
 	va_end(arg);
 }
 
+void L(short n, short textAtribute, ...)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	GetConsoleScreenBufferInfo(handle, &info);
+	short buf = info.wAttributes;
+
+	SetConsoleTextAttribute(handle, textAtribute);
+	va_list arg;
+	va_start(arg, textAtribute);
+
+	bool wait = true;
+	if (n < 0)
+	{
+		wait = !wait;
+		n *= -1;
+	}
+
+	string* text = new string[n];
+	short lenghtT = 0;
+	short x = 102, y = 37;//20,35
+
+	for (short i = 0; i < n; i++)
+	{
+		text[i] = va_arg(arg, char*);
+		lenghtT > text[i].length() ? lenghtT : lenghtT = text[i].length();
+	}
+	lenghtT;
+	ClearPlace({ x - lenghtT / 2,y - n }, { lenghtT, n });
+	for (short i = 0; i < n; i++)
+	{
+		SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y - n + i });
+		cout << text[i];
+	}
+
+	//Rysowanie ramki
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y - n - 1 });
+	for (short i = 0; i < lenghtT; i++)
+	{
+		wcout << L"\u2550";
+	}
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y });
+	for (short i = 0; i < lenghtT; i++)
+	{
+		wcout << L"\u2550";
+	}
+	for (short i = 0; i < n; i++)
+	{
+		SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1 , y - n + i });
+		wcout << L"\u2551";
+		SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1 , y - n + i });
+		wcout << L"\u2551";
+	}
+
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1, y - n - 1 });
+	wcout << L"\u2554";
+	SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1, y - n - 1 });
+	wcout << L"\u2557";
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1, y });
+	wcout << L"\u255a";
+	SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1, y });
+	wcout << L"\u255d";
+	_setmode(_fileno(stdout), _O_TEXT);
+
+	/*if (wait)
+	{
+		GetKey();
+		ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
+	}*/
+	//sprzatanie
+	SetConsoleTextAttribute(handle, buf);
+	va_end(arg);
+}
+
+void M(short n, short textAtribute, ...)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	GetConsoleScreenBufferInfo(handle, &info);
+	short buf = info.wAttributes;
+
+	SetConsoleTextAttribute(handle, textAtribute);
+	va_list arg;
+	va_start(arg, textAtribute);
+
+	bool wait = true;
+	if (n < 0)
+	{
+		wait = !wait;
+		n *= -1;
+	}
+
+	string* text = new string[n];
+	short lenghtT = 0;
+	short x = 61, y = 37;//20,35
+
+	for (short i = 0; i < n; i++)
+	{
+		text[i] = va_arg(arg, char*);
+		lenghtT > text[i].length() ? lenghtT : lenghtT = text[i].length();
+	}
+	lenghtT;
+	ClearPlace({ x - lenghtT / 2,y - n }, { lenghtT, n });
+	for (short i = 0; i < n; i++)
+	{
+		SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y - n + i });
+		cout << text[i];
+	}
+
+	//Rysowanie ramki
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y - n - 1 });
+	for (short i = 0; i < lenghtT; i++)
+	{
+		wcout << L"\u2550";
+	}
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 , y });
+	for (short i = 0; i < lenghtT; i++)
+	{
+		wcout << L"\u2550";
+	}
+	for (short i = 0; i < n; i++)
+	{
+		SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1 , y - n + i });
+		wcout << L"\u2551";
+		SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1 , y - n + i });
+		wcout << L"\u2551";
+	}
+
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1, y - n - 1 });
+	wcout << L"\u2554";
+	SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1, y - n - 1 });
+	wcout << L"\u2557";
+	SetConsoleCursorPosition(handle, { x - lenghtT / 2 - 1, y });
+	wcout << L"\u255a";
+	SetConsoleCursorPosition(handle, { x + lenghtT / 2 + 1, y });
+	wcout << L"\u255d";
+	_setmode(_fileno(stdout), _O_TEXT);
+
+	/*if (wait)
+	{
+		GetKey();
+		ClearPlace({ x - lenghtT / 2 - 1,y - n - 1 }, { lenghtT + 3, n + 2 });
+	}*/
+	//sprzatanie
+	SetConsoleTextAttribute(handle, buf);
+	va_end(arg);
+}

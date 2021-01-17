@@ -1,6 +1,7 @@
 ﻿#include "gfx.h"
 #include <io.h>
 #include <fcntl.h>
+#include "something.h"	
 
 /*
 														$$\   $$\ $$$$$$$$\ $$$$$$$\   $$$$$$\  
@@ -72,15 +73,16 @@ void ShowGfx_Hero(int id, COORD c)
 			}
 		}
 
-		Y()
+		W(2, 0x0004, "         Wojownik\n", "UM Specjalna: Aura Pancerza\n");
+		M(2, 0x0001, "           Mag\n", "UM Specjalna: Leczenie Ran\n");
+		L(2, 0x0002, "          Lowca\n", "UM Specjalna: Deszcz Strzał");
 
-
-		CDrawText("Wojownik", { 20,35 }, colors[0]);
-		CDrawText("Mag", { 20 + 41,35 }, colors[1]);
-		CDrawText("Łowca", { 20 + 82,35 }, colors[2]);
-		CDrawText("Aura Pancerza", { 20+4-7 ,37 }, colors[0]); 
-		CDrawText("Leczenie Ran ", { 20+1-7 + 42,37 }, colors[1]);	//wybacznie bo moze pomylilem spele
-		CDrawText("Deszcz Strzał", { 20 +3-7+ 82,37}, colors[2]);
+		//CDrawText("Wojownik", { 20,35 }, colors[0]);
+		//CDrawText("Mag", { 20 + 41,35 }, colors[1]);
+		//CDrawText("Łowca", { 20 + 82,35 }, colors[2]);
+		//CDrawText("Aura Pancerza", { 20+4-7 ,37 }, colors[0]); 
+		//CDrawText("Leczenie Ran ", { 20+1-7 + 42,37 }, colors[1]);	//wybacznie bo moze pomylilem spele
+		//CDrawText("Deszcz Strzał", { 20 +3-7+ 82,37}, colors[2]);
 	}
 	else
 	{

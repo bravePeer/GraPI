@@ -185,6 +185,7 @@ public:
 		{
 			X(1, 0x0002, "*Powinienem się teraz udać do Zarządcy wioski*");
 			shown = !shown;
+			map.ShowMap();
 		}
 		if (shown && player.positon == p1)
 		{
