@@ -104,7 +104,7 @@ Mob  Mob::MobStats(int level, int return_map)
 		mob.exp_after_win = mob.Exp_to_player( level);
 		return mob;
 	}
-	if (return_map ==1)
+	if (return_map ==2)
 	{
 		boss.name="Wilko³ak";
 		boss.armor = 20;
@@ -115,7 +115,7 @@ Mob  Mob::MobStats(int level, int return_map)
 		return boss;
 		
 	}
-	else if (return_map ==2)
+	else if (return_map ==1)
 	{
 		boss.name="Golem";
 		boss.armor = 40;

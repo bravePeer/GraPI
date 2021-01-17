@@ -163,14 +163,14 @@ public:
 	void CreateQuest(Player& player, Map& map)
 	{
 		ClearMapPlace();
-		ShowGfx_NPC(101,{(WHEREINFO-60)/2,4 });
+		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		
 		X(3, 0x0005, "Witaj jestem nowym zarządcom tutejszej wioski.", "Przepraszam, że od razu zawracam Tobie głowę", "ale mamy straszny problem z bestiami.");
-		ShowGfx_NPC(101,{(WHEREINFO-60)/2,4 });
+		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		X(2, 0x0002, "Coś o tych potworach wiadomo?", "Gdzie są? Ile ich jest?");
-		ShowGfx_NPC(101,{(WHEREINFO-60)/2,4 });
+		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		X(4, 0x0005, "Widziano je na południu stąd.", "Słyszałem, że jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
-		ShowGfx_NPC(101,{(WHEREINFO-60)/2,4 });
+		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		map.ShowMap();
 		map.GenerateMobs(player.level, { 2,27 }, {20, 20},10);
 	}
@@ -189,7 +189,7 @@ public:
 		if (shown && player.positon == p1)
 		{
 			ClearMapPlace();
-			ShowGfx_NPC(101,{(WHEREINFO-60)/2,4 });
+			ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 			X(2, 0x0005, "Dziękuję za pokonanie bestii.", "Proszę o to Twoja należność." );
 			CDrawText("+ " + to_string(gainMoney) + "G", { 108,38 }, 0x000a);
 			player.money += gainMoney;
@@ -222,7 +222,7 @@ class MainQuest5 : public Quest
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 1) CDrawText(L"ጰ",{104,39},0x0004);
+		if (map.mapID == 2) CDrawText(L"ጰ",{104,39},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -252,7 +252,7 @@ class MainQuest6 : public Quest
 	}
 	void UpdateQuest(Map& map)
 	{
-	if (map.mapID == 2)		CDrawText(L"ጰ",{60,15},0x0004);
+	if (map.mapID == 1)		CDrawText(L"ጰ",{60,15},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
