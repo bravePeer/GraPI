@@ -64,13 +64,13 @@ bool LoadGame(Player& player, vector<Map*>& allMaps)
 
 	switch (player.profession)
 	{
-	case 0:
+	case 1:
 		player.profession_name = "Wojownik";
 		break;
-	case 1:
+	case 2:
 		player.profession_name = "Mag";
 		break;
-	case 2:
+	case 3:
 		player.profession_name = "Łowca";
 		break;
 	}
@@ -834,6 +834,8 @@ void Game(bool isNewGame)//, Map &map
 			ShowGfx_NPC(106, { (WHEREINFO - 60) / 2, 4 });
 			Shop(player, allFood, allWeapons, allArmor);
 			player.ShowStats();
+			allMaps[mapID]->ShowMap();
+
 			ClearEqPlace();
 			DrawBorder();
 		}

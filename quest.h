@@ -163,7 +163,7 @@ public:
 	void CreateQuest(Player& player, Map& map)
 	{
 		ClearMapPlace();
-		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
+		ShowGfx_NPC(100,{(WHEREINFO-60)/2,2 });
 		
 		X(3, 0x0005, "Witaj jestem nowym zarządcom tutejszej wioski.", "Przepraszam, że od razu zawracam Tobie głowę", "ale mamy straszny problem z bestiami.");
 		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
@@ -282,7 +282,7 @@ Mob boss;
 		boss.life = 250;
 		boss.mob_lvl = 15;
 		boss.money_from_mob = 1000;
-		boss.exp_after_win = 1000;
+		boss.exp_after_win = 0;
 		boss.position = { 53,20 };
 		boss.gfxID = 900;
 		boss.onMap = L"\u0551";
@@ -368,7 +368,7 @@ class MainQuest9 : public Quest
 		if (map.mapID == 2 && punkt == player.positon)
 		{
 			ClearMapPlace();
-			ShowGfx_Envi(1000, {40,18});
+			ShowGfx_Envi(1000, {15,18});
 			X(-4, 0x0004, "Widzisz tajemniczą studnie.", "Czy chcesz zaglądnąć co jest w środku?","","");
 			switch (DrawMenu(s,{(WHEREINFO-2)/2,32}))
 			{

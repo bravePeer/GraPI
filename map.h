@@ -295,7 +295,7 @@ class Map3 : public Map
 		mapSize = Point(106, 41);
 
 		position = { 2,22 };		//pozycja gracza
-		nextMap	= {1,0}		//przejscie do nastepnej mapy
+		nextMap = { 1,0 };	//przejscie do nastepnej mapy
 		prevMap = { 1,22 };		//powrot do poprzedniej mapy
 		mapID = 3;
 		return 3;

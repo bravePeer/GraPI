@@ -95,7 +95,8 @@ bool Map::CanMove(Point &point)
 		map[point.y][point.x] == '_' || map[point.y][point.x] == '+' ||
 		map[point.y][point.x] == '/' || map[point.y][point.x] == 'L' ||
 		map[point.y][point.x] == '@' || map[point.y][point.x] == 'I' ||
-		map[point.y][point.x] == 'b' || map[point.y][point.x] == 'd'  )
+		map[point.y][point.x] == 'b' || map[point.y][point.x] == '#' ||
+		map[point.y][point.x] == 'd')
 	{
 		return false;
 	}
