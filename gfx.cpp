@@ -754,7 +754,7 @@ void ShowGfx_Mobs(int id )
 		c.Y = 1;
 	deafult:
 		c.X = 1;
-		c.Y = 1;
+		c.Y = 10;
 		break;
 	}
 

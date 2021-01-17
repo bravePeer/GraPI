@@ -833,10 +833,11 @@ void Game(bool isNewGame)//, Map &map
 			ShowGfx_NPC(106, { (WHEREINFO - 60) / 2, 4 });
 			Shop(player, allFood, allWeapons, allArmor);
 			player.ShowStats();
+			allMaps[mapID]->ShowMap();
 			ClearEqPlace();
 			DrawBorder();
 		}
-
+		 
 		/*Questy*/
 		if (mainQuest.size() > 0)
 		{
@@ -939,10 +940,13 @@ int main()
 
 			break;
 		case 2:	//pokazanie sterowania
-			system("cls");
+			//system("cls");
 	
-			CDrawText("awadawdawd", { 10,10 }, 0x0004);
-
+			//CDrawText("awadawdawd", { 10,10 }, 0x0004);
+			M(10, 0x0002, "Chodzenie – WASD ", "", "Ekwipunek - I ", "", "Zapis – L ", "", "Menu wyboru - strzałki ","","","");
+			//L(10, 0x0002, "Chodzenie – WASD ", "", "Ekwipunek - I ", "", "Zapis – L ", "", "Menu wyboru - strzałki ","","","");
+			//W(10, 0x0002, "Chodzenie – WASD ", "", "Ekwipunek - I ", "", "Zapis – L ", "", "Menu wyboru - strzałki ","","","");
+			//X(10, 0x0002, "Chodzenie – WASD ", "", "Ekwipunek - I ", "", "Zapis – L ", "", "Menu wyboru - strzałki ","","","");
 			_getch();
 			
 

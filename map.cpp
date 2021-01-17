@@ -42,6 +42,11 @@ void Map::ShowMap()
 /*Wyswietla mape i moby i npc*/
 void Map::ShowMap(Point& playerPos)
 {
+	for (short i = 0; i < 30; i++)
+	{
+		CDrawText(L"\u2501", {1 + i,0 }, 0x0003);
+	}
+	
 	CDrawText(buf, { (short)lastPlayerPos.x,(short)lastPlayerPos.y }, 0x0003);
 	buf = map[playerPos.y][playerPos.x];
 	lastPlayerPos = playerPos;
