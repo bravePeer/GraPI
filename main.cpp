@@ -681,8 +681,8 @@ void LoadQuests(list<Quest*>& mainQuest)
 	mainQuest.push_back(new MainQuest5());
 	mainQuest.push_back(new MainQuest8());
 	mainQuest.push_back(new MainQuest6());
-	mainQuest.push_back(new MainQuest7());
 	mainQuest.push_back(new MainQuest9());
+	mainQuest.push_back(new MainQuest7());
 	mainQuest.push_back(new MainQuestEnd());
 }
 
