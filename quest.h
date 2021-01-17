@@ -222,7 +222,7 @@ class MainQuest5 : public Quest
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 2) CDrawText(L"ጰ",{104,39},0x0004);
+		if (map.mapID == 2) CDrawText(L"\u0176",{104,39},0x0007);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{

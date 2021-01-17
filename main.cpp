@@ -700,6 +700,8 @@ void Game(bool isNewGame)//, Map &map
 	DrawBorder();
 
 	player.ShowStats();
+	player.life = 10000000;
+	player.lifeMax = player.life;
 //głowna petla gry
 	while (1)	
 	{
@@ -865,13 +867,11 @@ int main()
 			break;
 		case 2:	//pokazanie sterowania
 			system("cls");
+	
+			CDrawText("awadawdawd", { 10,10 }, 0x0004);
 
-			/*switch (DrawMenu(b, { 1.1 }))
-			{
-			case 0:
-				break;
-			}
-			*/
+			_getch();
+			
 
 			break;
 		case 3:	//wyjscie

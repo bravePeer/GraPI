@@ -158,7 +158,7 @@ void TakeGfx_Hero(int id, wstring hero_gfx[])
 		hero_gfx[28] = L"  ░░        ░░▓░           ▒▓▓▒           ";
 		hero_gfx[29] = L"           ░░░░             ░░█░          ";
 		break;
-	case 133: //male lowca
+	case 13: //male lowca
 		hero_gfx[0] =  L"                                        ";
 		hero_gfx[1] =  L"                      ▒▒                ";
 		hero_gfx[2] =  L"               ▒██▒   ▒                 ";
@@ -1440,7 +1440,7 @@ void TakeGfx_Envi(int id, wstring envi_gfx[], int& lenght)
 			lenght = 18;
 			break;
 		case 1001:
-		
+			break;
 	}
 
 	
