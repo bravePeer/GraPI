@@ -385,6 +385,25 @@ class MainQuest9 : public Quest
 	Point punkt ={104,3};
 };
 
+class MainQuestNWM : public Quest
+{
+	void CreateQuest(Player& player, Map& map)
+	{
+
+	}
+	void UpdateQuest(Map& map)
+	{
+
+	}
+	bool IsQuestDone(Player& player, Map& map)
+	{
+		if (map.mapID == 3)
+			return true;
+		return false;
+
+	}
+};
+
 /*jakieś napisy koncowe xd czy cus xd*/
 class MainQuestEnd : public Quest
 {
