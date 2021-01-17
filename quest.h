@@ -172,7 +172,7 @@ public:
 		X(4, 0x0005, "Widziano je na południu stąd.", "Słyszałem, że jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
 		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		map.ShowMap();
-		map.GenerateMobs(player.level, { 2,27 }, {20, 20},10);
+		map.GenerateMobs(player.level, { 2,27 }, { 20, 20 }, 3);
 	}
 	void UpdateQuest(Map& map)
 	{
