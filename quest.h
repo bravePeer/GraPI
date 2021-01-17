@@ -194,7 +194,7 @@ public:
 			X(2, 0x0005, "Dziękuję za pokonanie bestii.", "Proszę o to Twoja należność." );
 			CDrawText("+ " + to_string(gainMoney) + "G", { 108,38 }, 0x000a);
 			player.money += gainMoney;
-			CDrawText("+ " + to_string(gainXp) + "XP", { 108,38 }, 0x000e);
+			CDrawText("+ " + to_string(gainXp) + "XP", { 108,39 }, 0x000e);
 			player.xp += gainXp;
 			return true;
 
@@ -203,7 +203,7 @@ public:
 	}
 	
 	bool shown = false;
-	Point p1 = Point(20, 20);
+	Point p1 = Point(34, 4);
 };
 class MainQuest5 : public Quest
 {
@@ -218,12 +218,14 @@ class MainQuest5 : public Quest
 		boss.money_from_mob = 500;
 		boss.exp_after_win = 300;
 		boss.position = { 104,39 };
+		boss.onMap = L"\u0551";
+		boss.gfxID = 703;
 		map.mobs.push_back(new Mob(boss));
 		//map.GenerateMobs()
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 1) CDrawText(L"\u0551",{104,39},0x0007);
+		//if (map.mapID == 1) CDrawText(L"\u0551",{104,39},0x0007);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -249,11 +251,13 @@ class MainQuest6 : public Quest
 		boss.mob_lvl = 10;
 		boss.money_from_mob = 750;
 		boss.exp_after_win = 600;
+		boss.position = { 60,15 };
+		boss.onMap = L"\u0551";
 		map.mobs.push_back(new Mob(boss));
 	}
 	void UpdateQuest(Map& map)
 	{
-	if (map.mapID == 2)		CDrawText(L"\u0176",{60,15},0x0004);
+	//if (map.mapID == 2)		CDrawText(L"\u0176",{60,15},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -278,10 +282,13 @@ Mob boss;
 		boss.mob_lvl = 15;
 		boss.money_from_mob = 1000;
 		boss.exp_after_win = 1000;
+		boss.position = { 53,20 };
+		boss.onMap = L"\u0551";
+		map.mobs.push_back(new Mob(boss));
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 3)		CDrawText(L"\u20a6",{53,20},0x0004);
+	//	if (map.mapID == 3)		CDrawText(L"\u20a6",{53,20},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -318,6 +325,13 @@ class MainQuest8 : public Quest
 			switch (DrawMenu(s,{(WHEREINFO-2)/2,32}))
 			{
 			case 0:
+				
+				ClearMapPlace();
+				ShowGfx_Mobs(700);
+				Sleep(2000);
+				ClearMapPlace();
+				ShowGfx_Mobs(701);
+				Sleep(2000);
 				 player.positon = { 58,15 };
 				 map.ShowMap();
 				 return true;
@@ -346,16 +360,39 @@ class MainQuest9 : public Quest
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
+		vector<string> s;
+		s.push_back("Tak");
+		s.push_back("Nie");
+		if (map.mapID == 2 && punkt == player.positon)
+		{
+			ClearMapPlace();
+			ShowGfx_Envi(1000);
+			X(-4, 0x0004, "Widzisz tajemniczą studnie.", "Czy chcesz zaglądnąć co jest w środku?","","");
+			switch (DrawMenu(s,{(WHEREINFO-2)/2,32}))
+			{
+			case 0:
+				map.ShowMap();
+				player.positon = { 105,3 };
+				break;
+			case 1:
+				map.ShowMap();
+				player.positon = { 103,3 };
+				break;
+			}
+		}return false;
 
 	}
-
+	Point punkt ={104,3};
 };
 
-class MainQuest10 : public Quest
+/*jakieś napisy koncowe xd czy cus xd*/
+class MainQuestEnd : public Quest
 {
 	void CreateQuest(Player& player, Map& map)
 	{
-
+		X(4, 0x0002, "Gratulacje", "Udało Ci się ukończyć wątek fabularny!","","Dziękujemy!!!");
+		X(5, 0x0002, "Grę stworzyli:", "","Dąbrowski Hubert","Dąbrowski Kacper","Gojowczyk Bartłomiej");
+		X(9, 0x0002, "Muzyka:", "Move it Out", "Mountainside", "Balloon Fantasy 3", "Indian Ocen Twilight", "", "by Eric Matyas", "", "www.soundimage.org");
 	}
 	void UpdateQuest(Map& map)
 	{

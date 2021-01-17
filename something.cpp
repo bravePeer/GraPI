@@ -213,7 +213,7 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 			SetConsoleCursorPosition(handlee, { c2.X, short(c2.Y +i) });
 			for (int j = 0; j < lenghtA; j++)
 			{
-				cout << "%";
+				cout << " ";
 			}
 		}
 

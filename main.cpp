@@ -504,7 +504,7 @@ int Fight(Player& player, Mob& mobek, int return_map)
 		CDrawText("Twój przeciwnik uderza...", { 107,15 }, 0x000b);
 		if (return_map == 1)
 		{
-			mobek.dmg = 30;// + rand() % (40 - 30 + 1);
+			mobek.dmg = 30 + rand() % (40 - 30 + 1);
 		}
 		else if (return_map == 2)
 		{
@@ -680,7 +680,10 @@ void LoadQuests(list<Quest*>& mainQuest)
 	mainQuest.push_back(new MainQuest4());
 	mainQuest.push_back(new MainQuest5());
 	mainQuest.push_back(new MainQuest8());
-
+	mainQuest.push_back(new MainQuest6());
+	mainQuest.push_back(new MainQuest7());
+	mainQuest.push_back(new MainQuest9());
+	mainQuest.push_back(new MainQuestEnd());
 }
 
 void LoadMaps(vector<Map*>& allMaps)
@@ -692,7 +695,31 @@ void LoadMaps(vector<Map*>& allMaps)
 }
  
 
+void PlayS(int id)
+{
+	switch (id)
+	{
+	case 0:
+		PlaySound(TEXT("music/theme.wav"), NULL, SND_LOOP | SND_ASYNC);
+		break;
+	case 1:
+		PlaySound(TEXT("music/map1.wav"), NULL, SND_LOOP | SND_ASYNC);
 
+		break;
+	case 2:
+		PlaySound(TEXT("music/map2.wav"), NULL, SND_LOOP | SND_ASYNC);
+
+		break;
+	case 3:
+		PlaySound(TEXT("music/map3.wav"), NULL, SND_LOOP | SND_ASYNC);
+
+		break;
+	case -1:
+		PlaySound(TEXT("music/Fight.wav"), NULL, SND_LOOP | SND_ASYNC);
+
+		break;
+	}
+}
 
 void Game(bool isNewGame)//, Map &map
 {
@@ -785,13 +812,16 @@ void Game(bool isNewGame)//, Map &map
 		//walka
 		if (int buf = allMaps[mapID]->IsFight(player.positon))	
 		{
+			PlayS(-1);
 			X(3, 0x000c ,"Na swojej drodze spotkałeś" , allMaps[mapID]->mobs[buf-1]->name.c_str() ,"musisz stanąć z nim do walki!");
 			ClearMapPlace();
-			ShowGfx_Mobs(allMaps[mapID]->mobs[buf - 1]->gfxID, {(WHEREINFO-50)/2, 5});
+			ShowGfx_Mobs(allMaps[mapID]->mobs[buf - 1]->gfxID);
 			if (Fight(player, *allMaps[mapID]->mobs[buf-1], mapID))
 			{
 				allMaps[mapID]->KillMob(buf - 1);
 			}
+			PlayS(mapID);
+			player.ShowStats();
 			DrawBorder();
 			allMaps[mapID]->ShowMap();
 		}
@@ -799,17 +829,15 @@ void Game(bool isNewGame)//, Map &map
 		//czy spotka npc
 		if (allMaps[mapID]->map[player.positon.y][player.positon.x] == 'S')		
 		{
+			ClearMapPlace();
+			ShowGfx_NPC(106, { (WHEREINFO - 60) / 2, 4 });
 			Shop(player, allFood, allWeapons, allArmor);
+			player.ShowStats();
+			ClearEqPlace();
 			DrawBorder();
-		}/**/
-		/*if (int buf = allMaps[mapID]->IsWithNpc(player.positon))
-		{
-			allMaps[mapID]->npcs[buf - 1]->OnInteraction();
+		}
 
-			
-		}*/
-
-		/*Zabawa z questami*/
+		/*Questy*/
 		if (mainQuest.size() > 0)
 		{
 			mainQuest.front()->UpdateQuest(*allMaps[mapID]);
@@ -842,6 +870,7 @@ void Game(bool isNewGame)//, Map &map
 			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
 			allMaps[mapID]->ShowMap();
+			PlayS(mapID);
 		}
 		if (allMaps[mapID]->IsPrevMap(player.positon))
 		{
@@ -849,6 +878,7 @@ void Game(bool isNewGame)//, Map &map
 			allMaps[mapID]->LoadVMap(player.positon);
 			ClearMapPlace();
 			allMaps[mapID]->ShowMap();
+			PlayS(mapID);
 		}
 
 		//czy gracz żyje
@@ -872,7 +902,7 @@ int main()
 	srand(time(NULL));
 	GenerateWindow();
 
-	//PlaySound(TEXT("music/theme.wav"), NULL,  SND_LOOP | SND_ASYNC);
+	PlaySound(TEXT("music/theme.wav"), NULL,  SND_LOOP | SND_ASYNC);
 	
 	//_getch();
 	//PlaySound(TEXT("music/spirit.wav"), NULL, SND_FILENAME);
@@ -899,10 +929,14 @@ int main()
 		case 0: //poczatek gry
 			system("cls");
 			Game(true);//, map
+			PlaySound(TEXT("music/theme.wav"), NULL, SND_LOOP | SND_ASYNC);
+
 			break;
 		case 1:	//wczytanie zapisu
 			system("cls");
 			Game(false);
+			PlaySound(TEXT("music/theme.wav"), NULL, SND_LOOP | SND_ASYNC);
+
 			break;
 		case 2:	//pokazanie sterowania
 			system("cls");

@@ -77,8 +77,8 @@ Mob  Mob::MobStats(int level, int return_map)
 	if (return_map == 1)
 	{
 		//mob.name=pom_name;
-		mob.armor = 5 + rand() % (30 - 5 + 1);
-		mob.life = 60 + rand() % (140 - 60 + 1);
+		mob.armor = 5 + rand() % (10 - 5 + 1);
+		mob.life = 60 + rand() % (110 - 60 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);
 		mob.money_from_mob = 100 + rand() % (100 - 20 + 1);
 		mob.exp_after_win = mob.Exp_to_player( level);
@@ -87,8 +87,8 @@ Mob  Mob::MobStats(int level, int return_map)
 	else if(return_map == 2)
 	{
 		//mob.name=pom_name;
-		mob.armor = 15 + rand() % (35 - 15 + 1);
-		mob.life = 90 + rand() % (180 - 90 + 1);
+		mob.armor = 10 + rand() % (20 - 15 + 1);
+		mob.life = 110 + rand() % (150 - 110 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);
 		mob.money_from_mob = 40 + rand() % (120 - 40 + 1);
 		mob.exp_after_win = mob.Exp_to_player( level);
@@ -97,8 +97,8 @@ Mob  Mob::MobStats(int level, int return_map)
 	else if (return_map == 3)
 	{
 		//mob.name=pom_name;
-		mob.armor = 25 + rand() % (50 - 25 + 1);
-		mob.life = 110 + rand() % (220 - 110 + 1);
+		mob.armor = 20 + rand() % (30 - 20 + 1);
+		mob.life = 150 + rand() % (200 - 150 + 1);
 		mob.mob_lvl = mob.Lvl_mob( level);
 		mob.money_from_mob = 60 + rand() % (140 - 60 + 1);
 		mob.exp_after_win = mob.Exp_to_player( level);
@@ -108,7 +108,7 @@ Mob  Mob::MobStats(int level, int return_map)
 	{
 		boss.name="Golem";
 		boss.armor = 20;
-		boss.life = 180;
+		boss.life = 150;
 		boss.mob_lvl = mob.Lvl_mob( level);
 		boss.money_from_mob = 500;
 		boss.exp_after_win = mob.Exp_to_player( level);
@@ -118,8 +118,8 @@ Mob  Mob::MobStats(int level, int return_map)
 	else if (return_map ==2)
 	{
 		boss.name="Wilko³ak";
-		boss.armor = 40;
-		boss.life = 260;
+		boss.armor = 25;
+		boss.life = 200;
 		boss.mob_lvl = mob.Lvl_mob( level);
 		boss.money_from_mob = 750;
 		boss.exp_after_win = mob.Exp_to_player( level);
@@ -129,8 +129,8 @@ Mob  Mob::MobStats(int level, int return_map)
 	else if (return_map ==3)
 	{
 		boss.name="Nieumar³y Smok";
-		boss.armor = 70;
-		boss.life = 300;
+		boss.armor = 30;
+		boss.life = 250;
 		boss.mob_lvl = mob.Lvl_mob( level);
 		boss.money_from_mob = 1000;
 		boss.exp_after_win = mob.Exp_to_player( level);

@@ -48,31 +48,13 @@ void Map::ShowMap(Point& playerPos)
 
 	CDrawText(L"\u1d25", { (short)playerPos.x,(short)playerPos.y }, 0x0002);
 	CDrawText("Pozycja x: " + to_string(playerPos.x) + " y:" + to_string(playerPos.y), { 10,0 }, 0x0003);
-
+	
 	for (int i = 0; i < mobs.size(); i++)
 	{
-		CDrawText(L"\u0230", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
+		CDrawText(mobs[i]->onMap, { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
 	}
 
-	/*for (int i = 0; i < npcs.size(); i++)
-	{
-		switch (npcs[i]->NpcType())
-		{
-		case 0:
-			CDrawText(L"\u1d25", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
-			break;
-		case 1:
-			CDrawText(L"\u026f", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
-			break;
-		case 2:
-			CDrawText(L"\u0230", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
-			break;
-		case 3:
-			CDrawText(L"\u2126", { (short)mobs[i]->position.x,(short)mobs[i]->position.y }, 0x0004);
-			break;
-		}
-
-	}*/
+	 
 }
 
 /*Czy walka*/

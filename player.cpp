@@ -171,7 +171,7 @@ void Player::Bonus_stats_per_lvl()
 	//X(1, 0x0002, "Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.");
 	CDrawText("Wbi³eœ nastêpny poziom! Mo¿esz dodaæ 2 punkty umiejêtnoœci.", { 107,13 }, 0x0002);
 	GetKey();
-
+	DrawBorder();
 	//ClearMapPlace();
 
 	vector<string> s;
@@ -218,10 +218,12 @@ void Player::Bonus_stats_per_lvl()
 			break;
 		}
 	}
-	ClearInfoPlace();
+	//ClearInfoPlace();
 	lifeMax *= 1.2;
 	life = lifeMax;
-
+	ClearEqPlace();
+	ShowStats();
+	DrawBorder();
 }
 
 void Player::UsePreset()

@@ -29,5 +29,6 @@ public:
 	int exp_after_win = 1;
 	Point position = { 0,0 };
 	int gfxID = 0;
+	wstring onMap = L"\u00e6";
 };
 

@@ -28,7 +28,7 @@ public:
 	int armor = 15;		// pancerz
 
 	int life = 150;		// wytrzymalosc -> zdrowie aktualne
-	int lifeMax = 100;
+	int lifeMax = 150;
 	
 	int accuracy;		//celnosc
 	int strength;		//sila
