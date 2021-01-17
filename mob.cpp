@@ -128,7 +128,7 @@ Mob  Mob::MobStats(int level, int return_map)
 	}
 	else if (return_map ==3)
 	{
-		boss.name="Smok dzikiego wzgórza";
+		boss.name="Nieumar³y Smok";
 		boss.armor = 70;
 		boss.life = 300;
 		boss.mob_lvl = mob.Lvl_mob( level);
