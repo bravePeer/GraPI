@@ -210,7 +210,7 @@ class MainQuest5 : public Quest
 	
 	void CreateQuest(Player& player, Map& map)
 	{
-		boss.name="Wilkołak";
+		boss.name="Golem";
 		boss.armor = 30;
 		boss.life = 250;
 		boss.mob_lvl = 5;
@@ -222,7 +222,7 @@ class MainQuest5 : public Quest
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 2) CDrawText(L"\u0176",{104,39},0x0007);
+		if (map.mapID == 1) CDrawText(L"\u0551",{104,39},0x0007);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -242,7 +242,7 @@ class MainQuest6 : public Quest
 
 	void CreateQuest(Player& player, Map& map)
 	{
-		boss.name="Golem";
+		boss.name="Wilkołak";
 		boss.armor = 40;
 		boss.life = 350;
 		boss.mob_lvl = 10;
@@ -252,7 +252,7 @@ class MainQuest6 : public Quest
 	}
 	void UpdateQuest(Map& map)
 	{
-	if (map.mapID == 1)		CDrawText(L"ጰ",{60,15},0x0004);
+	if (map.mapID == 2)		CDrawText(L"\u0176",{60,15},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -280,7 +280,7 @@ Mob boss;
 	}
 	void UpdateQuest(Map& map)
 	{
-		if (map.mapID == 3)		CDrawText(L"ጰ",{53,20},0x0004);
+		if (map.mapID == 3)		CDrawText(L"\u20a6",{53,20},0x0004);
 	}
 	bool IsQuestDone(Player& player, Map& map)
 	{
@@ -291,7 +291,7 @@ Mob boss;
 		}
 		return false;
 	}
-
+//ጰ
 };
 
 class MainQuest8 : public Quest
@@ -312,9 +312,9 @@ class MainQuest8 : public Quest
 		if (map.mapID == 2 && punkt == player.positon)
 		{
 			
-			X(-4, 0x0004, "Z dala zobaczyłeś dziwnego potwora\n", "  Czy chcesz podejść bliżej?\n","\n","\n");
+			X(-4, 0x0004, " Z dala zobaczyłeś dziwnego potwora\n", "    Czy chcesz podejść bliżej?\n","\n","\n");
 
-			switch (DrawMenu(s,{(WHEREINFO-2)/2,36}))
+			switch (DrawMenu(s,{(WHEREINFO-2)/2,32}))
 			{
 			case 0:
 				 player.positon = { 58,15 };
