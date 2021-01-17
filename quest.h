@@ -212,8 +212,8 @@ class MainQuest5 : public Quest
 	void CreateQuest(Player& player, Map& map)
 	{
 		boss.name="Golem";
-		boss.armor = 30;
-		boss.life = 250;
+		boss.armor = 15;
+		boss.life = 150;
 		boss.mob_lvl = 5;
 		boss.money_from_mob = 500;
 		boss.exp_after_win = 300;
@@ -246,12 +246,13 @@ class MainQuest6 : public Quest
 	void CreateQuest(Player& player, Map& map)
 	{
 		boss.name="Wilkołak";
-		boss.armor = 40;
-		boss.life = 350;
+		boss.armor = 25;
+		boss.life = 200;
 		boss.mob_lvl = 10;
 		boss.money_from_mob = 750;
 		boss.exp_after_win = 600;
 		boss.position = { 60,15 };
+		boss.gfxID = 702;
 		boss.onMap = L"\u0551";
 		map.mobs.push_back(new Mob(boss));
 	}
@@ -277,12 +278,13 @@ Mob boss;
 	void CreateQuest(Player& player, Map& map)
 	{
 		boss.name="Smok dzikiego wzgórza";
-		boss.armor = 60;
-		boss.life = 5000;
+		boss.armor = 30;
+		boss.life = 250;
 		boss.mob_lvl = 15;
 		boss.money_from_mob = 1000;
 		boss.exp_after_win = 1000;
 		boss.position = { 53,20 };
+		boss.gfxID = 900;
 		boss.onMap = L"\u0551";
 		map.mobs.push_back(new Mob(boss));
 	}
@@ -332,7 +334,7 @@ class MainQuest8 : public Quest
 				ClearMapPlace();
 				ShowGfx_Mobs(701);
 				Sleep(2000);
-				 player.positon = { 58,15 };
+				 player.positon = { 60,15 };
 				 map.ShowMap();
 				 return true;
 				 break;
