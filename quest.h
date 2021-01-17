@@ -375,14 +375,15 @@ class MainQuest9 : public Quest
 			case 0:
 				map.ShowMap();
 				player.positon = { 105,3 };
+				return true;
 				break;
 			case 1:
 				map.ShowMap();
 				player.positon = { 103,3 };
 				break;
 			}
-		}return false;
-
+		}
+		return false;
 	}
 	Point punkt ={104,3};
 };
