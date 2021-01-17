@@ -219,6 +219,8 @@ void Player::Bonus_stats_per_lvl()
 		}
 	}
 	ClearInfoPlace();
+	lifeMax *= 1.2;
+	life = lifeMax;
 
 }
 
@@ -375,11 +377,12 @@ int Player::Spell(int atak_moba)
 		atak_moba =atak_moba* 0.5;
 		return atak_moba;
 	}
-	else if (profession == 2)  //mag - leczenie
+
+	if (profession == 2)  //mag - leczenie
 	{
 	
 		int healing;
-		healing = 10 + (level * 3);
+		healing = 30 + (level * 3);
 		if (life == lifeMax)
 		{
 			return 0;
@@ -403,7 +406,8 @@ int Player::Spell(int atak_moba)
 		}
 		return 0;
 	}
-	else if (profession == 3) // ³owca - losowe obrazenia z danego zakresu, roœnie z levelem
+
+	if (profession == 3) // ³owca - losowe obrazenia z danego zakresu, roœnie z levelem
 	{
 		int pom;
 		pom = (25 + (level * 2)) + rand() % ((50 + (level * 2)) - (25 + (level * 2)) + 1);

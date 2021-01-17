@@ -363,6 +363,14 @@ int Fight(Player& player, Mob& mobek, int return_map)
 	bool acc=false;
 
 	player.Dmg_formula();
+	if (player.equipedWeapon != NULL)
+	{
+		player.dmg_output += player.equipedWeapon->strength;
+	}
+	if (player.equipedArmor != NULL)
+	{
+		player.armor += player.equipedArmor->armor;
+	}
 
 	while (player.life > 0 || mobek.life > 0)
 	{
@@ -729,7 +737,7 @@ void Game(bool isNewGame)//, Map &map
 	DrawBorder();
 
 	player.ShowStats();
-	player.life = 10000000;
+	//player.life = 100;
 	player.lifeMax = player.life;
 //głowna petla gry
 	while (1)	
