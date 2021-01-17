@@ -248,8 +248,6 @@ void Player::ShowInventory()
 
 	vector<string> s;
 	vector<string> ad;
-	
-	
 
 	if (inventory.size() > 0)
 	{

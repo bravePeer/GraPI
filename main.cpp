@@ -510,27 +510,33 @@ int Fight(Player& player, Mob& mobek, int return_map)
 int SellItem(Player &player)
 {
 	vector<string> itNames;
+	vector<string> itDesc;
 	for (int i = 0; i < player.inventory.size(); i++)
 	{
 		itNames.push_back(player.inventory[i]->name + " " + [](string s)->string { s.erase(s.end() - 4, s.end()); return s; }(to_string(player.inventory[i]->weight)) + "Kg " + to_string(player.inventory[i]->price) + "G");
+		itDesc.push_back(player.inventory[i]->desc);
 	}
 	itNames.push_back("Powrót");
+	itDesc.push_back(" ");
 
-	ClearInfoPlace();
-	return DrawMenu(itNames, {107,1});
+	ClearEqPlace();
+	return DrawMenu(itNames, { WHEREINFO,13 }, itDesc, { WHEREINFO,38 }, 0x0004);
 }
 
 int BuyItem( vector<Item*> &sellersItems)
 {
 	vector<string> itNames;
+	vector<string> itDesc;
 	for (int i = 0; i < sellersItems.size(); i++)
 	{
 		itNames.push_back(sellersItems[i]->name + " " + [](string s)->string { s.erase(s.end() - 4, s.end()); return s; }(to_string(sellersItems[i]->weight)) + "Kg " + to_string(sellersItems[i]->price) + "G");
+		itDesc.push_back(sellersItems[i]->desc);
 	}
 	itNames.push_back("Powrót");
+	itDesc.push_back(" ");
 	
-	ClearInfoPlace();
-	return  DrawMenu(itNames, {107,1});
+	ClearEqPlace();
+	return  DrawMenu(itNames, { WHEREINFO,13 }, itDesc, {WHEREINFO,38}, 0x0004);
 }
 
 void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
@@ -560,9 +566,9 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 		//sellersItems.push_back(new Item("Tak", "To jest opis", 3 + i, 99 + i * 1));
 	}
 
-	ClearInfoPlace();
+	ClearEqPlace();
 
-	switch (DrawMenu(s, {107, 1}))
+	switch (DrawMenu(s, {WHEREINFO ,12}))
 	{
 	case 0:
 		it = BuyItem( sellersItems);
@@ -573,7 +579,6 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 				player.money -= sellersItems[it]->price;
 				player.inventory.push_back(sellersItems[it]);
 				CDrawText("Kupiłeś " + player.inventory[player.inventory.size() - 1]->name, { 107,30 }, 0x0003);
-				PlaySound(TEXT("music/Coins8.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				GetKey();
 			}
 			else
@@ -599,7 +604,7 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 	case 2:
 		break;
 	}
-
+	player.ShowStats();
 	//GetKey();
 
 	//Czyszczenie ekwipunku sprzedawcy
@@ -614,8 +619,8 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 
 void LoadGameAssets(vector<Food>& allFood, vector<Weapon>& allWeapons, vector<Armor>& allArmor)
 {
-	allFood.push_back(Food("Bułka", "Można zjeść", 0.05f, 30, 2));
-	allFood.push_back(Food("Chleb", "Można zjeść", 0.05f, 30, 2));
+	allFood.push_back(Food("Bułka", "Można zjeść\nPrzywróci trochę zdrowia", 0.05f, 30, 2));
+	allFood.push_back(Food("Chleb", "Można zjeść\nPrzywróci trochę zdrowia", 0.05f, 30, 2));
 	allFood.push_back(Food("Ciasteczka", "Ze stron ;)", 0.01f, 200, 3));
 	allFood.push_back(Food("Soczek Jagodowy", "Do picia", 0.3f, 500, 10));
 	allFood.push_back(Food("XXX", "Jak nie piłeś lepiej nie pij", 0.5f, 2000, -1));
@@ -676,21 +681,6 @@ void Game(bool isNewGame)//, Map &map
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
-		player.inventory.push_back(new Food("Ciasteczko", "Można zjeść, przywróci troche zdrowia", 0.2f, 200, 20));
 		player.mapID = 0;
 		SaveGame(player,  allMaps);
 	}
@@ -710,8 +700,8 @@ void Game(bool isNewGame)//, Map &map
 	DrawBorder();
 
 	player.ShowStats();
-	//system("cls");
-	while (1)	//głowna petla gry
+//głowna petla gry
+	while (1)	
 	{
 		allMaps[mapID]->ShowMap(player.positon);
 
