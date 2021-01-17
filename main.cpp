@@ -843,6 +843,9 @@ int main()
 	s.push_back("    Sterowanie     ");
 	s.push_back("       Wyjdź       ");
 
+	vector < string> b;
+	b.push_back("Powrót");
+
 	while (1)//główna 
 	{
 		system("cls");
@@ -860,8 +863,16 @@ int main()
 			system("cls");
 			Game(false);
 			break;
-		case 2:	//wyjscie
-			return 0;
+		case 2:	//pokazanie sterowania
+			system("cls");
+
+			/*switch (DrawMenu(b, { 1.1 }))
+			{
+			case 0:
+				break;
+			}
+			*/
+
 			break;
 		case 3:	//wyjscie
 			return 0;

@@ -19,8 +19,8 @@ void TakeGfx_MiniBoss(int id, wstring min_boss_gfx[], int& lenght);
 void ShowGfx_Boss(int id, COORD c);
 void TakeGfx_Boss(int id, wstring boss_gfx[]);
 
-void ShowGfx_Envi(int id);
-void TakeGfx_Envi(int id);
+void ShowGfx_Envi(int id, COORD c);
+void TakeGfx_Envi(int id, wstring envi_gfx[], int& lenght);
 
 void ShowGfx_Hero(int id, COORD c);
 void TakeGfx_Hero(int id, wstring hero_gfx[]);
