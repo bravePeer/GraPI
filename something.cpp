@@ -189,12 +189,13 @@ int DrawMenu(vector<string>& option, COORD c, vector<string>& additionalText, CO
 		buf = 0;
 		for (int j = 0;j < additionalText[i].length();j++)
 		{
-			if (j == '\n')
+			if (additionalText[i][j] == '\n')
 				buf++;
 		}
 		if (buf > heightA)
 			heightA = buf  ;//-3 ?
 	}
+	heightA++;
 	stringstream ss =  stringstream(additionalText[0]);
 	do
 	{
@@ -308,11 +309,16 @@ void DrawBorder()
 		SetConsoleCursorPosition(handle, { 106, i });
 		wcout << L"\u2503";
 	}
-
 	
 	for (short i = 0; i < WIDTHCONSOLE - WHEREINFO -1 ; i++)
 	{
 		SetConsoleCursorPosition(handle, { WHEREINFO + i, 11 });
+		wcout << L"\u2500";
+	}
+
+	for (short i = 0; i < WIDTHCONSOLE - WHEREINFO - 22; i++)
+	{
+		SetConsoleCursorPosition(handle, { WHEREINFO + i, 2 });
 		wcout << L"\u2500";
 	}
 
