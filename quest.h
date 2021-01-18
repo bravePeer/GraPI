@@ -163,7 +163,7 @@ public:
 	void CreateQuest(Player& player, Map& map)
 	{
 		ClearMapPlace();
-		ShowGfx_NPC(100,{(WHEREINFO-60)/2,2 });
+		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		
 		X(3, 0x0005, "Witaj jestem nowym zarządcom tutejszej wioski.", "Przepraszam, że od razu zawracam Tobie głowę", "ale mamy straszny problem z bestiami.");
 		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });

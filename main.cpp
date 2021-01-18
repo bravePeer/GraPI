@@ -630,7 +630,7 @@ void Shop(Player& player, vector<Food>& allFood, vector<Weapon>& allWeapons, vec
 		if (it < player.inventory.size())
 		{
 			CDrawText("Sprzedałeś: " + player.inventory[it]->name + " za: " + to_string(player.inventory[it]->price), {107,30 }, 0x000c);
-			PlaySound(TEXT("music/Coins8.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			//PlaySound(TEXT("music/Coins8.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			GetKey();
 			player.money += player.inventory[it]->price;
 			player.inventory[it] = NULL;
@@ -765,9 +765,8 @@ void Game(bool isNewGame)//, Map &map
 	DrawBorder();
 
 	player.ShowStats();
-	//player.life = 100;
-	player.lifeMax = player.life;
-//głowna petla gry
+
+	//głowna petla gry
 	while (1)	
 	{
 		allMaps[mapID]->ShowMap(player.positon);
@@ -825,6 +824,13 @@ void Game(bool isNewGame)//, Map &map
 			player.ShowStats();
 			DrawBorder();
 			allMaps[mapID]->ShowMap();
+		}
+		
+		//czy gracz żyje
+		if (player.dead)
+		{
+			X(1, 0x0004, "Koniec gry");
+			break;
 		}
 
 		//czy spotka npc
@@ -884,12 +890,7 @@ void Game(bool isNewGame)//, Map &map
 			PlayS(mapID);
 		}
 
-		//czy gracz żyje
-		if(player.dead)
-		{
-			X(1, 0x0004, "Koniec gry");
-			break;
-		}
+
 	}
 	
 	allArmor.clear();
