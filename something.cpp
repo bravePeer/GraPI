@@ -17,6 +17,7 @@ void GenerateWindow()
 	cfi.dwFontSize.Y = 12;// Width of each character in the font
 	cfi.FontFamily = FF_DONTCARE;
 	cfi.FontWeight = FW_NORMAL;
+	//cfi.FaceName = L"";
 	wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
 	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 	

@@ -16,12 +16,10 @@ public:
 	Quest(string _name, Point _point, int _needLvl, int _gainXp, int _gainMoney, Item _neededItem, Item _revardItem);
 	~Quest();
 
-	//bool IsOnQuestPoint(Point &playerPos);
-	//virtual void ShowMessege();
-	virtual bool IsQuestDone(Player& player, Map& map);
 	virtual void CreateQuest(Player& player, Map& map);
 	virtual void UpdateQuest(Map& map);
-	//virtual int GetTypeOfQuest();
+	virtual bool IsQuestDone(Player& player, Map& map);
+
 	Point QuestPoint = { 5,5 };
 	
 	string name;
@@ -172,7 +170,7 @@ public:
 		X(4, 0x0005, "Widziano je na południu stąd.", "Słyszałem, że jest ich co najmniej 5.","" ,"Za pomoc zostaniesz wynagrodzony!");
 		ShowGfx_NPC(101,{(WHEREINFO-60)/2,2 });
 		map.ShowMap();
-		map.GenerateMobs(player.level, { 2,27 }, { 20, 20 }, 3);
+		map.GenerateMobs(player.level, { 2,27 }, { 20, 20 }, 8);
 	}
 	void UpdateQuest(Map& map)
 	{
@@ -205,6 +203,7 @@ public:
 	bool shown = false;
 	Point p1 = Point(34, 4);
 };
+
 class MainQuest5 : public Quest
 {
 	Mob boss;
@@ -271,6 +270,7 @@ class MainQuest6 : public Quest
 	}
 
 };
+
 class MainQuest7 : public Quest
 {
 
@@ -426,5 +426,3 @@ class MainQuestEnd : public Quest
 	}
 
 };
-
-

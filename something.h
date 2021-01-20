@@ -48,8 +48,3 @@ void L(short n, short teztAtribute, ...);
 void M(short n, short teztAtribute, ...);
 
 int GetKey();
-
-
-
-//bool SaveGame(Player& player, vector<Map*>& allMaps);
- 
