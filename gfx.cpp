@@ -706,7 +706,7 @@ void ShowGfx_Mobs(int id )
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	wstring* mob_gfx = new wstring[40];
-	COORD c = { (WHEREINFO - 50) / 2, 5 };
+	COORD c = { (WHEREINFO - 50) / 2, 10 };
 	short att = 0x0001 ;
 	int lenght = 0;
 	_setmode(_fileno(stdout), _O_U16TEXT);
@@ -723,7 +723,7 @@ void ShowGfx_Mobs(int id )
 		break;
 	case 502://wilczek
 		c.X = (WHEREINFO - 40) / 2;
-		c.Y = (10);
+		c.Y = (WIDTHCONSOLE -20)/2;
 	case 503://drzewiec
 		c.Y = 1;
 		break;
@@ -907,7 +907,6 @@ void TakeGfx_Mobs(int id, wstring mob_gfx[], int& lenght)
 		mob_gfx[18] = L"      ░█   ▓█          ▒░  ▒░           ";
 		mob_gfx[19] = L"       ██▒  ██░        ▒█▒░░▒░          ";
 		lenght = 20;
-
 		break;
 	
 	case 503:

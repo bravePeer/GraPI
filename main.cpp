@@ -807,6 +807,39 @@ void Game(bool isNewGame)//, Map &map
 			SaveGame(player, allMaps);
 			return;
 			break;
+		case 'W':
+			player.positon.y -= 1;
+			if (player.positon.y < 1 || !allMaps[mapID]->CanMove(player.positon))
+				player.positon.y += 1;
+			break;
+		case 'S':
+			player.positon.y += 1;
+			if (player.positon.y > allMaps[mapID]->mapSize.y - 1 || !allMaps[mapID]->CanMove(player.positon))
+				player.positon.y -= 1;
+			break;
+		case 'A':
+			player.positon.x -= 1;
+			if (player.positon.x < 1 || !allMaps[mapID]->CanMove(player.positon))
+				player.positon.x += 1;
+			break;
+		case 'D':
+			player.positon.x += 1;
+			if (player.positon.x > allMaps[mapID]->mapSize.x - 1 || !allMaps[mapID]->CanMove(player.positon))
+				player.positon.x -= 1;
+			break;
+		case 'I':
+			player.ShowInventory();
+			ClearEqPlace();
+			break;
+		case 'J':
+			player.ShowQuests();
+			ClearEqPlace();
+			break;
+		case 'L':
+			player.mapID = mapID;
+			SaveGame(player, allMaps);
+			return;
+			break;
 		}
 
 		//walka
@@ -945,7 +978,7 @@ int main()
 		case 2:	//pokazanie sterowania
 			system("cls");
 	
-			//CDrawText("", { 10,10 }, 0x0004);
+			X(4, 0x0004, "Poruszanie się po mapie - wsad", "Menu Wyboru - Strzałki", "Otwieranie ekwipunku - I", "Zapis Gry - L");
 
 			_getch();
 			
